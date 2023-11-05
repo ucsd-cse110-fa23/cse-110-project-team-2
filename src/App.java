@@ -5,9 +5,9 @@ import javafx.stage.Stage;
 public class App extends Application {
 @Override
     public void start(Stage primaryStage) throws Exception {
-        AppFrame root = new AppFrame();
+        HomeScreen root = new HomeScreen();
         primaryStage.setTitle("PantryPal");
-        primaryStage.setScene(new Scene(root, 800, 900));
+        primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
