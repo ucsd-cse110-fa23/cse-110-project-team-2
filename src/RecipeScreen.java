@@ -17,14 +17,18 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 public class RecipeScreen extends BorderPane{
     private Header header;
+    private TextField generatedRecipe;
     private RecipeFooter footer;
 
     RecipeScreen(String recipe){
-        header = new Header("Here is your recipe!" + );
+        header = new Header("Here is your recipe!");
+        generatedRecipe = new TextField(recipe);
+        generatedRecipe.setEditable(false);
         footer = new RecipeFooter();
         // nextButton = new Button("Next");
         // nextButton.setStyle("-fx-background-color: #43ED58");
@@ -32,6 +36,7 @@ public class RecipeScreen extends BorderPane{
         // cancelButton.setStyle("-fx-background-color: #43ED58");
 
         this.setTop(header);
+        this.setCenter(generatedRecipe);
         this.setBottom(footer);
     }
 }

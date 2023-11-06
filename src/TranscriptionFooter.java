@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,6 +10,7 @@ import javafx.stage.Window;
 
 public class TranscriptionFooter extends Footer {
     private ChatGPT gpt;
+    private String recipe;
 
     TranscriptionFooter() {
         this.leftButton.setText("Cancel");
@@ -36,9 +40,19 @@ public class TranscriptionFooter extends Footer {
             if (screen instanceof Stage) {
                 Stage current = (Stage) screen;
                 gpt = new ChatGPT();
-                
-                gpt.generate();
-                RecipeScreen screenTwo = new RecipeScreen();
+                try {
+                    recipe = gpt.generate(TranscriptionScreen.getTranscription(), TranscriptionScreen.getMealType());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (URISyntaxException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                RecipeScreen screenTwo = new RecipeScreen(recipe);
                 current.setTitle("PantryPal");
                 current.setScene(new Scene(screenTwo, 500, 500));
                 current.setResizable(false);

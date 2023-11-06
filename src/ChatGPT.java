@@ -12,10 +12,8 @@ public class ChatGPT{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
     private static final String API_KEY = "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";
     private static final String MODEL = "gpt-3.5-turbo";
-    public String generate(String ingredients, String mealType) throws IOException, InterruptedException, URISyntaxException{
-        //TODO Accept string output from whisper and use it as prompt
-        //String fakeWhisper = "I have chicken, rice, and tomatoes.";
-        String prompt = "I would like you to create a" + mealType + " recipe for me with a recipe title, using the following ingredients: " + ingredients);
+    public static void main(String args[]) throws IOException, InterruptedException, URISyntaxException{
+        String prompt = "I would like you to create a" + " recipe for me with a recipe title, using the following ingredients: ";
         int maxTokens = 5;
 
         // Create a request body which you will pass into request object
@@ -52,6 +50,6 @@ public class ChatGPT{
         JSONArray choices = responseJson.getJSONArray("choices");
         String generatedText = choices.getJSONObject(0).getString("text");
         System.out.println(generatedText);
-        return generatedText;
+        // return generatedText;
     }
 }
