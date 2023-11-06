@@ -4,22 +4,18 @@ import javafx.scene.layout.*;
 
 public class Footer extends HBox {
     
-    private Button addRecipeButton;
-    private Button backButton;
+    public Button leftButton;
+    public Button centerButton;
+    public Button rightButton;
 
     Footer() {
-        addRecipeButton = new Button("New Recipe");
-        backButton = new Button("Back");
+        leftButton = new Button();
+        centerButton = new Button();
+        rightButton = new Button();
 
-        this.getChildren().addAll(addRecipeButton, backButton);
+        this.getChildren().addAll(leftButton, centerButton, rightButton);
         this.setAlignment(Pos.CENTER);
 
     }
 
-    public Button getAddRecipeButton() {
-        return addRecipeButton;
-    }
-    public Button getBackButton() {
-        return backButton;
-    }
 }

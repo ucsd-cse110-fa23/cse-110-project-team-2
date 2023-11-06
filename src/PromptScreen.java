@@ -15,48 +15,31 @@ import javafx.scene.layout.*;
 
 
 public class PromptScreen extends BorderPane {
-    private Footer footer;
+    private Header header;
+    private BackFooter footer;
     private PromptButtons prompt;
-    private Button backButton;
 
     PromptScreen() {
-        footer = new Footer();
+        header = new Header("What would you like to make right now?");
+        footer = new BackFooter();
         prompt = new PromptButtons();
+        this.setTop(header);
         this.setBottom(footer);
         this.setCenter(prompt);
-        backButton = footer.getBackButton();
-        addListeners();
-    }
-    public void addListeners() {
-        // Add button functionality
-        backButton.setOnAction(e -> {
-            //Stage primaryStage2 = new Stage();
-            //Window current = scene.getWindow();
-            Scene scene = getScene();
-            Window screen = scene.getWindow();
-            if (screen instanceof Stage) {
-                Stage current = (Stage) screen;
-                HomeScreen screenTwo = new HomeScreen();
-                current.setTitle("PantryPal");
-                current.setScene(new Scene(screenTwo, 500, 500));
-                current.setResizable(false);
-                current.show();
-            }
-        });
     }
 }
 
 class PromptButtons extends HBox {
-    private Button breakFastButton;
+    private Button breakfastButton;
     private Button lunchButton;
     private Button dinnerButton;
 
     PromptButtons() {
 
-        breakFastButton = new Button("BreakFast");
+        breakfastButton = new Button("BreakFast");
         lunchButton = new Button("Lunch");
         dinnerButton = new Button("Dinner");
-        this.getChildren().addAll(breakFastButton, lunchButton, dinnerButton);
+        this.getChildren().addAll(breakfastButton, lunchButton, dinnerButton);
         this.setAlignment(Pos.CENTER);
 
     }

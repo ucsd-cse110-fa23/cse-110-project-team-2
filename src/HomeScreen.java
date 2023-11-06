@@ -11,30 +11,13 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class HomeScreen extends BorderPane {
-    private Footer footer;
-    private Button addRecipeButton;
+    private Header header;
+    private HomeFooter footer;
 
     HomeScreen() {
-        footer = new Footer();
+        header = new Header("PantryPal");
+        footer = new HomeFooter();
+        this.setTop(header);
         this.setBottom(footer);
-        addRecipeButton = footer.getAddRecipeButton();
-        addListeners();
-    }
-    public void addListeners() {
-        // Add button functionality
-        addRecipeButton.setOnAction(e -> {
-            //Stage primaryStage2 = new Stage();
-            //Window current = scene.getWindow();
-            Scene scene = getScene();
-            Window screen = scene.getWindow();
-            if (screen instanceof Stage) {
-                Stage current = (Stage) screen;
-                PromptScreen screenTwo = new PromptScreen();
-                current.setTitle("Pick Meal");
-                current.setScene(new Scene(screenTwo, 500, 500));
-                current.setResizable(false);
-                current.show();
-            }
-        });
     }
 }
