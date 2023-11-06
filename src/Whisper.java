@@ -35,7 +35,7 @@ public class Whisper{
     }
         
         // Helper method to handle a successful response
-    private static void handleSuccessResponse(HttpURLConnection connection)throws IOException, JSONException {
+    private static String handleSuccessResponse(HttpURLConnection connection)throws IOException, JSONException {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
@@ -53,11 +53,12 @@ public class Whisper{
 
 
         // Print the transcription result
-        System.out.println("Transcription Result: " + generatedText);
+        System.out.println(generatedText);
+        return generatedText;
     }
 
         // Helper method to handle an error response
-    private static void handleErrorResponse(HttpURLConnection connection)throws IOException, JSONException {
+    private static String handleErrorResponse(HttpURLConnection connection)throws IOException, JSONException {
 
         BufferedReader errorReader = new BufferedReader(
             new InputStreamReader(connection.getErrorStream())
@@ -70,9 +71,10 @@ public class Whisper{
         errorReader.close();
         String errorResult = errorResponse.toString();
         System.out.println("Error Result: " + errorResult);
+        return errorResult;
     }
 
-    public void transcribe(File recording) throws IOException, URISyntaxException, JSONException {
+    public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         //TODO Want to make whisper accept recordingfile as input
         //TODO Want to make whisper return a string
         //TODO Want to make whisper return a string that is the transcription
@@ -110,15 +112,16 @@ public class Whisper{
         
         // Get response code
         int responseCode = connection.getResponseCode();
+        String output;
         
         // Check response code and handle response accordingly
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            handleSuccessResponse(connection);
+            output = handleSuccessResponse(connection);
         } else {
-            handleErrorResponse(connection);
+            output = handleErrorResponse(connection);
         }
-        
         // Disconnect connection
         connection.disconnect();
+        return output;
     }
 }
