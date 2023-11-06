@@ -41,7 +41,7 @@ class PromptButtons extends HBox {
         dinnerButton = new Button("Dinner");
         this.getChildren().addAll(breakfastButton, lunchButton, dinnerButton);
         this.setAlignment(Pos.CENTER);
-
+        addListeners();
     }
 
     public void addListeners(){
@@ -50,21 +50,37 @@ class PromptButtons extends HBox {
             //TODO have it move to recording scene
             //TODO then it will let you record then transcribe it with whisper
             //TODO then prompt it with ChatGPT
+            moveToNextScreen(breakfast);
         });
 
         lunchButton.setOnAction(e -> {
-            String lunch = "lunch";
+            String lunch = "Lunch";
             //TODO have it move to recording scene
             //TODO then it will let you record then transcribe it with whisper
             //TODO then prompt it with ChatGPT
+            moveToNextScreen(lunch);
         });
 
         dinnerButton.setOnAction(e -> {
-            String dinner = "dinner";
+            String dinner = "Dinner";
             //TODO have it move to recording scene
             //TODO then it will let you record then transcribe it with whisper
             //TODO then prompt it with ChatGPT
+            moveToNextScreen(dinner);
         });
+    }
+
+    public void moveToNextScreen(String type) {
+        Scene scene = getScene();
+        Window screen = scene.getWindow();
+        if (screen instanceof Stage) {
+            Stage current = (Stage) screen;
+            RecordScreen screenTwo = new RecordScreen(type);
+            current.setTitle("Recording");
+            current.setScene(new Scene(screenTwo, 500, 500));
+            current.setResizable(false);
+            current.show();
+        }
     }
 
 }
