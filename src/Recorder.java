@@ -1,3 +1,4 @@
+
 import java.io.File;
 
 import javax.sound.sampled.*;
@@ -6,6 +7,7 @@ public class Recorder {
 
     private AudioFormat audioFormat;
     private TargetDataLine targetDataLine;
+    private File recordingFile;
     
     Recorder(){
         audioFormat = getAudioFormat();
@@ -35,6 +37,10 @@ public class Recorder {
                 bigEndian);
     }
 
+    public File getRecordingFile() {
+        return this.recordingFile;
+    } 
+
     public void startRecording() {
         Thread t = new Thread(
             new Runnable() {
@@ -60,6 +66,7 @@ public class Recorder {
                                 audioInputStream,
                                 AudioFileFormat.Type.WAVE,
                                 audioFile);
+                        recordingFile = audioFile;
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
