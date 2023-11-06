@@ -44,4 +44,27 @@ class PromptButtons extends HBox {
 
     }
 
+    public void addListeners(){
+        breakfastButton.setOnAction(e -> {
+            String breakfast = "Breakfast";
+            //TODO have it move to recording scene
+            //TODO then it will let you record then transcribe it with whisper
+            //TODO then prompt it with ChatGPT
+        });
+
+        lunchButton.setOnAction(e -> {
+            String lunch = "lunch";
+            //TODO have it move to recording scene
+            //TODO then it will let you record then transcribe it with whisper
+            //TODO then prompt it with ChatGPT
+        });
+
+        dinnerButton.setOnAction(e -> {
+            String dinner = "dinner";
+            //TODO have it move to recording scene
+            //TODO then it will let you record then transcribe it with whisper
+            //TODO then prompt it with ChatGPT
+        });
+    }
+
 }

@@ -1,4 +1,4 @@
-package src;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +14,7 @@ public class ChatGPT{
     private static final String MODEL = "gpt-3.5-turbo";
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException{
         //TODO Accept string output from whisper and use it as prompt
-        String fakeWhisper = "I have chicken, rice, and tomatoes."
+        String fakeWhisper = "I have chicken, rice, and tomatoes.";
         String prompt = "I would like you to create a recipe for me using the following ingredients: " + fakeWhisper;
         int maxTokens = 5;
 
