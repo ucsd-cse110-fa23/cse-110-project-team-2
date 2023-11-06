@@ -1,8 +1,8 @@
-package src;
+
 import java.io.*;
 import java.net.*;
 import org.json.*;
-import Recorder.java;
+// import Recorder.java;
 
 public class Whisper{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
@@ -72,7 +72,7 @@ public class Whisper{
         System.out.println("Error Result: " + errorResult);
     }
 
-    public transcribe(File recording) throws IOException, URISyntaxException, JSONException {
+    public void transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         //TODO Want to make whisper accept recordingfile as input
         //TODO Want to make whisper return a string
         //TODO Want to make whisper return a string that is the transcription
