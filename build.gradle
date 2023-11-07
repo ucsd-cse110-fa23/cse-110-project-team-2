@@ -1,6 +1,18 @@
 plugins {
-    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls' ]
+}
+
+mainClassName = 'src.App'
 
 java {
     toolchain {
@@ -23,17 +35,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ["src"]
-        }
-    }
-}
-
-javafx {
-    version = "21.0.1"
-    modules = ['javafx.controls', 'javafx.fxml']
 }
