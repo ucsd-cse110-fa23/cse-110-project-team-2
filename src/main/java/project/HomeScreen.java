@@ -1,3 +1,5 @@
+package project;
+
 import java.io.File;
 
 import javafx.scene.Scene;

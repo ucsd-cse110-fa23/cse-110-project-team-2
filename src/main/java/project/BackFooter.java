@@ -1,36 +1,35 @@
-import javafx.geometry.Pos;
+package project;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class HomeFooter extends Footer {
-    
-    HomeFooter() {
-        this.leftButton.setVisible(false);
+public class BackFooter extends Footer {
 
-        this.centerButton.setText("New Recipe");
-        addListeners();
+        BackFooter() {
         
+        this.leftButton.setText("Back");
+
+        this.centerButton.setVisible(false);
+
         this.rightButton.setVisible(false);
+        addListeners();
     }
 
     public void addListeners() {
-        centerButton.setOnAction(e -> {
+        leftButton.setOnAction(e -> {
             //Stage primaryStage2 = new Stage();
             //Window current = scene.getWindow();
             Scene scene = getScene();
             Window screen = scene.getWindow();
             if (screen instanceof Stage) {
                 Stage current = (Stage) screen;
-                PromptScreen screenTwo = new PromptScreen();
-                current.setTitle("Pick Meal");
+                HomeScreen screenTwo = new HomeScreen();
+                current.setTitle("PantryPal");
                 current.setScene(new Scene(screenTwo, 500, 500));
                 current.setResizable(false);
                 current.show();
             }
         });
     }
-
 }

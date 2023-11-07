@@ -1,23 +1,25 @@
+package project;
+
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class BackFooter extends Footer {
+public class RecipeFooter extends Footer {
 
-        BackFooter() {
-        
-        this.leftButton.setText("Back");
+    RecipeFooter() {
+        this.leftButton.setText("Cancel");
 
         this.centerButton.setVisible(false);
-
-        this.rightButton.setVisible(false);
+        
+        this.rightButton.setText("Save");
         addListeners();
     }
 
-    public void addListeners() {
-        leftButton.setOnAction(e -> {
-            //Stage primaryStage2 = new Stage();
-            //Window current = scene.getWindow();
+    public void addListeners(){
+        leftButton.setOnAction(e->{
             Scene scene = getScene();
             Window screen = scene.getWindow();
             if (screen instanceof Stage) {
@@ -30,4 +32,6 @@ public class BackFooter extends Footer {
             }
         });
     }
+    
 }
+
