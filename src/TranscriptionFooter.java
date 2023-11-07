@@ -42,6 +42,7 @@ public class TranscriptionFooter extends Footer {
                 gpt = new ChatGPT();
                 try {
                     recipe = gpt.generate(TranscriptionScreen.getTranscription(), TranscriptionScreen.getMealType());
+                    // recipe = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
