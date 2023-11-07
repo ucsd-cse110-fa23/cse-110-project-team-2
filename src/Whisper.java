@@ -4,7 +4,7 @@ import java.net.*;
 import org.json.*;
 // import Recorder.java;
 
-public class Whisper{
+public class Whisper implements WhisperInterface{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
     private static final String TOKEN = "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";
     private static final String MODEL = "whisper-1";
