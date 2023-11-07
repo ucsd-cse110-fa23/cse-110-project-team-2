@@ -1,18 +1,11 @@
 plugins {
+    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
-repositories {
-    mavenCentral()
-}
-
-javafx {
-    version = "21"
-    modules = [ 'javafx.controls' ]
-}
-
-mainClassName = 'src.App'
+group 'com.mechanitis'
+version '1.0-SNAPSHOT'
 
 java {
     toolchain {
@@ -22,6 +15,11 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+javafx {
+    version = "21"
+    modules = ['javafx.controls', 'javafx.graphics']
 }
 
 dependencies {
@@ -35,4 +33,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+application {
+    mainModule.set('src')
+    mainClass.set('src.App')
+}
+
+java {
+    modularity.inferModulePath.set(true)
 }
