@@ -58,8 +58,8 @@ public class RecordScreen extends BorderPane {
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
-            //moveToNextScreen(testWhisper.transcribe(recording.toFile()));
-            moveToNextScreen("I have chicken and waffles.", getRecipeType());
+            moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
+            // moveToNextScreen("I have chicken and waffles.", getRecipeType());
         }
     }
 

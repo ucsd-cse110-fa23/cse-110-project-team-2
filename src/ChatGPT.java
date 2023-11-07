@@ -11,12 +11,10 @@ import org.json.JSONObject;
 public class ChatGPT{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
     private static final String API_KEY = "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";
-    private static final String MODEL = "gpt-3.5-turbo";
+    private static final String MODEL = "text-davinci-003";
     public String generate(String ingredients, String mealType) throws IOException, InterruptedException, URISyntaxException{
-        //TODO Accept string output from whisper and use it as prompt
-        //String fakeWhisper = "I have chicken, rice, and tomatoes.";
-        String prompt = "I would like you to create a" + mealType + " recipe for me with a recipe title, using the following ingredients: " + ingredients);
-        int maxTokens = 5;
+        String prompt = "I would like you to create a" + mealType + " recipe for me with a recipe title, and you can only use the ingredients I have: " + ingredients;
+        int maxTokens = 500;
 
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
