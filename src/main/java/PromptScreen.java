@@ -1,5 +1,6 @@
-import java.io.File;
+package main.java;
 
+import java.io.File;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
