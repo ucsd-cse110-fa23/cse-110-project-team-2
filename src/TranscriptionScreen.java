@@ -9,6 +9,7 @@ public class TranscriptionScreen extends Screen{
     public static String mealType;
     private ChatGPT gpt;
     private String recipe;
+    private String recipeTitle;
 
     TranscriptionScreen(String transcription, String type){
         ingredients = transcription;
@@ -21,7 +22,7 @@ public class TranscriptionScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe);
+        return new RecipeScreen(recipe, recipeTitle);
     }
 
     @Override
@@ -42,9 +43,7 @@ public class TranscriptionScreen extends Screen{
         {
             gpt = new ChatGPT();
             // try {
-                recipe = "Herb-Crusted Chicken and Egg Bake\r\n" + //
-                        "\r\n" + //
-                        "Ingredients: \r\n" + //
+                recipe = "Ingredients: \r\n" + //
                         "-2 boneless, skinless chicken breasts, cut into cubes\r\n" + //
                         "-2 large eggs\r\n" + //
                         "-2 tablespoons of fresh herbs (such as thyme, oregano, rosemary, or sage)\r\n" + //
@@ -66,6 +65,7 @@ public class TranscriptionScreen extends Screen{
                         "5. Bake for 25 minutes until the chicken is cooked through and the eggs have set.\r\n" + //
                         "\r\n" + //
                         "6. Serve hot and enjoy!";
+                recipeTitle = "Herb-Crusted Chicken and Egg Bake";
             // } catch (IOException e1) {
             //     e1.printStackTrace();
             // } catch (InterruptedException e1) {
