@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -8,38 +7,37 @@ import org.json.JSONException;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
 
-public class RecordScreen extends BorderPane {
-    private Header header;
-    private BackFooter footer;
+public class RecordScreen extends Screen {
     private Button recordButton;
     private String recipeType;
+    private String transcript;
     private Boolean isRecording = false;
     private Recorder recorder;
-    private Whisper testWhisper;
 
     RecordScreen(String type) {
         recipeType = type;
-        header = new Header("What ingredients do you have now? You said you wanted: " + getRecipeType());
-        footer = new BackFooter();
+        setHeaderText("What ingredients do you have now? You said you wanted: " + getRecipeType());
+        setFooterButtons("Back", "", "");
+        setLeftButtonAction("PantryPal", changePreviousScreenEvent);
         recordButton = new Button("Record");
         recordButton.setStyle("-fx-background-color: #43ED58");
         recorder = new Recorder();
-        testWhisper = new Whisper();
-        this.setTop(header);
         this.setCenter(recordButton);
-        this.setBottom(footer);
         addListeners();
+    }
+
+    @Override
+    protected Screen createNextScreen() {
+        return new TranscriptionScreen(transcript, recipeType);
+    }
+
+    @Override
+    protected Screen createPreviousScreen() {
+        return new HomeScreen();
     }
 
     public String getRecipeType() {
@@ -58,8 +56,8 @@ public class RecordScreen extends BorderPane {
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
-            moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
-            // moveToNextScreen("I have chicken and waffles.", getRecipeType());
+            // moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
+            moveToNextScreen("I have chicken and eggs.", getRecipeType());
         }
     }
 

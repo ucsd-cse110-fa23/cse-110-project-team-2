@@ -1,23 +1,21 @@
-import java.io.File;
-
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-public class HomeScreen extends BorderPane {
-    private Header header;
-    private HomeFooter footer;
+public class HomeScreen extends Screen {
 
     HomeScreen() {
-        header = new Header("PantryPal");
-        footer = new HomeFooter();
-        this.setTop(header);
-        this.setBottom(footer);
+
+        super();
+        setHeaderText("PantryPal");
+        setCenterObject();
+        setFooterButtons("", "New Recipe", "");
+        setCenterButtonAction("Pick Meal", changeNextScreenEvent);
+    }
+
+    @Override
+    protected Screen createNextScreen() {
+        return new PromptScreen();
+    }
+
+    @Override
+    protected Screen createPreviousScreen() {
+        return new HomeScreen();
     }
 }

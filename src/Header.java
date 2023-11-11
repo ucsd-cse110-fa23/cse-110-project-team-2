@@ -10,4 +10,8 @@ public class Header extends HBox {
         this.getChildren().add(titleText);
         this.setAlignment(Pos.CENTER);
     }
+
+    void changeTitleText(String text) {
+        titleText.setText(text);
+    }
 }
