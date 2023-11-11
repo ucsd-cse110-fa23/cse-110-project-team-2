@@ -39,19 +39,19 @@ public class TranscriptionFooter extends Footer {
             Window screen = scene.getWindow();
             if (screen instanceof Stage) {
                 Stage current = (Stage) screen;
-                // gpt = new ChatGPT();
-                // try {
-                //     recipe = gpt.generate(TranscriptionScreen.getTranscription(), TranscriptionScreen.getMealType());
-                // } catch (IOException e1) {
-                //     // TODO Auto-generated catch block
-                //     e1.printStackTrace();
-                // } catch (InterruptedException e1) {
-                //     // TODO Auto-generated catch block
-                //     e1.printStackTrace();
-                // } catch (URISyntaxException e1) {
-                //     // TODO Auto-generated catch block
-                //     e1.printStackTrace();
-                // }
+                gpt = new ChatGPT();
+                try {
+                    recipe = gpt.generate(TranscriptionScreen.getTranscription(), TranscriptionScreen.getMealType());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (URISyntaxException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 recipe = "This is a placeholder!";
                 RecipeScreen screenTwo = new RecipeScreen(recipe);
                 current.setTitle("PantryPal");

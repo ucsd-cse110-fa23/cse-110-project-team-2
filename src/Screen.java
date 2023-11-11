@@ -10,7 +10,6 @@ public abstract class Screen extends BorderPane {
     protected Center center;
     protected Footer footer;
     private String title;
-    private Boolean prevOrNext;
 
     Screen() {
         header = new Header("");
@@ -56,7 +55,7 @@ public abstract class Screen extends BorderPane {
         footer.setRightButtonAction(event);
     }
 
-    private void changeScreen(Screen screenTwo) {
+    public void changeScreen(Screen screenTwo) {
         Scene scene = getScene();
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {

@@ -32,8 +32,8 @@ public class Footer extends HBox {
         leftButton.setOnAction(eventHandler);
     }
 
-    public void setCenterButtonAction(EventHandler<ActionEvent> eventHandler) {
-        centerButton.setOnAction(eventHandler);
+    public void setCenterButtonAction(EventHandler<ActionEvent> event) {
+        centerButton.setOnAction(event);
     }
 
     public void setRightButtonAction(EventHandler<ActionEvent> eventHandler) {

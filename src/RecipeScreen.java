@@ -1,10 +1,9 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
 
 public class RecipeScreen extends Screen{
-    private Header header;
     private TextArea generatedRecipe;
-    private RecipeFooter footer;
 
     RecipeScreen(String recipe){
         setHeaderText("Here is your recipe!");
@@ -29,4 +28,13 @@ public class RecipeScreen extends Screen{
     protected Screen createPreviousScreen() {
         return new HomeScreen();
     }
+
+    // action event 
+    protected EventHandler<ActionEvent> changeScreenSaveRecipe = new EventHandler<ActionEvent>() { 
+        public void handle(ActionEvent e) 
+        {
+            Screen nextScreen = createNextScreen();
+            changeScreen(nextScreen);
+        } 
+    };
 }
