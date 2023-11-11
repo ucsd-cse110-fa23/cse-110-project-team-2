@@ -7,7 +7,6 @@ import org.json.JSONException;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -66,13 +65,10 @@ public class RecordScreen extends Screen {
             try {
                 toggleRecord();
             } catch (JSONException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             } catch (URISyntaxException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         });

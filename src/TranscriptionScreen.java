@@ -3,7 +3,6 @@ import java.net.URISyntaxException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.layout.BorderPane;
 
 public class TranscriptionScreen extends Screen{
     public static String ingredients;
@@ -45,13 +44,10 @@ public class TranscriptionScreen extends Screen{
             try {
                 recipe = gpt.generate(TranscriptionScreen.getTranscription(), TranscriptionScreen.getMealType());
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             } catch (URISyntaxException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             Screen nextScreen = createNextScreen();
