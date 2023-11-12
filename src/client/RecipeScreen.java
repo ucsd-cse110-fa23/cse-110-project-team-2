@@ -54,7 +54,7 @@ public class RecipeScreen extends Screen{
         {
             //Screen nextScreen = createNextScreen();
             Screen nextScreen = new HomeScreen(recipeList);
-            String dummyRecipeTitle = "Recipetitle";
+            String dummyRecipeTitle = "Recipe title";//make a second dummy and see if we can post and access to different entries
             String dummyRecipe = "Recipe details query doesn't like if their's spaces in Recipe Title";
             recipeObj = new Recipe(dummyRecipe, dummyRecipeTitle, date);
             String response = model.performRequest("POST", dummyRecipeTitle, dummyRecipe, null);

@@ -40,7 +40,7 @@ public class Recipe extends HBox{
         recipeButton.setOnAction(e -> {
             //String query = view.getQuery();
             String query = recipeTitle;
-            String dummyRecipeTitle = "Recipetitle";//replace with query
+            String dummyRecipeTitle = "Recipe-title";//replace with query
             //String dummyTitle = "Recipe Title";
             //String dummyRecipe = "Recipe of title";
             String response = model.performRequest("GET", null, null, dummyRecipeTitle);

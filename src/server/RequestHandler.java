@@ -8,6 +8,7 @@ import java.util.*;
 
 public class RequestHandler implements HttpHandler {
     private final Map<String, String> data;
+    private int counter = 0;
 
     public RequestHandler(Map<String, String> data) {
         this.data = data;
@@ -46,8 +47,14 @@ public class RequestHandler implements HttpHandler {
         String response = "Invalid GET request";
         URI uri = httpExchange.getRequestURI();
         String query = uri.getRawQuery();
+        //query == "getNext"
+        //response = list[0]
+        //list[0] = "recipeTitle, recipe"
         if (query != null) {
             String value = query.substring(query.indexOf("=") + 1);
+            //value = reciple-Tltle
+            //replace - with spaces
+            //replace all
             String year = data.get(value); // Retrieve data from hashmap
             if (year != null) {
                 response = year;
