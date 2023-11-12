@@ -3,13 +3,14 @@ package client;
 import javafx.event.ActionEvent;
 
 public class Controller {
-    
+    private View view;
     private Model model;
 
-    public Controller(Model model) {
+    public Controller(View view, Model model) {
+        this.view = view; 
         this.model = model;
 
-        // this.view.setPostButtonAction(this::handlePostButton);
+        this.view.setPostButtonAction(this::handlePostButton);
         this.view.setGetButtonAction(this::handleGetButton);
         this.view.setPutButtonAction(this::handlePutButton);
         this.view.setDeleteButtonAction(this::handleDeleteButton);

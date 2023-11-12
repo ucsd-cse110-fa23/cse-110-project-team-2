@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URI;
-
+ 
 
 public class Model {
     public String performRequest(String method, String language, String year, String query) {

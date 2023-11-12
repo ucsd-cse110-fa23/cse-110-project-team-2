@@ -1,36 +1,41 @@
-package server;
+//package server;
+//package server;
+
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class RequestHandler implements HttpHandler {
-    private final Map<String, String> saved;
-    public RequestHandler(Map<String, String> saved) {
-        this.saved = saved;
+    private final Map<String, String> data;
+
+    public RequestHandler(Map<String, String> data) {
+        this.data = data;
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "Request Received";
         String method = httpExchange.getRequestMethod();
+
         try {
             if (method.equals("GET")) {
-              response = handleGet(httpExchange);
+                response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
-              response = handlePost(httpExchange);
+                response = handlePost(httpExchange);
             } else if (method.equals("PUT")) {
-              response = handlePut(httpExchange);
+                response = handlePut(httpExchange);
             } else if (method.equals("DELETE")) {
-               response = handleDelete(httpExchange);
+                response = handleDelete(httpExchange);
             } else {
-              throw new Exception("Not Valid Request Method");
+                throw new Exception("Not Valid Request Method");
             }
         } catch (Exception e) {
             System.out.println("An erroneous request");
             response = e.toString();
             e.printStackTrace();
-        }       
-        //Sending back response to the client
+        }
+
+        // Sending back response to the client
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
         outStream.write(response.getBytes());
@@ -42,81 +47,78 @@ public class RequestHandler implements HttpHandler {
         URI uri = httpExchange.getRequestURI();
         String query = uri.getRawQuery();
         if (query != null) {
-          String recipeTitle = query.substring(query.indexOf("=") + 1);
-          String recipe = saved.get(recipeTitle); // Retrieve saved from hashmap
-          if (recipe != null) {
-            response = recipe;
-            System.out.println("Queried for " + recipeTitle + " and found " + recipe);
-          } else {
-            response = "No saved found for " + recipeTitle;
-          }
+            String value = query.substring(query.indexOf("=") + 1);
+            String year = data.get(value); // Retrieve data from hashmap
+            if (year != null) {
+                response = year;
+                System.out.println("Queried for " + value + " and found " + year);
+            } else {
+                response = "No data found for " + value;
+            }
         }
         return response;
     }
-      
-      private String handlePost(HttpExchange httpExchange) throws IOException {
+
+    private String handlePost(HttpExchange httpExchange) throws IOException {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
-        String postsaved = scanner.nextLine();
-        String recipeTitle = postsaved.substring(
-          0,
-          postsaved.indexOf(",")
-        ), recipe = postsaved.substring(postsaved.indexOf(",") + 1);
-     
-     
-        // Store saved in hashmap
-        saved.put(recipeTitle, recipe);
-     
-     
-        String response = "Posted entry {" + recipeTitle + ", " + recipe + "}";
+        String postData = scanner.nextLine();
+        String language = postData.substring(
+                0,
+                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);
+
+        // Store data in hashmap
+        data.put(language, year);
+
+        String response = "Posted entry {" + language + ", " + year + "}";
         System.out.println(response);
         scanner.close();
-     
-     
+
         return response;
-      }    
-      
+    }
+
     private String handlePut(HttpExchange httpExchange) throws IOException {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
-        String putsaved = scanner.nextLine();
-        String recipeTitle = putsaved.substring(
-            0,
-          putsaved.indexOf(",")
-        ), recipe = putsaved.substring(putsaved.indexOf(",") + 1);
+        String postData = scanner.nextLine();
+        String language = postData.substring(
+                0, 
+                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);
 
-        String response = "";
-        //Editing recipe
-        if(saved.containsKey(recipeTitle) == true){
-            String preRecipe = saved.get(recipeTitle);
-            saved.put(recipeTitle, recipe);
-            response = "Updated entry {" + recipeTitle + ", " + recipe + "} (previous recipe: " + preRecipe + ")";
-            scanner.close();
+        String response;
+        if (data.containsKey(language)) {
+            String previousYear = data.get(language);  
+            data.put(language, year);
+            response = "Updated entry {" + language + ", " + year + "}" + "(previous year: " + previousYear + ")";
         }
-        //Saving a recipe
-        else{
-            saved.put(recipeTitle, recipe);
-            response = "Posted entry {" + recipeTitle + ", " + recipe + "}";
-            scanner.close();
+        else {
+            data.put(language, year);
+            response = "Added entry {" + language + ", " + year + "}";    
         }
-        //Store saved in hashmap
-        return response;
-    } 
+        System.out.println(response);
+        scanner.close();
+
+        return response;    
+    }
+
     private String handleDelete(HttpExchange httpExchange) throws IOException {
         String response = "Invalid DELETE request";
         URI uri = httpExchange.getRequestURI();
         String query = uri.getRawQuery();
         if (query != null) {
-          String recipeTitle = query.substring(query.indexOf("=") + 1);
-          String recipe = saved.get(recipeTitle); // Retrieve saved from hashmap
-          if (recipe != null) {
-            response = "Deleted entry {" + recipeTitle + ", " + recipe + "}";
-            System.out.println("Queried for " + recipeTitle + " and deleted it");
-            saved.remove(recipeTitle);
-          } else {
-            response = "No saved found for " + recipeTitle;
-          }
+            // this is the Language, the key
+            String value = query.substring(query.indexOf("=") + 1);
+            // year is value
+            String year = data.get(value); // Retrieve data from hashmap
+            //if the value returned by the hashmap is not null then that means key exists
+            if (year != null) {
+                response = "Deleted entry {" + value + ", " + year + "}";
+                data.remove(value);
+            } else {
+                response = "No data found for " + value;
+            }
         }
         return response;
     }
+
 }
