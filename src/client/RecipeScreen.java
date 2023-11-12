@@ -7,17 +7,14 @@ import javafx.scene.control.TextArea;
 
 public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
-    private Map<String, String> saved;
     private String recipe;
     private String recipeTitle;
     private Model model;
     private Recipe recipeObj;
     private Date date;
-    private RecipeList recipeList;
 
-    RecipeScreen(String recipe, String recipeTitle, Date date, RecipeList rl){
+    RecipeScreen(String recipe, String recipeTitle, Date date){
         setHeaderText("Here is your recipe!");
-        this.recipeList = rl;
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
         this.date = date;
@@ -35,22 +32,20 @@ public class RecipeScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new HomeScreen(this.recipeList);
+        return new HomeScreen();
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen(this.recipeList);
+        return new HomeScreen();
     }
 
-    // action event 
-
     public void changeScreenSaveRecipe (ActionEvent e) {
-        Screen nextScreen = new HomeScreen(recipeList);
+        Screen nextScreen = new HomeScreen();
         recipeObj = new Recipe(recipeTitle, recipe, date);
         String response = model.performRequest("POST", recipeTitle, recipe, null);
         System.out.println(response);
-        recipeList.getChildren().add(recipeObj);
+        AppFrame.getAppRecipeList().getChildren().add(recipeObj);
         changeScreen(nextScreen);
     } 
 }

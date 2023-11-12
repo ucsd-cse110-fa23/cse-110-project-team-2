@@ -2,15 +2,13 @@ package client;
 
 public class HomeScreen extends Screen {
     private RecipeDisplay recipeDisplay;
-    private RecipeList recipeList;
-    HomeScreen(RecipeList rl) {
+    HomeScreen() {
         super();
-        this.recipeList = rl;
         setHeaderText("PantryPal");
         setCenterObject();
         setFooterButtons("", "New Recipe", "");
         setCenterButtonAction("Pick Meal", this::changeNextScreenEvent);
-        recipeDisplay = new RecipeDisplay(this.recipeList);
+        recipeDisplay = new RecipeDisplay();
         this.setCenter(recipeDisplay);
     }
 
@@ -20,11 +18,11 @@ public class HomeScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new PromptScreen(this.recipeList);
+        return new PromptScreen();
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen(this.recipeList);
+        return new HomeScreen();
     }
 }

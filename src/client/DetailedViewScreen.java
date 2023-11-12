@@ -5,13 +5,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class DetailedViewScreen extends Screen {
-    private RecipeList recipeList;
     private Recipe currentRecipe;
     private TextField currentRecipeTitle;
     private TextArea currentRecipeBody;
 
-    DetailedViewScreen(RecipeList rl, Recipe currentRecipe) {
-        this.recipeList = rl;
+    DetailedViewScreen(Recipe currentRecipe) {
         this.currentRecipe = currentRecipe;
         
         setHeaderText("Current Recipe: " + currentRecipe.getRecipeTitle());
@@ -32,12 +30,12 @@ public class DetailedViewScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new EditScreen(recipeList, currentRecipe);
+        return new EditScreen(currentRecipe);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen(recipeList);
+        return new HomeScreen();
     }
     
     public void changeScreenUpdateRecipe(ActionEvent e) {

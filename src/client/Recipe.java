@@ -60,7 +60,7 @@ public class Recipe extends HBox{
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
             // Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
-            Screen nextScreen = new DetailedViewScreen(AppFrame.getAppRecipeList(), this);
+            Screen nextScreen = new DetailedViewScreen(this);
             current.setTitle("Detailed View");
             current.setScene(new Scene(nextScreen, 500, 500));
             current.setResizable(false);

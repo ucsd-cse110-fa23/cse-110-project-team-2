@@ -8,7 +8,7 @@ public class AppFrame extends BorderPane {
 
     AppFrame() {
         AppFrame.recipeList = new RecipeList();
-        startScreen = new HomeScreen(recipeList);
+        startScreen = new HomeScreen();
         this.setCenter(startScreen);
     }
     

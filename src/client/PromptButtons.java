@@ -11,10 +11,8 @@ class PromptButtons extends HBox {
     private Button breakfastButton;
     private Button lunchButton;
     private Button dinnerButton;
-    private RecipeList recipeList;
 
-    PromptButtons(RecipeList rl) {
-        this.recipeList = rl;
+    PromptButtons() {
         breakfastButton = new Button("BreakFast");
         lunchButton = new Button("Lunch");
         dinnerButton = new Button("Dinner");
@@ -45,7 +43,7 @@ class PromptButtons extends HBox {
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            RecordScreen screenTwo = new RecordScreen(type,this.recipeList);
+            RecordScreen screenTwo = new RecordScreen(type);
             current.setTitle("Recording");
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);
