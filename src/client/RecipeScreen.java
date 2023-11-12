@@ -9,17 +9,18 @@ import javafx.scene.control.TextArea;
 
 public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
+    private Map<String, String> saved;
     private String recipe;
     private String recipeTitle;
+    private Model model;
     private Recipe recipeObj;
     //private RecipeList recipeList;
     private Date date;
+    private RecipeList recipeList;
 
-    private Model model;
-
-    RecipeScreen(String recipe, String recipeTitle, Date date){
+    RecipeScreen(String recipe, String recipeTitle, Date date, RecipeList rl){
         setHeaderText("Here is your recipe!");
-        //recipeList = new RecipeList();
+        this.recipeList = rl;
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
         this.date = date;
@@ -32,19 +33,17 @@ public class RecipeScreen extends Screen{
         setLeftButtonAction("PantryPal", changeNextScreenEvent);
         setRightButtonAction("PantryPal", changeSavedRecipe);
         this.setCenter(generatedRecipe);
-
         this.model = new Model();
-        //Model model = new Model();
     }
 
     @Override
     protected Screen createNextScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
- 
+
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 
     // action event 
@@ -52,15 +51,14 @@ public class RecipeScreen extends Screen{
         // private Map<String, String> saved;
         public void handle(ActionEvent e) 
         {
-            Screen nextScreen = createNextScreen();
-            //Screen nextScreen = new HomeScreen();
+            //Screen nextScreen = createNextScreen();
+            Screen nextScreen = new HomeScreen(recipeList);
             recipeObj = new Recipe(recipe, recipeTitle, date);
             String response = model.performRequest("POST", recipeTitle, recipe, null);
             System.out.println(response);
-            
             // Add recipe to recipelist
             //nextScreen.getChildren().add(recipeObj);
-            ((HomeScreen)(nextScreen)).getRecipeDisplay().getRecipeList().getChildren().add(recipeObj);
+            recipeList.getChildren().add(recipeObj);
             //recipeList.getChildren().add(recipeObj);
             //recipeList.sortRecipes();
             changeScreen(nextScreen);

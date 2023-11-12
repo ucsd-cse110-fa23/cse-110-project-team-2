@@ -4,18 +4,18 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 
 public class RecipeDisplay extends BorderPane{
-    private RecipeList RecipeList;
+    private RecipeList recipeList;
 
-    RecipeDisplay() {
-        RecipeList = new RecipeList();
-        this.setCenter(RecipeList);
-        ScrollPane scroller = new ScrollPane(RecipeList);
+    RecipeDisplay(RecipeList rl) {
+        this.recipeList = rl;
+        this.setCenter(recipeList);
+        ScrollPane scroller = new ScrollPane(recipeList);
         scroller.setFitToWidth(true);
         scroller.setFitToHeight(true);
     }
 
 
-    public RecipeList getRecipeList() {
-        return this.RecipeList;
+    public RecipeList getrecipeList() {
+        return this.recipeList;
     }
 }

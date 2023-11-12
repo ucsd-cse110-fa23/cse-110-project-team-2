@@ -8,7 +8,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        HomeScreen root = new HomeScreen();
+        HomeScreen root = new HomeScreen(new RecipeList());
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);

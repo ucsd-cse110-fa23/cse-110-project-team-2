@@ -3,23 +3,25 @@ package client;
 public class PromptScreen extends Screen {
     private PromptButtons prompt;
     private String recipeType;
+    private RecipeList recipeList;
 
-    PromptScreen() {
+    PromptScreen(RecipeList rl) {
         super();
+        this.recipeList = rl;
         setHeaderText("What would you like to make right now?");
         setFooterButtons("Back", "", "");
-        prompt = new PromptButtons();
+        prompt = new PromptButtons(this.recipeList);
         this.setCenter(prompt);
         setLeftButtonAction("PantryPal", changePreviousScreenEvent);
     }
 
     @Override
     protected Screen createNextScreen() {
-        return new RecordScreen(recipeType);
+        return new RecordScreen(recipeType, this.recipeList);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 }

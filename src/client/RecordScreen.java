@@ -18,8 +18,10 @@ public class RecordScreen extends Screen {
     private String transcript;
     private Boolean isRecording = false;
     private Recorder recorder;
+    private RecipeList recipeList;
 
-    RecordScreen(String type) {
+    RecordScreen(String type, RecipeList rl) {
+        this.recipeList = rl;
         recipeType = type;
         setHeaderText("What ingredients do you have now? You said you wanted: " + getRecipeType());
         setFooterButtons("Back", "", "");
@@ -33,12 +35,12 @@ public class RecordScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new TranscriptionScreen(transcript, recipeType);
+        return new TranscriptionScreen(transcript, recipeType, this.recipeList);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 
     public String getRecipeType() {
@@ -81,7 +83,7 @@ public class RecordScreen extends Screen {
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            TranscriptionScreen screenTwo = new TranscriptionScreen(transcription, mealType);
+            TranscriptionScreen screenTwo = new TranscriptionScreen(transcription, mealType,this.recipeList);
             current.setTitle("Ingredients");
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);

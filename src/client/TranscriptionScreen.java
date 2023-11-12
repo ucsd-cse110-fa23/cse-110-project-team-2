@@ -14,9 +14,11 @@ public class TranscriptionScreen extends Screen{
     private String recipe;
     private String recipeTitle;
     private Date date;
+    private RecipeList recipeList;
 
-    TranscriptionScreen(String transcription, String type){
-        ingredients = transcription; 
+    TranscriptionScreen(String transcription, String type, RecipeList rl){
+        this.recipeList = rl;
+        ingredients = transcription;
         mealType = type;
         setHeaderText("This is what we heard from you. Confirm your ingredients: " + getTranscription());
         setFooterButtons("Cancel", "", "Next");
@@ -26,12 +28,12 @@ public class TranscriptionScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe, recipeTitle, date);
+        return new RecipeScreen(recipe, recipeTitle, date, this.recipeList);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 
     public static String getTranscription(){
