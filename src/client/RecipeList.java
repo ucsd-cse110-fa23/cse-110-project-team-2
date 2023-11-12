@@ -2,8 +2,6 @@ package client;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import javafx.scene.layout.VBox;
 
@@ -30,6 +28,16 @@ public class RecipeList extends VBox{
                 if(curr.getDate().compareTo(next.getDate()) < 0){
                     Collections.swap(RecipeList, i, j);
                 }
+            }
+        }
+    }
+
+    public void deleteRecipe(Recipe recipe) {
+        for(int i = 0; i < this.getChildren().size(); i++){
+            Recipe current = ((Recipe) this.getChildren().get(i));
+            if(current == recipe) {
+                this.getChildren().remove(i);
+                break;
             }
         }
     }

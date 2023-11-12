@@ -25,7 +25,7 @@ public class RecordScreen extends Screen {
         recipeType = type;
         setHeaderText("What ingredients do you have now? You said you wanted: " + getRecipeType());
         setFooterButtons("Back", "", "");
-        setLeftButtonAction("PantryPal", changePreviousScreenEvent);
+        setLeftButtonAction("PantryPal", this::changePreviousScreenEvent);
         recordButton = new Button("Record");
         recordButton.setStyle("-fx-background-color: #43ED58");
         recorder = new Recorder();

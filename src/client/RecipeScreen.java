@@ -2,9 +2,7 @@ package client;
 
 import java.util.*;
 
-import client.Model;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 
 public class RecipeScreen extends Screen{
@@ -14,7 +12,6 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private Model model;
     private Recipe recipeObj;
-    //private RecipeList recipeList;
     private Date date;
     private RecipeList recipeList;
 
@@ -30,8 +27,8 @@ public class RecipeScreen extends Screen{
         generatedRecipe.setEditable(false);
         generatedRecipe.setWrapText(true);
         setFooterButtons("Cancel", "", "Save");
-        setLeftButtonAction("PantryPal", changeNextScreenEvent);
-        setRightButtonAction("PantryPal", changeSavedRecipe);
+        setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
+        setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
         this.setCenter(generatedRecipe);
         this.model = new Model();
     }
@@ -47,21 +44,13 @@ public class RecipeScreen extends Screen{
     }
 
     // action event 
-    protected EventHandler<ActionEvent> changeSavedRecipe = new EventHandler<ActionEvent>() {
-        // private Map<String, String> saved;
-        public void handle(ActionEvent e) 
-        {
-            //Screen nextScreen = createNextScreen();
-            Screen nextScreen = new HomeScreen(recipeList);
-            recipeObj = new Recipe(recipe, recipeTitle, date);
-            String response = model.performRequest("POST", recipeTitle, recipe, null);
-            System.out.println(response);
-            // Add recipe to recipelist
-            //nextScreen.getChildren().add(recipeObj);
-            recipeList.getChildren().add(recipeObj);
-            //recipeList.getChildren().add(recipeObj);
-            //recipeList.sortRecipes();
-            changeScreen(nextScreen);
-        } 
-    };
+
+    public void changeScreenSaveRecipe (ActionEvent e) {
+        Screen nextScreen = new HomeScreen(recipeList);
+        recipeObj = new Recipe(recipeTitle, recipe, date);
+        String response = model.performRequest("POST", recipeTitle, recipe, null);
+        System.out.println(response);
+        recipeList.getChildren().add(recipeObj);
+        changeScreen(nextScreen);
+    } 
 }

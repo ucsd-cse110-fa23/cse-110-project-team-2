@@ -1,10 +1,13 @@
 package client;
 
 import java.util.Date;
-import javafx.geometry.Insets;
+
+import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class Recipe extends HBox{
     private String recipeTitle;
@@ -20,17 +23,13 @@ public class Recipe extends HBox{
 
         this.setPrefSize(500, 20); // sets size of Contact
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of Contact
-        /*taskName = new TextField(); // create task name text field
-        taskName.setPrefSize(380, 20); // set size of text field
-        taskName.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // set background color of texfield
-        taskName.setPadding(new Insets(10, 0, 10, 0)); // adds some padding to the text field
-        this.getChildren().add(taskName); // add textlabel to task*/
 
+        System.out.println("RECIPE TITLE IS: " + recipeTitle);
         recipeButton = new Button(recipeTitle); // creates a button for marking the task as done
-        recipeButton.setPrefSize(100, 20);
+        recipeButton.setPrefSize(500, 20);
         recipeButton.setPrefHeight(Double.MAX_VALUE);
         recipeButton.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0;"); // sets style of button
-
+        recipeButton.setOnAction(this::changeToDetailedView);
         this.getChildren().add(recipeButton);
     }
 
@@ -46,8 +45,26 @@ public class Recipe extends HBox{
         return date;
     }
 
+    public Button getRecipeButton() {
+        return recipeButton;
+    }
+
     //setter for recipe
     public void setRecipe(String recipe) {
         this.recipe = recipe;
     }
+
+    public void changeToDetailedView (ActionEvent e) {
+        Scene scene = getScene();
+        Window screen = scene.getWindow();
+        if (screen instanceof Stage) {
+            Stage current = (Stage) screen;
+            // Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
+            Screen nextScreen = new DetailedViewScreen(AppFrame.getAppRecipeList(), this);
+            current.setTitle("Detailed View");
+            current.setScene(new Scene(nextScreen, 500, 500));
+            current.setResizable(false);
+            current.show();
+        }
+    } 
 }

@@ -9,7 +9,7 @@ public class HomeScreen extends Screen {
         setHeaderText("PantryPal");
         setCenterObject();
         setFooterButtons("", "New Recipe", "");
-        setCenterButtonAction("Pick Meal", changeNextScreenEvent);
+        setCenterButtonAction("Pick Meal", this::changeNextScreenEvent);
         recipeDisplay = new RecipeDisplay(this.recipeList);
         this.setCenter(recipeDisplay);
     }

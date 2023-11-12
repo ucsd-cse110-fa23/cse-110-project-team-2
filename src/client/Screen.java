@@ -70,20 +70,14 @@ public abstract class Screen extends BorderPane {
     }
 
     // action event 
-    protected EventHandler<ActionEvent> changeNextScreenEvent = new EventHandler<ActionEvent>() { 
-        public void handle(ActionEvent e) 
-        {
-            Screen nextScreen = createNextScreen();
-            changeScreen(nextScreen);
-        } 
-    };
+    public void changeNextScreenEvent (ActionEvent e) {
+        Screen nextScreen = createNextScreen();
+        changeScreen(nextScreen);
+    } 
 
     // action event 
-    protected EventHandler<ActionEvent> changePreviousScreenEvent = new EventHandler<ActionEvent>() { 
-        public void handle(ActionEvent e) 
-        {
-            Screen previousScreen = createPreviousScreen();
-            changeScreen(previousScreen);
-        } 
-    };
+    public void changePreviousScreenEvent (ActionEvent e) {
+        Screen previousScreen = createPreviousScreen();
+        changeScreen(previousScreen);
+    } 
 }

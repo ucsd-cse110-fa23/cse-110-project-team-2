@@ -12,7 +12,7 @@ public class PromptScreen extends Screen {
         setFooterButtons("Back", "", "");
         prompt = new PromptButtons(this.recipeList);
         this.setCenter(prompt);
-        setLeftButtonAction("PantryPal", changePreviousScreenEvent);
+        setLeftButtonAction("PantryPal", this::changePreviousScreenEvent);
     }
 
     @Override

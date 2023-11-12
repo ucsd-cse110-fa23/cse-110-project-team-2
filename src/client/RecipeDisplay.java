@@ -8,10 +8,11 @@ public class RecipeDisplay extends BorderPane{
 
     RecipeDisplay(RecipeList rl) {
         this.recipeList = rl;
-        this.setCenter(recipeList);
+        // this.setCenter(recipeList);
         ScrollPane scroller = new ScrollPane(recipeList);
         scroller.setFitToWidth(true);
         scroller.setFitToHeight(true);
+        this.setCenter(scroller);
     }
 
 
