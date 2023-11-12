@@ -52,18 +52,15 @@ public class RecipeScreen extends Screen{
         // private Map<String, String> saved;
         public void handle(ActionEvent e) 
         {
-            //Screen nextScreen = createNextScreen();
-            Screen nextScreen = new HomeScreen();
-            //recipeObj = new Recipe(recipe, recipeTitle, date);
-            //String language = view.getLanguage();
-            //String year = view.getYear();
+            Screen nextScreen = createNextScreen();
+            //Screen nextScreen = new HomeScreen();
+            recipeObj = new Recipe(recipe, recipeTitle, date);
             String response = model.performRequest("POST", recipeTitle, recipe, null);
             System.out.println(response);
             
-            //view.showAlert("Response", response);
             // Add recipe to recipelist
             //nextScreen.getChildren().add(recipeObj);
-            //((HomeScreen)(nextScreen)).getRecipeDisplay().getRecipeList().getChildren().add(recipeObj);
+            ((HomeScreen)(nextScreen)).getRecipeDisplay().getRecipeList().getChildren().add(recipeObj);
             //recipeList.getChildren().add(recipeObj);
             //recipeList.sortRecipes();
             changeScreen(nextScreen);
