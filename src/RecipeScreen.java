@@ -14,10 +14,11 @@ public class RecipeScreen extends Screen{
     private Recipe recipeObj;
     //private RecipeList recipeList;
     private Date date;
+    private RecipeList recipeList;
 
-    RecipeScreen(String recipe, String recipeTitle, Date date){
+    RecipeScreen(String recipe, String recipeTitle, Date date, RecipeList rl){
         setHeaderText("Here is your recipe!");
-        //recipeList = new RecipeList();
+        this.recipeList = rl;
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
         this.date = date;
@@ -34,12 +35,12 @@ public class RecipeScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 
     // action event 
@@ -48,11 +49,11 @@ public class RecipeScreen extends Screen{
         public void handle(ActionEvent e) 
         {
             //Screen nextScreen = createNextScreen();
-            Screen nextScreen = new HomeScreen();
+            Screen nextScreen = new HomeScreen(recipeList);
             recipeObj = new Recipe(recipe, recipeTitle, date);
             // Add recipe to recipelist
             //nextScreen.getChildren().add(recipeObj);
-            ((HomeScreen)(nextScreen)).getRecipeDisplay().getRecipeList().getChildren().add(recipeObj);
+            recipeList.getChildren().add(recipeObj);
             //recipeList.getChildren().add(recipeObj);
             //recipeList.sortRecipes();
             changeScreen(nextScreen);

@@ -1,13 +1,14 @@
 public class HomeScreen extends Screen {
     private RecipeDisplay recipeDisplay;
-    HomeScreen() {
-
+    private RecipeList recipeList;
+    HomeScreen(RecipeList rl) {
         super();
+        this.recipeList = rl;
         setHeaderText("PantryPal");
         setCenterObject();
         setFooterButtons("", "New Recipe", "");
         setCenterButtonAction("Pick Meal", changeNextScreenEvent);
-        recipeDisplay = new RecipeDisplay();
+        recipeDisplay = new RecipeDisplay(this.recipeList);
         this.setCenter(recipeDisplay);
     }
 
@@ -17,11 +18,11 @@ public class HomeScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new PromptScreen();
+        return new PromptScreen(this.recipeList);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(this.recipeList);
     }
 }
