@@ -12,12 +12,12 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private Model model;
     private Recipe recipeObj;
-    private RecipeList recipeList;
+    //private RecipeList recipeList;
     private Date date;
 
     RecipeScreen(String recipe, String recipeTitle, Date date){
         setHeaderText("Here is your recipe!");
-        recipeList = new RecipeList();
+        //recipeList = new RecipeList();
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
         this.date = date;
@@ -47,11 +47,14 @@ public class RecipeScreen extends Screen{
         // private Map<String, String> saved;
         public void handle(ActionEvent e) 
         {
-            Screen nextScreen = createNextScreen();
+            //Screen nextScreen = createNextScreen();
+            Screen nextScreen = new HomeScreen();
             recipeObj = new Recipe(recipe, recipeTitle, date);
             // Add recipe to recipelist
-            recipeList.getChildren().add(recipeObj);
-            recipeList.sortRecipes();
+            //nextScreen.getChildren().add(recipeObj);
+            ((HomeScreen)(nextScreen)).getRecipeDisplay().getRecipeList().getChildren().add(recipeObj);
+            //recipeList.getChildren().add(recipeObj);
+            //recipeList.sortRecipes();
             changeScreen(nextScreen);
         } 
     };

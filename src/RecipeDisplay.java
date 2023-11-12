@@ -11,4 +11,9 @@ public class RecipeDisplay extends BorderPane{
         scroller.setFitToWidth(true);
         scroller.setFitToHeight(true);
     }
+
+
+    public RecipeList getRecipeList() {
+        return this.RecipeList;
+    }
 }

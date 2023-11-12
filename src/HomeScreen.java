@@ -11,6 +11,10 @@ public class HomeScreen extends Screen {
         this.setCenter(recipeDisplay);
     }
 
+    public RecipeDisplay getRecipeDisplay() {
+        return this.recipeDisplay;
+    }
+
     @Override
     protected Screen createNextScreen() {
         return new PromptScreen();
