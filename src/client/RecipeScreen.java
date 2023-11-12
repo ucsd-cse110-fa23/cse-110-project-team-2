@@ -5,6 +5,7 @@ import java.util.*;
 import client.Model;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 
 public class RecipeScreen extends Screen{
@@ -53,15 +54,22 @@ public class RecipeScreen extends Screen{
         {
             //Screen nextScreen = createNextScreen();
             Screen nextScreen = new HomeScreen(recipeList);
-            recipeObj = new Recipe(recipe, recipeTitle, date);
-            String response = model.performRequest("POST", recipeTitle, recipe, null);
-            System.out.println(response);
+            String dummyRecipeTitle = "Recipetitle";
+            String dummyRecipe = "Recipe details query doesn't like if their's spaces in Recipe Title";
+            recipeObj = new Recipe(dummyRecipe, dummyRecipeTitle, date);
+            String response = model.performRequest("POST", dummyRecipeTitle, dummyRecipe, null);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Response");
+            alert.setHeaderText(null);
+            alert.setContentText(response);
+            alert.showAndWait();
+            //System.out.println(response);
             // Add recipe to recipelist
             //nextScreen.getChildren().add(recipeObj);
             recipeList.getChildren().add(recipeObj);
             //recipeList.getChildren().add(recipeObj);
             //recipeList.sortRecipes();
-            changeScreen(nextScreen);
+            changeScreen(nextScreen); 
         } 
     };
 }

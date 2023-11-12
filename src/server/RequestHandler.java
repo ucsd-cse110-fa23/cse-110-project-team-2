@@ -51,6 +51,7 @@ public class RequestHandler implements HttpHandler {
             String year = data.get(value); // Retrieve data from hashmap
             if (year != null) {
                 response = year;
+                System.out.println(response);
                 System.out.println("Queried for " + value + " and found " + year);
             } else {
                 response = "No data found for " + value;
