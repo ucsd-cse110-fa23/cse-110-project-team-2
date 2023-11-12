@@ -1,5 +1,5 @@
 public class HomeScreen extends Screen {
-
+    private RecipeDisplay recipeDisplay;
     HomeScreen() {
 
         super();
@@ -7,6 +7,8 @@ public class HomeScreen extends Screen {
         setCenterObject();
         setFooterButtons("", "New Recipe", "");
         setCenterButtonAction("Pick Meal", changeNextScreenEvent);
+        recipeDisplay = new RecipeDisplay();
+        this.setCenter(recipeDisplay);
     }
 
     @Override

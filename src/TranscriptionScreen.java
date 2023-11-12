@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ public class TranscriptionScreen extends Screen{
     private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
+    private Date date;
 
     TranscriptionScreen(String transcription, String type){
         ingredients = transcription;
@@ -22,7 +24,7 @@ public class TranscriptionScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe, recipeTitle);
+        return new RecipeScreen(recipe, recipeTitle, date);
     }
 
     @Override
@@ -66,6 +68,7 @@ public class TranscriptionScreen extends Screen{
                         "\r\n" + //
                         "6. Serve hot and enjoy!";
                 recipeTitle = "Herb-Crusted Chicken and Egg Bake";
+                date = new Date();
             // } catch (IOException e1) {
             //     e1.printStackTrace();
             // } catch (InterruptedException e1) {

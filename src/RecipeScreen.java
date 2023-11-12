@@ -11,12 +11,16 @@ public class RecipeScreen extends Screen{
     private String recipe;
     private String recipeTitle;
     private Model model;
+    private Recipe recipeObj;
+    private RecipeList recipeList;
+    private Date date;
 
-    RecipeScreen(String recipe, String recipeTitle){
-        saved = new HashMap<>();
+    RecipeScreen(String recipe, String recipeTitle, Date date){
         setHeaderText("Here is your recipe!");
+        recipeList = new RecipeList();
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
+        this.date = date;
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
@@ -24,7 +28,7 @@ public class RecipeScreen extends Screen{
         generatedRecipe.setWrapText(true);
         setFooterButtons("Cancel", "", "Save");
         setLeftButtonAction("PantryPal", changeNextScreenEvent);
-        setRightButtonAction("PantryPal", changeNextScreenEvent);
+        setRightButtonAction("PantryPal", changeSavedRecipe);
         this.setCenter(generatedRecipe);
     }
 
@@ -39,13 +43,15 @@ public class RecipeScreen extends Screen{
     }
 
     // action event 
-    protected EventHandler<ActionEvent> changeNextScreenEvent = new EventHandler<ActionEvent>() {
+    protected EventHandler<ActionEvent> changeSavedRecipe = new EventHandler<ActionEvent>() {
         // private Map<String, String> saved;
         public void handle(ActionEvent e) 
         {
-            Screen nextScreen = createPreviousScreen();
-            saved.put(recipeTitle, recipe);
-            System.out.println(saved);
+            Screen nextScreen = createNextScreen();
+            recipeObj = new Recipe(recipe, recipeTitle, date);
+            // Add recipe to recipelist
+            recipeList.getChildren().add(recipeObj);
+            recipeList.sortRecipes();
             changeScreen(nextScreen);
         } 
     };
