@@ -9,7 +9,7 @@ import java.net.URI;
  
 
 public class Model {
-    public String performRequest(String method, String language, String year, String query) {
+    public String performRequest(String method, String language, String query) {
         // Implement your HTTP request logic here and return the response
 
         try {
@@ -24,7 +24,7 @@ public class Model {
 
             if (method.equals("POST") || method.equals("PUT")) {
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(language + "," + year);
+                out.write(language);
                 out.flush();
                 out.close();
             }

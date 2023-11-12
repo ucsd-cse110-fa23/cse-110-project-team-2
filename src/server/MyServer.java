@@ -5,6 +5,7 @@
 import com.sun.net.httpserver.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -19,7 +20,8 @@ public class MyServer {
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
     // create a map to store data
-    Map<String, String> data = new HashMap<>();
+    ArrayList<String> data = new ArrayList<String>();
+    //Map<String, String> data = new HashMap<>();
 
     // create a server
     HttpServer server = HttpServer.create(

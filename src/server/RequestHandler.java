@@ -7,9 +7,12 @@ import java.net.*;
 import java.util.*;
 
 public class RequestHandler implements HttpHandler {
-    private final Map<String, String> data;
+    //private final Map<String, String> data;
+    private final ArrayList<String> data;
+    private int postCount = 0;
+    private int getCount = 0;
 
-    public RequestHandler(Map<String, String> data) {
+    public RequestHandler(ArrayList<String> data) {
         this.data = data;
     }
 
@@ -22,11 +25,11 @@ public class RequestHandler implements HttpHandler {
                 response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
                 response = handlePost(httpExchange);
-            } else if (method.equals("PUT")) {
+            } /*else if (method.equals("PUT")) {
                 response = handlePut(httpExchange);
             } else if (method.equals("DELETE")) {
                 response = handleDelete(httpExchange);
-            } else {
+            }*/ else {
                 throw new Exception("Not Valid Request Method");
             }
         } catch (Exception e) {
@@ -48,13 +51,23 @@ public class RequestHandler implements HttpHandler {
         String query = uri.getRawQuery();
         if (query != null) {
             String value = query.substring(query.indexOf("=") + 1);
-            String year = data.get(value); // Retrieve data from hashmap
+            String postData = data.get(getCount);
+
+            if (postData != null) {
+                response = postData;
+                System.out.println("Queried for " + query + " and found " + postData);
+                getCount += 1;
+            } 
+            else {
+                response = "No data";
+            }
+            /*String year = data.get(value); // Retrieve data from hashmap
             if (year != null) {
                 response = year;
                 System.out.println("Queried for " + value + " and found " + year);
             } else {
                 response = "No data found for " + value;
-            }
+            }*/
         }
         return response;
     }
@@ -63,21 +76,28 @@ public class RequestHandler implements HttpHandler {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
         String postData = scanner.nextLine();
-        String language = postData.substring(
+        /*String language = postData.substring(
                 0,
-                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);
+                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);*/
 
         // Store data in hashmap
-        data.put(language, year);
+        //data.put(language, year);
+        // Store data in arraylist
+        data.add(postData);
+        postCount += 1;
+        String recipeTitle = postData.substring(
+                0,
+                postData.indexOf(",")), recipe = postData.substring(postData.indexOf(",") + 1);
 
-        String response = "Posted entry {" + language + ", " + year + "}";
-        System.out.println(response);
+        String response = "Posted entry {" + recipeTitle + "," + recipe + "}";
+        System.out.println("post data which is the format string,string: " + "postData");
+        System.out.println("data when its separated: " + response);
         scanner.close();
 
         return response;
     }
 
-    private String handlePut(HttpExchange httpExchange) throws IOException {
+    /*private String handlePut(HttpExchange httpExchange) throws IOException {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
         String postData = scanner.nextLine();
@@ -119,6 +139,6 @@ public class RequestHandler implements HttpHandler {
             }
         }
         return response;
-    }
+    }*/
 
 }
