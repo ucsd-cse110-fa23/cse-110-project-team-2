@@ -1,4 +1,4 @@
-//package server;
+package server;
 //package server;
 
 import com.sun.net.httpserver.*;

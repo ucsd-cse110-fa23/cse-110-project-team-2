@@ -1,5 +1,5 @@
 //package server;
-//package server;
+package server;
 
 //import java.io.IOException;
 import com.sun.net.httpserver.*;
