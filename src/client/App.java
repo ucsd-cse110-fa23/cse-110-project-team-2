@@ -7,12 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    //private AppFrame root = new AppFrame();
-    private Model model;
+    private RequestSender request;
 
     @Override
     public void start(Stage primaryStage) {
-        this.model = new Model();
+        this.request = new RequestSender();
         AppFrame root = new AppFrame();
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
@@ -21,7 +20,7 @@ public class App extends Application {
 
         String query = "getNext"; 
         while (true) {
-            String response = model.performRequest("GET", null, query);
+            String response = request.performRequest("GET", null, query);
             System.out.println(response);
             if (response.equals("Invalid")) {
                 break;
@@ -38,34 +37,16 @@ public class App extends Application {
         String recipeTitle;
         String recipe;
         String uploadString;
-        this.model = new Model();
+        this.request = new RequestSender();
         for (int i = 0; i < AppFrame.getAppRecipeList().getChildren().size(); i++) {
             recipeTitle = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipeTitle();
             recipe = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipe();
             uploadString = recipeTitle + "," + recipe;
             System.out.println(uploadString);
-            //String language = view.getLanguage();
-            //String year = view.getYear();
-            String response = model.performRequest("POST", uploadString, null);
+            String response = request.performRequest("POST", uploadString, null);
         }
-        // executed when the application shuts down
     }
     public static void main(String[] args) {
         launch(args);
     } 
 }
-
-/*
-public class App extends Application {
-@Override
-    public void start(Stage primaryStage) throws Exception {
-        HomeScreen root = new HomeScreen();
-        primaryStage.setTitle("PantryPal");
-        primaryStage.setScene(new Scene(root, 500, 500));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);}
-} */

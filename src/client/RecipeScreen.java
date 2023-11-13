@@ -9,7 +9,7 @@ public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
     private String recipe;
     private String recipeTitle;
-    private Model model;
+    private RequestSender request;
     private Recipe recipeObj;
     private Date date;
 
@@ -27,7 +27,7 @@ public class RecipeScreen extends Screen{
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
         setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
         this.setCenter(generatedRecipe);
-        this.model = new Model();
+        this.request = new RequestSender();
     }
 
     @Override
@@ -43,8 +43,6 @@ public class RecipeScreen extends Screen{
     public void changeScreenSaveRecipe (ActionEvent e) {
         Screen nextScreen = new HomeScreen();
         recipeObj = new Recipe(recipeTitle, recipe, date);
-        //String response = model.performRequest("POST", recipeTitle, recipe, null);
-        //System.out.println(response);
         AppFrame.getAppRecipeList().getChildren().add(0, recipeObj);
         changeScreen(nextScreen);
     } 
