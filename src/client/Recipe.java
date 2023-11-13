@@ -13,7 +13,6 @@ public class Recipe extends HBox{
     private String recipeTitle;
     private String recipe;
     private Date date;
-    //private TextField taskName;
     private Button recipeButton;
 
     Recipe(String recipeTitle, String recipe, Date date){
@@ -61,7 +60,6 @@ public class Recipe extends HBox{
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            // Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
             Screen nextScreen = new DetailedViewScreen(this);
             current.setTitle("Detailed View");
             current.setScene(new Scene(nextScreen, 500, 500));

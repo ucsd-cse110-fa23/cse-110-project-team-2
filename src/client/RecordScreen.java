@@ -59,7 +59,6 @@ public class RecordScreen extends Screen {
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
             moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
-            // moveToNextScreen("I have chicken and eggs.", getRecipeType());
         }
     }
 

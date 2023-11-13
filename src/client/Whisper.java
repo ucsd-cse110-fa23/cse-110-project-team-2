@@ -3,13 +3,11 @@ package client;
 import java.io.*;
 import java.net.*;
 import org.json.*;
-// import Recorder.java;
 
 public class Whisper{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
     private static final String TOKEN = "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";
     private static final String MODEL = "whisper-1";
-    //private static final String FILE_PATH = "C:/Users/linkh/Downloads/lab4test.mp3";
 
     // Helper method to write a parameter to the output stream in multipart form data format
     private static void writeParameterToOutputStream(OutputStream outputStream, String parameterName, String parameterValue, String boundary) throws IOException {
@@ -76,11 +74,6 @@ public class Whisper{
     }
 
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
-        //TODO Want to make whisper accept recordingfile as input
-        //TODO Want to make whisper return a string
-        //TODO Want to make whisper return a string that is the transcription
-        //TODO Want to make whisper return a string that is the transcription and then send that to chatgpt
-        
         // Set up HTTP connection
         URL url = new URI(API_ENDPOINT).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
