@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import org.apache.commons.io.IOUtils;
 
 public class RequestHandler implements HttpHandler {
     //private final Map<String, String> data;

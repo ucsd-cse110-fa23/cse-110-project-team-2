@@ -22,10 +22,10 @@ public class App extends Application {
         String query = "getNext"; 
         while (true) {
             String response = model.performRequest("GET", null, query);
+            System.out.println(response);
             if (response.equals("Invalid")) {
                 break;
             }
-            System.out.println(response);
             String recipeTitle = response.substring(0,response.indexOf(",")); 
             String recipe = response.substring(response.indexOf(",") + 1);
             Date date = new Date(10);

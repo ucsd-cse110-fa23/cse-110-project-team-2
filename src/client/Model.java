@@ -29,11 +29,10 @@
 
 package client;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.net.URI;
  
 
@@ -58,8 +57,8 @@ public class Model {
                 out.close();
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String response = in.readLine();
+            InputStream in = conn.getInputStream();
+            String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             in.close();
             return response;
         } catch (Exception ex) {
