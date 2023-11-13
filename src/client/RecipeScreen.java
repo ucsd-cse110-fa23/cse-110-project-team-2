@@ -45,7 +45,7 @@ public class RecipeScreen extends Screen{
         recipeObj = new Recipe(recipeTitle, recipe, date);
         //String response = model.performRequest("POST", recipeTitle, recipe, null);
         //System.out.println(response);
-        AppFrame.getAppRecipeList().getChildren().add(recipeObj);
+        AppFrame.getAppRecipeList().getChildren().add(0, recipeObj);
         changeScreen(nextScreen);
     } 
 }
