@@ -17,9 +17,9 @@ public class App extends Application {
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);
-        primaryStage.show();
+        primaryStage.show(); 
 
-        String query = "getNext";
+        String query = "getNext"; 
         while (true) {
             String response = model.performRequest("GET", null, query);
             if (response.equals("Invalid")) {
