@@ -1,5 +1,7 @@
 package client;
 
+import java.sql.Date;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,30 +12,25 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.model = new Model();
         AppFrame root = new AppFrame();
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        /*String query = "getNext";
+        String query = "getNext";
         while (true) {
             String response = model.performRequest("GET", null, query);
-            if (response.equals("No Data")) {
+            if (response.equals("Invalid")) {
                 break;
             }
-        }*/
-        //String response = model.performRequest("GET", null, query);//response will be an element of arraylist
-
-        
-        /*
-         * String language = postData.substring(
-                0,
-                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);
-         */
-        /*String query = view.getQuery();
-        String response = model.performRequest("GET", null, null, query);
-        view.showAlert("Response", response); */
+            String recipeTitle = response.substring(0,response.indexOf(",")), 
+            recipe = response.substring(response.indexOf(",") + 1);
+            Date date = new Date(10);
+            Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
+            AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
+        }
     }
     @Override
     public void stop() {

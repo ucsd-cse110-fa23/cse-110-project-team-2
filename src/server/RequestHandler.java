@@ -9,8 +9,9 @@ import java.util.*;
 public class RequestHandler implements HttpHandler {
     //private final Map<String, String> data;
     private final ArrayList<String> data;
-    private int postCount = 0;
-    private int getCount = 0;
+    //private int postCount = 0;
+    //private int getCount = 0;
+    private int count = 0;
 
     public RequestHandler(ArrayList<String> data) {
         this.data = data;
@@ -49,26 +50,21 @@ public class RequestHandler implements HttpHandler {
         String response = "Invalid GET request";
         URI uri = httpExchange.getRequestURI();
         String query = uri.getRawQuery();
+        System.out.println(query);
         if (query != null) {
             String value = query.substring(query.indexOf("=") + 1);
-            String postData = data.get(getCount);
-
-            if (postData != null) {
+            String postData;
+            if (count < data.size()) {
+                postData = data.get(count);
                 response = postData;
                 System.out.println("Queried for " + query + " and found " + postData);
-                getCount += 1;
-            } 
-            else {
-                response = "No data";
+                count += 1;
             }
-            /*String year = data.get(value); // Retrieve data from hashmap
-            if (year != null) {
-                response = year;
-                System.out.println("Queried for " + value + " and found " + year);
-            } else {
-                response = "No data found for " + value;
-            }*/
+            else {
+                response = "Invalid";
+            }
         }
+        System.out.println(response);
         return response;
     }
 
@@ -84,13 +80,13 @@ public class RequestHandler implements HttpHandler {
         //data.put(language, year);
         // Store data in arraylist
         data.add(postData);
-        postCount += 1;
+        //postCount += 1;
         String recipeTitle = postData.substring(
                 0,
                 postData.indexOf(",")), recipe = postData.substring(postData.indexOf(",") + 1);
 
         String response = "Posted entry {" + recipeTitle + "," + recipe + "}";
-        System.out.println("post data which is the format string,string: " + "postData");
+        System.out.println("post data which is the format string,string: " + postData);
         System.out.println("data when its separated: " + response);
         scanner.close();
 
