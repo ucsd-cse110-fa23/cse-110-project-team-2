@@ -1,3 +1,5 @@
+package client;
+
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
@@ -9,5 +11,9 @@ public class Header extends HBox {
         titleText = new Text(headerText);
         this.getChildren().add(titleText);
         this.setAlignment(Pos.CENTER);
+    }
+
+    void changeTitleText(String text) {
+        titleText.setText(text);
     }
 }

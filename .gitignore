@@ -1,7 +1,9 @@
-/.vscode/*
-/.bin/*
+/.vscode/
+/.bin/
 # Ignore Gradle project-specific cache directory
 .gradle
-
+bin/
+.vscode/
 # Ignore Gradle build output directory
 build
+*.wav
