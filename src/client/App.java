@@ -25,8 +25,9 @@ public class App extends Application {
             if (response.equals("Invalid")) {
                 break;
             }
-            String recipeTitle = response.substring(0,response.indexOf(",")), 
-            recipe = response.substring(response.indexOf(",") + 1);
+            System.out.println(response);
+            String recipeTitle = response.substring(0,response.indexOf(",")); 
+            String recipe = response.substring(response.indexOf(",") + 1);
             Date date = new Date(10);
             Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
             AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
@@ -42,6 +43,7 @@ public class App extends Application {
             recipeTitle = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipeTitle();
             recipe = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipe();
             uploadString = recipeTitle + "," + recipe;
+            System.out.println(uploadString);
             //String language = view.getLanguage();
             //String year = view.getYear();
             String response = model.performRequest("POST", uploadString, null);

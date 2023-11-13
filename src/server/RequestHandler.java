@@ -4,7 +4,9 @@ package server;
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import org.apache.commons.io.IOUtils;
 
 public class RequestHandler implements HttpHandler {
     //private final Map<String, String> data;
@@ -70,8 +72,10 @@ public class RequestHandler implements HttpHandler {
 
     private String handlePost(HttpExchange httpExchange) throws IOException {
         InputStream inStream = httpExchange.getRequestBody();
-        Scanner scanner = new Scanner(inStream);
-        String postData = scanner.nextLine();
+        System.out.println(inStream.toString());
+        String postData = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
+        // Scanner scanner = new Scanner(inStream);
+        // String postData = scanner.nextLine();
         /*String language = postData.substring(
                 0,
                 postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);*/
@@ -88,7 +92,7 @@ public class RequestHandler implements HttpHandler {
         String response = "Posted entry {" + recipeTitle + "," + recipe + "}";
         System.out.println("post data which is the format string,string: " + postData);
         System.out.println("data when its separated: " + response);
-        scanner.close();
+        //scanner.close();
 
         return response;
     }

@@ -26,6 +26,7 @@ public class Recipe extends HBox{
 
         System.out.println("RECIPE TITLE IS: " + recipeTitle);
         recipeTitle = recipeTitle.trim().replaceAll("^[\n\r]", "");
+        this.recipeTitle = recipeTitle.trim().replaceAll("^[\n\r]", "");
         recipeButton = new Button(recipeTitle); // creates a button for marking the task as done
         recipeButton.setPrefSize(500, 20);
         recipeButton.setPrefHeight(Double.MAX_VALUE);
