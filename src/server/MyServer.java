@@ -32,6 +32,7 @@ public class MyServer {
     //HttpContext context = createContext("/", new RequestHandler(data));
     RequestHandler request = new RequestHandler(data);
     server.createContext("/", request);
+    //server.createContext("/", new RequestHandler(data));
 
     // TODO: set the executor
     server.setExecutor(threadPoolExecutor);

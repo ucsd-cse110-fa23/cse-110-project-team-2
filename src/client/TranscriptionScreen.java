@@ -39,6 +39,7 @@ public class TranscriptionScreen extends Screen{
     }
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
+        // possibly call a GET for the chatgpt here
         gpt = new ChatGPT();
         // try {
             recipe = "Ingredients: \r\n" + //

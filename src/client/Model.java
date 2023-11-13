@@ -1,4 +1,4 @@
-package client;
+/*package client;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,9 +25,9 @@ public class Model {
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         return transcriber.transcribe(recording);
     }
-}
+}*/
 
-/*package client;
+package client;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -67,5 +67,5 @@ public class Model {
             return "Error: " + ex.getMessage();
         }
     }
-}*/
+}
 
