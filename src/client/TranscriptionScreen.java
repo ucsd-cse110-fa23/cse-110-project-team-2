@@ -13,7 +13,7 @@ public class TranscriptionScreen extends Screen{
     private String recipe;
     private String recipeTitle;
     private Date date;
-    private TextArea ingredArea;
+    private TextArea ingredArea; 
 
     TranscriptionScreen(String transcription, String type){
 
