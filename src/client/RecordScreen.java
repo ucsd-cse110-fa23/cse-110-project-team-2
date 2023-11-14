@@ -57,8 +57,12 @@ public class RecordScreen extends Screen {
             recordButton.setText("Record");
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
-            Path recording = Paths.get("./recording.wav");
-            moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
+            //Path recording = Paths.get("./recording.wav");
+            String path = "./recording.wav";
+            String response = model.performRequestRecording("POST", path);//only perform this
+            String transcribing = model.performRequestTranscription("POST", response);//we don't have to make this return anything
+            String dummy = "we won't need to pass this anymore";
+            moveToNextScreen(dummy, getRecipeType());//we don't have to pass transcribe here anymore with server
         }
     }
 

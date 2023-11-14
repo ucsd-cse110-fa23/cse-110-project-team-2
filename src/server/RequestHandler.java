@@ -10,8 +10,6 @@ import java.util.*;
 public class RequestHandler implements HttpHandler {
     //private final Map<String, String> data;
     private final ArrayList<String> data;
-    //private int postCount = 0;
-    //private int getCount = 0;
     private int count = 0;
 
     public RequestHandler(ArrayList<String> data) {
@@ -27,11 +25,7 @@ public class RequestHandler implements HttpHandler {
                 response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
                 response = handlePost(httpExchange);
-            } /*else if (method.equals("PUT")) {
-                response = handlePut(httpExchange);
-            } else if (method.equals("DELETE")) {
-                response = handleDelete(httpExchange);
-            }*/ else {
+            } else {
                 throw new Exception("Not Valid Request Method");
             }
         } catch (Exception e) {
@@ -51,12 +45,12 @@ public class RequestHandler implements HttpHandler {
         String response = "Invalid GET request";
         URI uri = httpExchange.getRequestURI();
         String query = uri.getRawQuery();
-        System.out.println(query);
-        if (query != null) {
-            String value = query.substring(query.indexOf("=") + 1);
+        System.out.println(query);//we would use the query to access the , but then title can't have spaces since query hates it
+        if (query != null) {//so maybe replace all spaces with _ (underscores) before its passed on in the performRequest
+            String value = query.substring(query.indexOf("=") + 1);//this would give us the text after = which is the key in our situation
             String postData;
-            if (count < data.size()) {
-                postData = data.get(count);
+            if (count < data.size()) {//then about here we would use the key to access the data of the hasmap, and then return it's value
+                postData = data.get(count);//of the key, in this case it would be the recipe, so return response will return the recipe
                 response = postData;
                 System.out.println("Queried for " + query + " and found " + postData);
                 count += 1;
@@ -92,52 +86,7 @@ public class RequestHandler implements HttpHandler {
         System.out.println("post data which is the format string,string: " + postData);
         System.out.println("data when its separated: " + response);
         //scanner.close();
-
+        inStream.close();
         return response;
     }
-
-    /*private String handlePut(HttpExchange httpExchange) throws IOException {
-        InputStream inStream = httpExchange.getRequestBody();
-        Scanner scanner = new Scanner(inStream);
-        String postData = scanner.nextLine();
-        String language = postData.substring(
-                0, 
-                postData.indexOf(",")), year = postData.substring(postData.indexOf(",") + 1);
-
-        String response;
-        if (data.containsKey(language)) {
-            String previousYear = data.get(language);  
-            data.put(language, year);
-            response = "Updated entry {" + language + ", " + year + "}" + "(previous year: " + previousYear + ")";
-        }
-        else {
-            data.put(language, year);
-            response = "Added entry {" + language + ", " + year + "}";    
-        }
-        System.out.println(response);
-        scanner.close();
-
-        return response;    
-    }
-
-    private String handleDelete(HttpExchange httpExchange) throws IOException {
-        String response = "Invalid DELETE request";
-        URI uri = httpExchange.getRequestURI();
-        String query = uri.getRawQuery();
-        if (query != null) {
-            // this is the Language, the key
-            String value = query.substring(query.indexOf("=") + 1);
-            // year is value
-            String year = data.get(value); // Retrieve data from hashmap
-            //if the value returned by the hashmap is not null then that means key exists
-            if (year != null) {
-                response = "Deleted entry {" + value + ", " + year + "}";
-                data.remove(value);
-            } else {
-                response = "No data found for " + value;
-            }
-        }
-        return response;
-    }*/
-
 }

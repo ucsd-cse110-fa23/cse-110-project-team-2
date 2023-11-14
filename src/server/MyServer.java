@@ -20,8 +20,9 @@ public class MyServer {
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
     // create a map to store data
-    ArrayList<String> data = new ArrayList<String>();
-    //Map<String, String> data = new HashMap<>();
+    //ArrayList<String> data = new ArrayList<String>();
+    Model model = new Model();
+    Map<String, String> data = new HashMap<>();
 
     // create a server
     HttpServer server = HttpServer.create(
@@ -32,6 +33,16 @@ public class MyServer {
     //HttpContext context = createContext("/", new RequestHandler(data));
     RequestHandler request = new RequestHandler(data);
     server.createContext("/", request);
+
+    RequestRecording requestRecording = new RequestRecording(model);
+    server.createContext("/recording", requestRecording);
+
+    RequestTranscription requestTranscription = new RequestTranscription(model);
+    server.createContext("/transcription", requestTranscription);
+
+    RequestRecipe requestRecipe = new RequestRecipe(data, model);
+    server.createContext("/recipe", requestRecipe);
+
 
     // TODO: set the executor
     server.setExecutor(threadPoolExecutor);

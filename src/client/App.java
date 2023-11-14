@@ -44,6 +44,7 @@ public class App extends Application {
             uploadString = recipeTitle + "," + recipe;
             System.out.println(uploadString);
             String response = request.performRequest("POST", uploadString, null);
+            //response actually returns something for POST but we don't use it so that's why
         }
     }
     public static void main(String[] args) {

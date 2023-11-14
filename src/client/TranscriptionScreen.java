@@ -16,7 +16,9 @@ public class TranscriptionScreen extends Screen{
     private TextArea ingredArea;
 
     TranscriptionScreen(String transcription, String type){
-        ingredients = transcription;
+
+        //right here lets do a getTranscription and assign it to ingredients
+        ingredients = model.performRequestTranscription("GET", model.performRequestRecording("GET", null), "na");//now we need to fix the GET transcription
         mealType = type;
         setHeaderText("This is what we heard from you. Confirm your ingredients:");
         setFooterButtons("Cancel", "", "Next");

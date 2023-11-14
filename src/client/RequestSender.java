@@ -8,13 +8,13 @@ import java.net.URI;
  
 
 public class RequestSender {
-    public String performRequest(String method, String language, String query) {
+    public String performRequest(String method, String language, String query) {//this thing is writing into the server to the corresponding handler
         // Implement your HTTP request logic here and return the response
 
         try {
             String urlString = "http://localhost:8100/";
             if (query != null) {
-                urlString += "?=" + query;
+                urlString += "?=" + query;//make sure you replace all spaces with underscores when you add to the urlstring
             }
             URL url = new URI(urlString).toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
