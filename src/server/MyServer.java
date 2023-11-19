@@ -3,6 +3,9 @@ package server;
 
 //import java.io.IOException;
 import com.sun.net.httpserver.*;
+
+import client.Model;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -22,7 +25,6 @@ public class MyServer {
     // create a map to store data
     //ArrayList<String> data = new ArrayList<String>();
     Model model = new Model();
-    Map<String, String> data = new HashMap<>();
 
     // create a server
     HttpServer server = HttpServer.create(

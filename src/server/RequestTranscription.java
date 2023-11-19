@@ -64,10 +64,10 @@ public class RequestTranscription implements HttpHandler {
         InputStream inStream = httpExchange.getRequestBody();
         Scanner scanner = new Scanner(inStream);
         String postData = scanner.nextLine();
-        String recording = postData;
+        String recording = postData;//will not need this
 
         //will have to implement getRecipeType for now just use dummy variable
-        transcription = model.getWhisperTranscription(recording);//if we use correct input for recording then we won't get throw errors
+        transcription = model.getWhisperTranscription();//if we use correct input for recording then we won't get throw errors
 
         String response = transcription;
         scanner.close();
