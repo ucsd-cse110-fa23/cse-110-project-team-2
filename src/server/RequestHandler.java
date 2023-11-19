@@ -64,10 +64,11 @@ public class RequestHandler implements HttpHandler {
     }
 
     private String handlePost(HttpExchange httpExchange) throws IOException {
-        InputStream inStream = httpExchange.getRequestBody();
+        InputStream inStream = httpExchange.getRequestBody();//our request method already wrote to it, now read it
         System.out.println(inStream.toString());
         String postData = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
-        // Scanner scanner = new Scanner(inStream);
+        // the issue here it's only reading one line
+        // Scanner scanner = new Scanner(inStream); 
         // String postData = scanner.nextLine();
         /*String language = postData.substring(
                 0,

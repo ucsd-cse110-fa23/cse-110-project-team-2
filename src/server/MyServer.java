@@ -36,6 +36,10 @@ public class MyServer {
     RequestHandler request = new RequestHandler(data);
     server.createContext("/", request);
 
+    RequestMeal requestMeal = new RequestMeal(model);
+    server.createContext("/meal", requestMeal);
+
+    // will need more of these and update them according to the new Controller and Model
     RequestRecording requestRecording = new RequestRecording(model);
     server.createContext("/recording", requestRecording);
 
@@ -44,6 +48,8 @@ public class MyServer {
 
     RequestRecipe requestRecipe = new RequestRecipe(data, model);
     server.createContext("/recipe", requestRecipe);
+
+
 
 
     // TODO: set the executor

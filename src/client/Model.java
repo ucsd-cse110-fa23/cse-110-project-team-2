@@ -18,9 +18,11 @@ import java.net.URISyntaxException;
 public class Model {
     private Whisper useWhisper;
     private Map<String, String> recipeData;
+    // will be used when user says meal type and their ingredients
     File recording;
+    String mealType;
 
-    Model() {
+    public Model() {
         useWhisper = new Whisper();
         recipeData = new HashMap<>();
     }
@@ -32,11 +34,21 @@ public class Model {
     public Map<String, String> getRecipeData() {
         return recipeData;
     }
-    
+    public String getMealType() {
+        return mealType;
+    }
+
     public void setRecording(File recording) {
         this.recording = recording;
     }
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
+    }
 }
 
+/*
+ * Requesthandler for recipeData(homescreen)
+ * Requesthandler for mealType (promptscreen)
+ */
 
 
