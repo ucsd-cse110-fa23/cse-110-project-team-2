@@ -29,7 +29,7 @@ public class Controller {
             conn.setRequestMethod(method);
             conn.setDoOutput(true);
 
-            if (method.equals("POST") || method.equals("PUT")) {
+            if (method.equals("POST") || method.equals("PUT")) {//we can make the method have different types like POSTRECIPE, POSTRECORDING
                 //this is then writing into a file where the requesthandler reads from
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
                 out.write(language);
