@@ -1,15 +1,13 @@
-package src;
+package client;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import Recorder;
 
 import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class RecorderTest {
+public class testRecorder {
 
     private Recorder recorder;
 
