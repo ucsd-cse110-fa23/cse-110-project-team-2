@@ -1,4 +1,4 @@
-package project;
+package client;
 
 import java.io.*;
 import java.net.*;
@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class WhisperTest {
+public class whisperTest {
     @Test
     void testTranscribeWorking() throws InterruptedException{
-        MockWhisper w = new MockWhisper();
+        mockWhisper w = new mockWhisper();
         Recorder r = new Recorder();
         File f = new File("recording.wav");
         r.startRecording();

@@ -1,5 +1,6 @@
 package client;
 
+
 public class HomeScreen extends Screen {
     private RecipeDisplay recipeDisplay;
     HomeScreen() {
