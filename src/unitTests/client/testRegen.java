@@ -1,5 +1,10 @@
 package client;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -8,16 +13,13 @@ import org.json.JSONException;
 
 import client.ChatGPT;
 
-public class testRegen extends ChatGPT{
-    @Override
-    public String generate(String ingredients, String mealType) {return "regenerated";}
-    
+public class testRegen{
     @Test
-    public void regenTest() throws IOException{
+    public void testRegen() throws IOException, InterruptedException, URISyntaxException{
         String mockIngredients = "Onion and brussel sprouts";
         String mockMealType = "Breakfast";
-        ChatGPT gpt = new ChatGPT();
+        mockGPT gpt = new mockGPT();
         String s = gpt.generate(mockIngredients, mockMealType);
-        assertTrue(s.equals("regenerated"));
+        assertEquals(s, "regenerated");
     }
 }
