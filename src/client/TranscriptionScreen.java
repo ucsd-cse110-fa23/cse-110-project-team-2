@@ -29,7 +29,7 @@ public class TranscriptionScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe, recipeTitle, date);
+        return new RecipeScreen(recipe, recipeTitle, ingredients, mealType, date);
     }
 
     @Override
