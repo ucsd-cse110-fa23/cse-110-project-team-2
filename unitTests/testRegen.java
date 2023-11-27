@@ -8,13 +8,14 @@ import client.ChatGPT;
 
 public class testRegen extends ChatGPT{
     @Override
-    public String generate(String ingredients, String mealType) {throw new IOException();}
+    public String generate(String ingredients, String mealType) {return "regenerated";}
     
-    @Test(expected=IOException.class)
+    @Test
     public void regenTest() throws IOException{
         String mockIngredients = "Onion and brussel sprouts";
         String mockMealType = "Breakfast";
         ChatGPT gpt = new ChatGPT();
-        gpt.generate(mockIngredients, mockMealType);
+        String s = gpt.generate(mockIngredients, mockMealType);
+        assertTrue(s.equals("regenerated"));
     }
 }
