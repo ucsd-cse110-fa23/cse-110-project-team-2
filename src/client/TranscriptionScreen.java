@@ -14,11 +14,13 @@ public class TranscriptionScreen extends Screen{
     private String recipeTitle;
     private Date date;
     private TextArea ingredArea; 
+    private Controller controller;
 
     TranscriptionScreen(String transcription, String type){
+        controller = new Controller();
 
         //right here lets do a getTranscription and assign it to ingredients
-        ingredients = model.performRequestTranscription("GET", model.performRequestRecording("GET", null), "na");//now we need to fix the GET transcription
+        ingredients = controller.performRequestTranscription("GET");
         mealType = type;
         setHeaderText("This is what we heard from you. Confirm your ingredients:");
         setFooterButtons("Cancel", "", "Next");
@@ -48,18 +50,12 @@ public class TranscriptionScreen extends Screen{
     }
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
-        gpt = new ChatGPT();
-        try {
-            recipe = gpt.generate(ingredients, mealType);
-            recipeTitle = gpt.generateTitle(ingredients, mealType);
-            date = new Date();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        }
+        String responseOfRecipePost = controller.performRequestGPT("POST");
+        String responseOfRecipeTitlePost = controller.performRequestGPT("POSTTITLE");
+        recipe = controller.performRequestGPT("GET");
+        recipeTitle = controller.performRequestGPT("GETTITLE");
+        date = new Date();
+
         Screen nextScreen = createNextScreen();
         changeScreen(nextScreen);
     } 

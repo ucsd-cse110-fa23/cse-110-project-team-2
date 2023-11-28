@@ -2,7 +2,6 @@ package server;
 
 import com.sun.net.httpserver.*;
 
-import client.Model;
 import javafx.scene.shape.Path;
 
 import java.io.*;
@@ -10,8 +9,7 @@ import java.net.*;
 import java.util.*;
 
 public class RequestRecording implements HttpHandler {
-    private Model model;
-    // private String recording;
+    Model model;
 
     public RequestRecording(Model model) {// doesn't need a model
         this.model = model;
@@ -43,7 +41,9 @@ public class RequestRecording implements HttpHandler {
     private String handlePost(HttpExchange httpExchange) throws IOException {
         String CRLF = "\r\n";
         int fileSize = 0;
-        String FILE_TO_RECEIVED = "";
+        // expected file format to receive
+        String FILE_TO_RECEIVED = "recording.wav";
+
         File f = new File(FILE_TO_RECEIVED);
         if (!f.exists()) {
             f.createNewFile();
@@ -83,7 +83,7 @@ public class RequestRecording implements HttpHandler {
         httpExchange.sendResponseHeaders(200, 0);
 
         //now that file is populated with our audio, then set the models file to this audio file
-        model.setRecording(f);
+        model.setRecording(f);// might have to set the model to an audio file specifics, use recorder.java for reference
 
         String response = "did it work?";
         return response;

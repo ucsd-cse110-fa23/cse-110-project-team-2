@@ -4,13 +4,8 @@ package server;
 //import java.io.IOException;
 import com.sun.net.httpserver.*;
 
-import client.Model;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 
 public class MyServer {
@@ -33,21 +28,24 @@ public class MyServer {
 
     // TODO: create the context
     //HttpContext context = createContext("/", new RequestHandler(data));
-    RequestHandler request = new RequestHandler(data);
-    server.createContext("/", request);
+    //RequestHandler request = new RequestHandler(data);
+    //server.createContext("/", request);
 
-    RequestMeal requestMeal = new RequestMeal(model);
-    server.createContext("/meal", requestMeal);
+    //RequestMeal requestMeal = new RequestMeal(model);
+    //server.createContext("/meal", requestMeal);
 
     // will need more of these and update them according to the new Controller and Model
-    RequestRecording requestRecording = new RequestRecording(model);
+    RequestRecording requestRecording = new RequestRecording(model);   
     server.createContext("/recording", requestRecording);
 
     RequestTranscription requestTranscription = new RequestTranscription(model);
     server.createContext("/transcription", requestTranscription);
 
-    RequestRecipe requestRecipe = new RequestRecipe(data, model);
-    server.createContext("/recipe", requestRecipe);
+    RequestGPT requestGPT= new RequestGPT(model);
+    server.createContext("/gpt", requestGPT);
+
+    //RequestRecipe requestRecipe = new RequestRecipe(data, model);
+    //server.createContext("/recipe", requestRecipe);
 
 
 

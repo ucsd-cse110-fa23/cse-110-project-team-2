@@ -12,10 +12,8 @@ import org.json.JSONException;
 
 import com.sun.net.httpserver.*;
 
-import client.Model;
-
 public class RequestMeal implements HttpHandler {
-    private Model model;
+    Model model;
 
     public RequestMeal(Model model) {
         this.model = model;

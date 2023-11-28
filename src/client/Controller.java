@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 public class Controller {
-    public String performRequest(String method, String language, String query) {//this thing is writing into the server to the corresponding handler
+    /*public String performRequest(String method, String language, String query) {//this thing is writing into the server to the corresponding handler
         // Implement your HTTP request logic here and return the response
         try {
             String urlString = "http://localhost:8100/";
@@ -45,7 +45,7 @@ public class Controller {
             ex.printStackTrace();
             return "Error: " + ex.getMessage();
         }
-    }
+    }*/
     //automate this process to reduce lines of code.
     public String performRequestMeal(String method, String mealType) {
         // Implement your HTTP request logic here and return the response
@@ -115,7 +115,7 @@ public class Controller {
             return "Error: " + ex.getMessage();
         }
     }
-    public String performRequestTranscription(String method, String recording) {
+    public String performRequestTranscription(String method) {
         // Implement your HTTP request logic here and return the response
 
         try {
@@ -125,12 +125,24 @@ public class Controller {
             conn.setRequestMethod(method);
             conn.setDoOutput(true);
 
-            if (method.equals("POST")) {
-                OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(recording);
-                out.flush();
-                out.close();
-            }
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String response = in.readLine();
+            in.close();
+            return response;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Error: " + ex.getMessage();
+        }
+    }
+    public String performRequestGPT(String method) {
+        // Implement your HTTP request logic here and return the response
+
+        try {
+            String urlString = "http://localhost:8100/gpt";
+            URL url = new URI(urlString).toURL();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(method);
+            conn.setDoOutput(true);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String response = in.readLine();

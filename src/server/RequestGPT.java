@@ -2,18 +2,14 @@ package server;
 
 import com.sun.net.httpserver.*;
 
-import javafx.scene.shape.Path;
-
 import java.io.*;
 import java.net.*;
-import java.util.*;
-
 import org.json.JSONException;
 
-public class RequestTranscription implements HttpHandler {
+public class RequestGPT implements HttpHandler {
     Model model;
 
-    public RequestTranscription(Model model) {
+    public RequestGPT(Model model) {
         this.model = model;
     }
 
@@ -26,6 +22,10 @@ public class RequestTranscription implements HttpHandler {
                 response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
                 response = handlePost(httpExchange);
+            } else if (method.equals("GETTITLE")) {
+                response = handleGetTitle(httpExchange);
+            } else if (method.equals("POSTTITLE")) {
+                response = handlePostTitle(httpExchange);
             } else {
                 throw new Exception("Not Valid Request Method");
             }
@@ -42,14 +42,26 @@ public class RequestTranscription implements HttpHandler {
     }
 
     private String handleGet(HttpExchange httpExchange) throws IOException {
-        String response = model.getTranscription();
+        String response = model.getRecipe();
         return response;
     }
 
-    private String handlePost(HttpExchange httpExchange) throws IOException, URISyntaxException {
-        String transcription = model.getWhisperTranscription();//if we use correct input for recording then we won't get throw errors
-        String response = transcription;
-        model.setTranscription(transcription);
+    private String handlePost(HttpExchange httpExchange) throws IOException, JSONException, URISyntaxException, InterruptedException {
+        String recipe = model.getGPTRecipe();//if we use correct input for recording then we won't get throw errors
+        String response = recipe;
+        model.setRecipe(recipe);
+
+        return response;
+    }
+    private String handleGetTitle(HttpExchange httpExchange) throws IOException {
+        String response = model.getRecipeTitle();
+        return response;
+    }
+
+    private String handlePostTitle(HttpExchange httpExchange) throws IOException, JSONException, URISyntaxException, InterruptedException {
+        String recipeTitle = model.getGPTRecipeTitle();//if we use correct input for recording then we won't get throw errors
+        String response = recipeTitle;
+        model.setRecipeTitle(recipeTitle);
 
         return response;
     }

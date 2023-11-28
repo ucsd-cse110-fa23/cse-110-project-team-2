@@ -7,18 +7,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    private RequestSender request;
+    //private RequestSender request;
 
     @Override
     public void start(Stage primaryStage) {
-        this.request = new RequestSender();
+        //this.request = new RequestSender();
         AppFrame root = new AppFrame();
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);
         primaryStage.show(); 
 
-        String query = "getNext"; 
+        /*String query = "getNext"; 
         while (true) {
             String response = request.performRequest("GET", null, query);
             System.out.println(response);
@@ -30,9 +30,9 @@ public class App extends Application {
             Date date = new Date(10);
             Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
             AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
-        }
+        }*/
     }
-    @Override
+    /*@Override
     public void stop() {
         String recipeTitle;
         String recipe;
@@ -46,7 +46,7 @@ public class App extends Application {
             String response = request.performRequest("POST", uploadString, null);
             //response actually returns something for POST but we don't use it so that's why
         }
-    }
+    }*/
     public static void main(String[] args) {
         launch(args);
     } 

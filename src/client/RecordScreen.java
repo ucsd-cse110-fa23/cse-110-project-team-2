@@ -1,5 +1,6 @@
 package client;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ public class RecordScreen extends Screen {
     private Boolean isRecording = false;
     private Recorder recorder;
     private Whisper testWhisper = new Whisper();
+    private Controller controller = new Controller();
 
     RecordScreen(String type) {
         recipeType = type;
@@ -54,15 +56,17 @@ public class RecordScreen extends Screen {
             recorder.startRecording();
         }
         else {
+
             recordButton.setText("Record");
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
-            //Path recording = Paths.get("./recording.wav");
-            String path = "./recording.wav";
-            String response = model.performRequestRecording("POST", path);//only perform this
-            String transcribing = model.performRequestTranscription("POST", response);//we don't have to make this return anything
-            String dummy = "we won't need to pass this anymore";
-            moveToNextScreen(dummy, getRecipeType());//we don't have to pass transcribe here anymore with server
+            Path recording = Paths.get("./recording.wav");
+            File recordingFile = recording.toFile();
+
+            String responseOfRecording = controller.performRequestRecording("POST", recordingFile);
+            String transcription = controller.performRequestTranscription("POST");
+            // passing in transcription should not be a thing
+            moveToNextScreen(controller.performRequestTranscription("GET"), getRecipeType());
         }
     }
 
