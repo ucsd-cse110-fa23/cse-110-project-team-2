@@ -40,6 +40,7 @@ public class GPTHandler implements HttpHandler{
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String requestBody = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
+        //Expects a json to be used as request body, with ingredients and type as keys
         JSONObject requestJson = new JSONObject(requestBody);
         String ingredients = requestJson.getString("ingredients");
         String mealtype = requestJson.getString("type");

@@ -42,7 +42,7 @@ public class WhisperHandler implements HttpHandler{
                         .replaceFirst(".*filename=\"([^\"]+)\".*", "$1");
 
         // Save the uploaded file to the server
-        OutputStream outputStream = new FileOutputStream(fileName);
+        OutputStream outputStream = new FileOutputStream("recording2.wav");
         byte[] buffer = new byte[4096];
         int bytesRead;
         while ((bytesRead = inStream.read(buffer)) != -1) {
@@ -53,7 +53,7 @@ public class WhisperHandler implements HttpHandler{
         //end of ChatGPT code
 
         //Create response through Whisper
-        File f = new File(fileName);
+        File f = new File("recording2.wav");
         String response = bl.transcribe(f);
         return response;
     }
