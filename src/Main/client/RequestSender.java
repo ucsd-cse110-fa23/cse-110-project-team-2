@@ -1,10 +1,16 @@
 package client;
 
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.net.URI;
  
 
@@ -38,5 +44,81 @@ public class RequestSender {
             return "Error: " + ex.getMessage();
         }
     }
+
+    public String performTranscribe(File recording){
+        //Code taken from ChatGPT 3.5
+        //Prompt used; write me code to send a file to this server using java
+        //Done after the prompt used in WhisperHandler
+        try{
+            String serverUrl = "http://localhost:8100/transcribe";
+            if (!recording.exists()) {
+                throw new FileNotFoundException("File Not Found");
+            }
+    
+            URL url = new URI(serverUrl).toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/octet-stream");
+            connection.setRequestProperty("Content-Disposition", "attachment; filename=\"" + recording.getName() + "\"");
+    
+            OutputStream outputStream = connection.getOutputStream();
+            FileInputStream fileInputStream = new FileInputStream(recording);
+    
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+    
+            outputStream.flush();
+            outputStream.close();
+            fileInputStream.close();
+    
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Reading the response from the server
+                String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                connection.disconnect();
+                return response;
+            } else {
+                connection.disconnect();
+                return "File upload failed with response code: " + responseCode;
+            }   
+        } catch (Exception e){
+            e.printStackTrace();
+            return "Error: File Not Found";
+        }
+    }
+    public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException{
+            String urlString = "http://localhost:8100/generate";
+            // Create a request body which you will pass into request object
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("ingredients", ingredients);
+            requestBody.put("type", mealtype);
+            // Create the HTTP Client
+            HttpClient client = HttpClient.newHttpClient();
+
+            URI ur = URI.create(urlString);
+            // Create the request object
+            HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(ur)
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .build();
+
+
+            // Send the request and receive the response
+            HttpResponse<String> response = client.send(
+            request,
+            HttpResponse.BodyHandlers.ofString()
+            );
+            
+            // Process the response
+            String responseBody = response.body();
+            return responseBody;
+    }
+   
 }
 
