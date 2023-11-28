@@ -9,7 +9,7 @@ import java.util.*;
 
 public class RecipeRequestHandler implements HttpHandler {
     //private final Map<String, String> data;
-    private final ArrayList<String> data;
+    private ArrayList<String> data;
     //private int postCount = 0;
     //private int getCount = 0;
     private int count = 0;

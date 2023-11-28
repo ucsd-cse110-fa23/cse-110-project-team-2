@@ -1,17 +1,13 @@
 package server;
 
+import java.net.URISyntaxException;
 import com.sun.net.httpserver.*;
 import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
 
-import org.json.JSONObject;
-
-public class GPTHandler implements HttpHandler{
-
+public class WhisperHandler implements HttpHandler{
     BusinessLogic bl;
 
-    public GPTHandler(BusinessLogic bl){
+    public WhisperHandler(BusinessLogic bl){
         this.bl = bl;
     }
 
@@ -37,13 +33,28 @@ public class GPTHandler implements HttpHandler{
         outStream.write(response.getBytes());
         outStream.close();
     }
+
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
-        String requestBody = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
-        JSONObject requestJson = new JSONObject(requestBody);
-        String ingredients = requestJson.getString("ingredients");
-        String mealtype = requestJson.getString("type");
-        String response = bl.generate(ingredients, mealtype);
+        //Get filename from header - taken from ChatGPT 3.5
+        // prompt used: "write me code for receiving a file through an http request using java"
+        String fileName = httpExchange.getRequestHeaders().getFirst("Content-Disposition")
+                        .replaceFirst(".*filename=\"([^\"]+)\".*", "$1");
+
+        // Save the uploaded file to the server
+        OutputStream outputStream = new FileOutputStream(fileName);
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        outputStream.close();
+        inStream.close();
+        //end of ChatGPT code
+
+        //Create response through Whisper
+        File f = new File(fileName);
+        String response = bl.transcribe(f);
         return response;
     }
 }

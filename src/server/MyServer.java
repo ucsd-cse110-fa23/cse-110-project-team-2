@@ -6,8 +6,6 @@ import com.sun.net.httpserver.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 
 public class MyServer {
@@ -36,7 +34,10 @@ public class MyServer {
 
     GPTHandler gpthandler = new GPTHandler(bl);
     server.createContext("/generate", gpthandler);
-    
+
+    WhisperHandler whisperhandler = new WhisperHandler(bl);
+    server.createContext("/transcribe", whisperhandler);
+
     // TODO: set the executor
     server.setExecutor(threadPoolExecutor);
 
@@ -44,6 +45,5 @@ public class MyServer {
     server.start();
 
     System.out.println("Server started on port " + SERVER_PORT);
-
   }
 }
