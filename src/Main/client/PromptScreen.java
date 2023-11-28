@@ -1,5 +1,6 @@
 package client;
 
+
 public class PromptScreen extends Screen {
     private PromptButtons prompt;
     private String recipeType;
