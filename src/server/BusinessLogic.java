@@ -16,11 +16,15 @@ public class BusinessLogic {
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
     }
-
+    //Generates using chatgpt
     public String generate(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
         return cgpt.generate(ingredients, mealtype);
     }
 
+    public String generateTitle(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
+        return cgpt.generateTitle(ingredients, mealtype);
+    }
+    //Transcribes using whisper
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         return wspr.transcribe(recording);
     }

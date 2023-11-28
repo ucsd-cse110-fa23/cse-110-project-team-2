@@ -27,8 +27,6 @@ public class MyServer {
         new InetSocketAddress(SERVER_HOSTNAME, SERVER_PORT),
         0);
 
-    // TODO: create the context
-    //HttpContext context = createContext("/", new RequestHandler(data));
     RecipeRequestHandler request = new RecipeRequestHandler(data);
     server.createContext("/", request);
 
@@ -36,12 +34,11 @@ public class MyServer {
     server.createContext("/generate", gpthandler);
 
     WhisperHandler whisperhandler = new WhisperHandler(bl);
+      
     server.createContext("/transcribe", whisperhandler);
 
-    // TODO: set the executor
     server.setExecutor(threadPoolExecutor);
 
-    // TODO: start the server
     server.start();
 
     System.out.println("Server started on port " + SERVER_PORT);
