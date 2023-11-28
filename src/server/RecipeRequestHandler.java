@@ -7,14 +7,14 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class RequestHandler implements HttpHandler {
+public class RecipeRequestHandler implements HttpHandler {
     //private final Map<String, String> data;
     private final ArrayList<String> data;
     //private int postCount = 0;
     //private int getCount = 0;
     private int count = 0;
 
-    public RequestHandler(ArrayList<String> data) {
+    public RecipeRequestHandler(ArrayList<String> data) {
         this.data = data;
     }
 

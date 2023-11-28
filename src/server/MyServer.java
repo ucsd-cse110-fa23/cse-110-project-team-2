@@ -20,6 +20,7 @@ public class MyServer {
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
     // create a map to store data
+    BusinessLogic bl = new BusinessLogic();
     ArrayList<String> data = new ArrayList<String>();
     //Map<String, String> data = new HashMap<>();
 
@@ -30,9 +31,12 @@ public class MyServer {
 
     // TODO: create the context
     //HttpContext context = createContext("/", new RequestHandler(data));
-    RequestHandler request = new RequestHandler(data);
+    RecipeRequestHandler request = new RecipeRequestHandler(data);
     server.createContext("/", request);
 
+    GPTHandler gpthandler = new GPTHandler(bl);
+    server.createContext("/generate", gpthandler);
+    
     // TODO: set the executor
     server.setExecutor(threadPoolExecutor);
 
