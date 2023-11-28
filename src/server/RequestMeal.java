@@ -29,7 +29,7 @@ public class RequestMeal implements HttpHandler {
                 response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
                 response = handlePost(httpExchange);
-                //valid = handlePost(httpExchange);
+                // Check if response is a valid option e.i. breakfast, lunch, dinner
             } else {
                 throw new Exception("Not Valid Request Method");
             }
@@ -54,17 +54,12 @@ public class RequestMeal implements HttpHandler {
         //you're assuming you have access to the recording already
         String transcription = model.getWhisperTranscription();
         model.setMealType(transcription);
-        String response = "false"; //we only need this for testing purposes
+        String response = "false";
         if (model.getMealType().equals("Breakfast") || model.getMealType().equals("Lunch") || 
         model.getMealType().equals("Dinner")) {
-            response = "Valid meal type";
-            // maybe in UI we can have an if statement to check if its valid
-            // for example when we post do a post recording and then do a post of meal type and it's invalid
-            // then we can return false outside this if statement.
-            // so if this return false, then UI should prompt user to say the meal type again
+            response = "valid meal type";
             return response;
         }
-        //return false;
         return response;
     }
     

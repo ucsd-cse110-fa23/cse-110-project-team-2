@@ -47,10 +47,10 @@ public class RequestTranscription implements HttpHandler {
     }
 
     private String handlePost(HttpExchange httpExchange) throws IOException, URISyntaxException {
-        String transcription = model.getWhisperTranscription();//if we use correct input for recording then we won't get throw errors
-        String response = transcription;
+        String transcription = model.getWhisperTranscription();
         model.setTranscription(transcription);
-
+        
+        String response = transcription;
         return response;
     }
 }

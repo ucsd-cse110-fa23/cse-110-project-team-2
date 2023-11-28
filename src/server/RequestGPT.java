@@ -36,12 +36,10 @@ public class RequestGPT implements HttpHandler {
         outStream.write(response.getBytes());
         outStream.close();
     }
-
     private String handleGet(HttpExchange httpExchange) throws IOException {
         String response = model.getRecipe();
         return response;
     }
-
     private String handlePost(HttpExchange httpExchange) throws IOException, JSONException, URISyntaxException, InterruptedException {
         String recipeTitle = model.getGPTRecipeTitle();
         String recipe = model.getGPTRecipe();
@@ -49,7 +47,6 @@ public class RequestGPT implements HttpHandler {
 
         model.setRecipe(recipeData);
         String response = recipeData;
-
         return response;
     }
 }

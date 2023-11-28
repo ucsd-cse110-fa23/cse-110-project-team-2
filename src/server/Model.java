@@ -66,13 +66,5 @@ public class Model {
         this.recipe = recipe;
     }
 }
-//model should have the post, get methods
-
-//put handle method here and make it have different if statements for different types of posts, in reality we only need one perform request in controller
-
-/*
- * Requesthandler for recipeData(homescreen)
- * Requesthandler for mealType (promptscreen)
- */
 
 
