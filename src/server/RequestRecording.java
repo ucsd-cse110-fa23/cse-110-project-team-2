@@ -39,7 +39,30 @@ public class RequestRecording implements HttpHandler {
     }
 
     private String handlePost(HttpExchange httpExchange) throws IOException {
-        String CRLF = "\r\n";
+        InputStream inStream = httpExchange.getRequestBody();
+        //Get filename from header - taken from ChatGPT 3.5
+        // prompt used: "write me code for receiving a file through an http request using java"
+        String fileName = httpExchange.getRequestHeaders().getFirst("Content-Disposition")
+                        .replaceFirst(".*filename=\"([^\"]+)\".*", "$1");
+
+        // Save the uploaded file to the server
+        OutputStream outputStream = new FileOutputStream("recording2.wav");
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        outputStream.close();
+        inStream.close();
+        //end of ChatGPT code
+
+        //Create response through Whisper
+        File f = new File("recording2.wav");
+        model.setRecording(f);
+        String response = "recording uploaded to database";
+        return response;
+
+        /*String CRLF = "\r\n";
         int fileSize = 0;
         // expected file format to receive
         String FILE_TO_RECEIVED = "recording.wav";
@@ -77,7 +100,7 @@ public class RequestRecording implements HttpHandler {
              * write(byte[] b, int off, int len)
              * Writes len bytes from the specified byte array starting at offset off to this buffered output stream.
              */
-            bos.flush();
+            /*bos.flush();
         }
 
         httpExchange.sendResponseHeaders(200, 0);
@@ -86,10 +109,10 @@ public class RequestRecording implements HttpHandler {
         model.setRecording(f);// might have to set the model to an audio file specifics, use recorder.java for reference
 
         String response = "did it work?";
-        return response;
+        return response;*/
     }
 
-    private static String readLine(InputStream is, String lineSeparator)
+    /*private static String readLine(InputStream is, String lineSeparator)
             throws IOException {
                 
         int off = 0, i = 0;
@@ -117,5 +140,5 @@ public class RequestRecording implements HttpHandler {
         }
         throw new IOException(
                 "Reached end of stream while reading the current line!");
-    }
+    }*/
 }

@@ -2,6 +2,8 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -75,8 +77,52 @@ public class Controller {
     // https://stackoverflow.com/questions/37869483/transfer-audio-file-from-client-to-http-server-via-urlconnection
     // citation: transfering a File recording from client to server side.
     public String performRequestRecording(String method, File recording) {
+        //Code taken from ChatGPT 3.5
+        //Prompt used; write me code to send a file to this server using java
+        //Done after the prompt used in WhisperHandler
+        try{
+            String serverUrl = "http://localhost:8100/recording";
+            if (!recording.exists()) {
+                throw new FileNotFoundException("File Not Found");
+            }
+    
+            URL url = new URI(serverUrl).toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    
+            connection.setRequestMethod(method);
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/octet-stream");
+            connection.setRequestProperty("Content-Disposition", "attachment; filename=\"" + recording.getName() + "\"");
+    
+            OutputStream outputStream = connection.getOutputStream();
+            FileInputStream fileInputStream = new FileInputStream(recording);
+    
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+    
+            outputStream.flush();
+            outputStream.close();
+            fileInputStream.close();
+    
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Reading the response from the server
+                String response = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                connection.disconnect();
+                return response;
+            } else {
+                connection.disconnect();
+                return "File upload failed with response code: " + responseCode;
+            }   
+        } catch (Exception e){
+            e.printStackTrace();
+            return "Error: File Not Found";
+        }
         // Implement your HTTP request logic here and return the response
-        try {
+        /*try {
             String urlString = "http://localhost:8100/recording";
             File uploadFile = recording;
             URL url = new URI(urlString).toURL();
@@ -113,7 +159,7 @@ public class Controller {
         } catch (Exception ex) {
             ex.printStackTrace();
             return "Error: " + ex.getMessage();
-        }
+        }*/
     }
     public String performRequestTranscription(String method) {
         // Implement your HTTP request logic here and return the response
@@ -144,8 +190,8 @@ public class Controller {
             conn.setRequestMethod(method);
             conn.setDoOutput(true);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String response = in.readLine();
+            InputStream in = conn.getInputStream();
+            String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             in.close();
             return response;
         } catch (Exception ex) {

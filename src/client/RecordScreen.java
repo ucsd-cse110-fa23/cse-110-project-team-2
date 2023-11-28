@@ -62,6 +62,7 @@ public class RecordScreen extends Screen {
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
             File recordingFile = recording.toFile();
+            System.out.println(recordingFile.toString());
 
             String responseOfRecording = controller.performRequestRecording("POST", recordingFile);
             String transcription = controller.performRequestTranscription("POST");

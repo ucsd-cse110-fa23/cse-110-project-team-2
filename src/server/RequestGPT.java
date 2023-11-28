@@ -22,10 +22,6 @@ public class RequestGPT implements HttpHandler {
                 response = handleGet(httpExchange);
             } else if (method.equals("POST")) {
                 response = handlePost(httpExchange);
-            } else if (method.equals("GETTITLE")) {
-                response = handleGetTitle(httpExchange);
-            } else if (method.equals("POSTTITLE")) {
-                response = handlePostTitle(httpExchange);
             } else {
                 throw new Exception("Not Valid Request Method");
             }
@@ -47,21 +43,12 @@ public class RequestGPT implements HttpHandler {
     }
 
     private String handlePost(HttpExchange httpExchange) throws IOException, JSONException, URISyntaxException, InterruptedException {
-        String recipe = model.getGPTRecipe();//if we use correct input for recording then we won't get throw errors
-        String response = recipe;
-        model.setRecipe(recipe);
+        String recipeTitle = model.getGPTRecipeTitle();
+        String recipe = model.getGPTRecipe();
+        String recipeData = recipeTitle + "@" + recipe;
 
-        return response;
-    }
-    private String handleGetTitle(HttpExchange httpExchange) throws IOException {
-        String response = model.getRecipeTitle();
-        return response;
-    }
-
-    private String handlePostTitle(HttpExchange httpExchange) throws IOException, JSONException, URISyntaxException, InterruptedException {
-        String recipeTitle = model.getGPTRecipeTitle();//if we use correct input for recording then we won't get throw errors
-        String response = recipeTitle;
-        model.setRecipeTitle(recipeTitle);
+        model.setRecipe(recipeData);
+        String response = recipeData;
 
         return response;
     }

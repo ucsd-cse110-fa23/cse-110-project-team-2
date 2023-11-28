@@ -41,7 +41,7 @@ public class MyServer {
     RequestTranscription requestTranscription = new RequestTranscription(model);
     server.createContext("/transcription", requestTranscription);
 
-    RequestGPT requestGPT= new RequestGPT(model);
+    RequestGPT requestGPT = new RequestGPT(model);
     server.createContext("/gpt", requestGPT);
 
     //RequestRecipe requestRecipe = new RequestRecipe(data, model);

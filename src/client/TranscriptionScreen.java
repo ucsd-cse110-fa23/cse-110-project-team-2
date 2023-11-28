@@ -51,9 +51,14 @@ public class TranscriptionScreen extends Screen{
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
         String responseOfRecipePost = controller.performRequestGPT("POST");
-        String responseOfRecipeTitlePost = controller.performRequestGPT("POSTTITLE");
-        recipe = controller.performRequestGPT("GET");
-        recipeTitle = controller.performRequestGPT("GETTITLE");
+        String recipeData = controller.performRequestGPT("GET");
+
+        System.out.println(recipeData);
+
+        String[] parsedData = recipeData.split("@");
+        recipeTitle = parsedData[0];
+        recipe = parsedData[1];
+
         date = new Date();
 
         Screen nextScreen = createNextScreen();

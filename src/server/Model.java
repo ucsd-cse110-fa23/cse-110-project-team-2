@@ -13,12 +13,12 @@ public class Model {
     private Whisper useWhisper;
     private ChatGPT gpt;
     private Map<String, String> recipeData;
-    // will be used when user says meal type and their ingredients
+    
+    // should be a place in mongoDB to store these before a recipe is officially added into the list
     File recording;
     String mealType;
     String transcription;
     String recipe;
-    String recipeTitle;
 
     public Model() {
         this.useWhisper = new Whisper();
@@ -52,9 +52,6 @@ public class Model {
     public String getRecipe() {
         return recipe;
     }
-    public String getRecipeTitle() {
-        return recipeTitle;
-    }
 
     public void setRecording(File recording) {
         this.recording = recording;
@@ -68,10 +65,6 @@ public class Model {
     public void setRecipe(String recipe) {
         this.recipe = recipe;
     }
-    public void setRecipeTitle(String recipeTitle) {
-        this.recipeTitle = recipeTitle;
-    }
-    
 }
 //model should have the post, get methods
 
