@@ -7,6 +7,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -101,7 +103,22 @@ public class RequestSender {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
             conn.setDoOutput(true);
-
+            ingredients = 
+            """
+            Ingredients:
+        
+        -2 large eggs
+        
+        -3 ounces of cooked ham, cubed
+        
+        -2 tablespoons of butter
+        
+        -½ cup of shredded cheese (cheddar, Parmesan, or your preferred type)
+        -½ teaspoon of Italian seasoning
+        -Salt and pepper to taste
+        
+        
+        """;
             //JSONObject requestBody = new JSONObject();
             //requestBody.put("ingredients", ingredients);
             //requestBody.put("type", mealtype);
@@ -112,10 +129,13 @@ public class RequestSender {
                 out.flush();
                 out.close();
             }
-            InputStream in = conn.getInputStream();
-            String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-            //System.out.println(response);
-            in.close();
+            int responseCode = conn.getResponseCode();       
+            String response = "Failed";
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Reading the response from the server
+                response = new String(conn.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                conn.disconnect();
+            }
             System.out.println(response + "this is here");
             return response;
         } catch (Exception ex) {

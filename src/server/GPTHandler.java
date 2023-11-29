@@ -34,17 +34,18 @@ public class GPTHandler implements HttpHandler{
         }
         // Sending back response to the client
         //System.out.println(response);
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        // File f = new File("test.txt");
         OutputStream outStream = httpExchange.getResponseBody();
-        //OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
-        outStream.write(response.getBytes(StandardCharsets.UTF_8));
-        outStream.flush();
-        outStream.close();
+        // OutputStream outStream = new FileOutputStream(f);
+        OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
+        out.write(response);
+        out.close();
     }
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String requestBody = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
-
+        System.out.println("request body: " + requestBody);
         
         //Expects a json to be used as request body, with ingredients and type as keys
         /*JSONObject requestJson = new JSONObject(requestBody);
@@ -52,7 +53,7 @@ public class GPTHandler implements HttpHandler{
         String mealtype = requestJson.getString("type");
         JSONObject responseJson = new JSONObject();*/
         String test = """
-            Ingredients:
+        Ingredients:
         
         -2 large eggs
         
@@ -74,7 +75,6 @@ public class GPTHandler implements HttpHandler{
 
         // new code starts here
         String[] parseData = requestBody.split("@");
-        System.out.println(requestBody);
         String ingredients = parseData[0];
         String mealtype = parseData[1];
 
@@ -82,7 +82,7 @@ public class GPTHandler implements HttpHandler{
         String recipeTitle = "title";
 
         String response = recipeTitle + "@" + recipe;
-        System.out.println(response);
+        System.out.println("response:" + response);
         
         return response;
     }
