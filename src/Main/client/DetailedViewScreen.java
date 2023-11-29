@@ -4,20 +4,31 @@ package client;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class DetailedViewScreen extends Screen {
     private Recipe currentRecipe;
     private TextField currentRecipeTitle;
     private TextArea currentRecipeBody;
+    private ImageView currentRecipeImage;
 
     DetailedViewScreen(Recipe currentRecipe) {
         this.currentRecipe = currentRecipe;
+        this.currentRecipeImage = currentRecipe.getRecipeImage();
         
         setHeaderText("Current Recipe: " + currentRecipe.getRecipeTitle());
         setFooterButtons("Back", "Delete", "Edit");
         setLeftButtonAction("PantryPal", this::changeScreenUpdateRecipe);
         setCenterButtonAction("PantryPal", this::changeScreenDeleteRecipe);
         setRightButtonAction("Editing", this::changeNextScreenEvent);
+
+        System.out.println("CURRENT RECIPE IMAGE IS: " + currentRecipe.getRecipeImage());
+
+        // ImageView testImageView = new ImageView();
+        // Image testImage = new Image("file:recipeImage.png");
+
+        // testImageView.setImage(testImage);
 
         currentRecipeTitle = new TextField(currentRecipe.getRecipeTitle());
         currentRecipeBody = new TextArea(currentRecipe.getRecipe());
@@ -26,6 +37,8 @@ public class DetailedViewScreen extends Screen {
         currentRecipeBody.setEditable(false);
         currentRecipeBody.setWrapText(true);
 
+        // this.setTop(testImageView);
+        this.setTop(currentRecipeImage);
         this.setCenter(currentRecipeBody);
     }
 

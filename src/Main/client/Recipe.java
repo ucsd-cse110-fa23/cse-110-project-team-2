@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -15,11 +16,11 @@ public class Recipe extends HBox{
     private String recipeTitle;
     private String recipe;
     private String mealType;
-    private Image recipeImage;
+    private ImageView recipeImage;
     private Date date;
     private Button recipeButton;
 
-    Recipe(String recipeTitle, String recipe, String mealType, Image recipeImage, Date date){
+    Recipe(String recipeTitle, String recipe, String mealType, ImageView recipeImage, Date date){
         this.recipeTitle = recipeTitle;
         this.recipe = recipe;
         this.mealType = mealType;
@@ -55,8 +56,8 @@ public class Recipe extends HBox{
     public Button getRecipeButton() {
         return recipeButton;
     }
-   
-    public Image getRecipeImage() {
+
+    public ImageView getRecipeImage() {
         return recipeImage;
     }
 

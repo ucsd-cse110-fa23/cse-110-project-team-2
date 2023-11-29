@@ -66,13 +66,14 @@ public class DallE implements DallEInterface{
         // System.out.println("DALL-E Response: ");
         // System.out.println(generatedImageURL);
 
+        String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
 
         // Download the Generated Image to Current Directory
         try(
             InputStream in = new URI(generatedImageURL).toURL().openStream()
         )
         {
-            Files.copy(in, Paths.get("recipeImage.png"));
+            Files.copy(in, Paths.get(recipeFileName+".png"));
         }
 
     }

@@ -8,6 +8,7 @@ import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TranscriptionScreen extends Screen{
     public static String ingredients;
@@ -15,7 +16,7 @@ public class TranscriptionScreen extends Screen{
     private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
-    private Image recipeImage;
+    private ImageView recipeImage;
     private Date date;
     private TextArea ingredArea;
     private DallE dallE;
@@ -78,7 +79,11 @@ public class TranscriptionScreen extends Screen{
                     "6. Serve hot and enjoy!";
             recipeTitle = "Herb-Crusted Chicken and Egg Bake";
             dallE.image(recipeTitle);
-            recipeImage = new Image("file:../../../recipeImage.png");
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            System.out.println("currImage points to: " + currImage);
+            recipeImage = new ImageView();
+            recipeImage.setImage(currImage);
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();

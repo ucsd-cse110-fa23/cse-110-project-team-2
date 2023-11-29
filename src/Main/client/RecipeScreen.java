@@ -17,14 +17,14 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private String ingreds;
     private String mealType;
-    private Image recipeImage;
+    private ImageView recipeImage;
     private DallE dallE;
     private RequestSender request;
     private Recipe recipeObj;
     private Date date;
     private ChatGPT gpt;
 
-    RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, Image recipeImage, Date date){
+    RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, ImageView recipeImage, Date date){
         setHeaderText("Here is your recipe!");
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
@@ -32,10 +32,10 @@ public class RecipeScreen extends Screen{
         this.recipeImage = recipeImage;
         this.date = date;
         this.ingreds = ingreds;
-        ImageView recipeImageView = new ImageView(recipeImage);
-        recipeImageView.setFitHeight(50);
-        recipeImageView.setFitWidth(50);
-        recipeImageView.setPreserveRatio(true);
+        System.out.println("RECIPE IMAGE IS: " + recipeImage);
+        recipeImage.setFitHeight(250);
+        recipeImage.setFitWidth(250);
+        recipeImage.setPreserveRatio(true);
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
@@ -45,6 +45,7 @@ public class RecipeScreen extends Screen{
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
         setCenterButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
         setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
+        this.setTop(recipeImage);
         this.setCenter(generatedRecipe);
         this.request = new RequestSender();
     }
@@ -76,7 +77,9 @@ public class RecipeScreen extends Screen{
             recipe = gpt.generate(ingreds, mealType);
             recipeTitle = gpt.generateTitle(ingreds, mealType);
             dallE.image(recipeTitle);
-            recipeImage = new Image("file:../../../recipeImage.png");
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            recipeImage.setImage(currImage);
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();

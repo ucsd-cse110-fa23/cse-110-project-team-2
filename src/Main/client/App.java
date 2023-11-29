@@ -7,6 +7,7 @@ import java.sql.Date;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -31,7 +32,10 @@ public class App extends Application {
             String recipeTitle = response.substring(0,response.indexOf(",")); 
             String recipe = response.substring(response.indexOf(",") + 1);
             String mealType = response.substring(response.indexOf(",") + 2);
-            Image recipeImage = new Image("file:../../../recipeImage.png");
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            ImageView recipeImage = new ImageView();
+            recipeImage.setImage(currImage);
             Date date = new Date(10);
             Recipe recipeObj = new Recipe(recipeTitle, recipe, mealType, recipeImage, date);
             AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
