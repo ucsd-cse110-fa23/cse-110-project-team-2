@@ -21,7 +21,7 @@ public class testRegen extends mockRegen{
         String mockMealType = "Breakfast";
         mockRegen regen= new mockRegen();
         Pair<String,String> actual = regen.regen(mockIngredients, mockMealType);
-        Pair<String,String> expected = new Pair<String,String>("Chicken and egg scramble", "Scramble eggs with chicken on pan");
+        Pair<String,String> expected = new Pair<String,String>("Scramble eggs with chicken on pan", "Chicken and egg scramble");
         assertEquals(expected, actual);
     }
 }
