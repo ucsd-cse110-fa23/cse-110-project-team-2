@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import org.json.JSONObject;
+
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 
@@ -14,7 +16,7 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private String ingreds;
     private String mealType;
-    private RequestSender request;
+    private RequestSender request = new RequestSender();
     private Recipe recipeObj;
     private Date date;
     private ChatGPT gpt;
@@ -32,7 +34,20 @@ public class RecipeScreen extends Screen{
         generatedRecipe.setWrapText(true);
         setFooterButtons("Cancel", "Regenerate", "Save");
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
-        setCenterButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
+        setCenterButtonAction("PantryPal", arg0 -> {
+            try {
+                changeScreenGenerateRecipeEvent(arg0);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
         this.setCenter(generatedRecipe);
         this.request = new RequestSender();
@@ -59,19 +74,16 @@ public class RecipeScreen extends Screen{
         changeScreen(nextScreen);
     } 
 
-    public void changeScreenGenerateRecipeEvent (ActionEvent e) {
-        gpt = new ChatGPT();
-        try {
-            recipe = gpt.generate(ingreds, mealType);
-            recipeTitle = gpt.generateTitle(ingreds, mealType);
-            date = new Date();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        }
+    public void changeScreenGenerateRecipeEvent (ActionEvent e) throws URISyntaxException, IOException, InterruptedException {
+            String data = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
+            JSONObject dataJson = new JSONObject(data);
+            recipe = dataJson.getString("recipe");
+            recipeTitle = dataJson.getString("title");
+            /*String recipeData = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
+            String[] parsedData = recipeData.split("@");
+            recipeTitle = parsedData[0];
+            recipe = parsedData[1];
+            date = new Date();*/
         Screen sameScreen = createSameScreen();
         changeScreen(sameScreen);
     } 

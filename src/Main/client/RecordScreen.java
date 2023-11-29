@@ -20,6 +20,7 @@ public class RecordScreen extends Screen {
     private Boolean isRecording = false;
     private Recorder recorder;
     private Whisper testWhisper = new Whisper();
+    private RequestSender request = new RequestSender();
 
     RecordScreen(String type) {
         recipeType = type;
@@ -59,7 +60,8 @@ public class RecordScreen extends Screen {
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
-            moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
+
+            moveToNextScreen(AppFrame.getRequest().performTranscribe(recording.toFile()), getRecipeType());
         }
     }
 
