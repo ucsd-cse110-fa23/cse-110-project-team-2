@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Pair;
 
 public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
@@ -23,6 +24,8 @@ public class RecipeScreen extends Screen{
     private Recipe recipeObj;
     private Date date;
     private ChatGPT gpt;
+    private Regenerate regen;
+    private Pair<String, String> recipePair;
 
     RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, ImageView recipeImage, Date date){
         setHeaderText("Here is your recipe!");
@@ -73,10 +76,11 @@ public class RecipeScreen extends Screen{
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
         gpt = new ChatGPT();
+        regen = new Regenerate();
         try {
-            recipe = gpt.generate(ingreds, mealType);
-            recipeTitle = gpt.generateTitle(ingreds, mealType);
-            dallE.image(recipeTitle);
+            recipePair = regen.regen(ingreds, mealType);
+            recipe = recipePair.getKey();
+            recipeTitle = recipePair.getValue();
             String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
             Image currImage = new Image("file:"+recipeFileName+".png");
             recipeImage.setImage(currImage);

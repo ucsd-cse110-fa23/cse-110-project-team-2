@@ -16,12 +16,14 @@ import javafx.scene.image.Image;
 
 public class testImgGen{
     private File imageFile;
+    private String recipeFileName;
     @Test
     public void testRegen() throws IOException, InterruptedException, URISyntaxException{
-        String mockTitle = "Chicken Omlette";
+        String mockTitle = "Herb-Crusted Chicken and Egg Bake";
         mockDallE dallE = new mockDallE();
         dallE.image(mockTitle);
-        imageFile = new File("src/main/client/recipeImage.png");
-        assertTrue(imageFile.exists());
+        recipeFileName = mockTitle.replaceAll("\\s+", "_").toLowerCase();
+        imageFile = new File(recipeFileName + ".png");
+        assertTrue(imageFile.exists(), "Image should exist");
     }
 }

@@ -59,8 +59,8 @@ public class RecordScreen extends Screen {
             recordButton.setStyle("-fx-background-color: #43ED58;");
             recorder.stopRecording();
             Path recording = Paths.get("./recording.wav");
-            moveToNextScreen("Chicken and eggs", getRecipeType());
-            // moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
+            // moveToNextScreen("Chicken and eggs", getRecipeType());
+            moveToNextScreen(testWhisper.transcribe(recording.toFile()), getRecipeType());
         }
     }
 
