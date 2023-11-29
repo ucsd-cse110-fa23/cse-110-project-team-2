@@ -12,13 +12,16 @@ import java.net.URISyntaxException;
 import org.json.JSONException;
 
 import client.ChatGPT;
+import javafx.scene.image.Image;
 
 public class testImgGen{
+    private File imageFile;
     @Test
     public void testRegen() throws IOException, InterruptedException, URISyntaxException{
         String mockTitle = "Chicken Omlette";
-        mockGPT gpt = new mockDallE();
-        String s = gpt.generate(mockTitle);
-        assertEquals(s, "regenerated");
+        mockDallE dallE = new mockDallE();
+        dallE.image(mockTitle);
+        imageFile = new File("src/main/client/recipeImage.png");
+        assertTrue(imageFile.exists());
     }
 }

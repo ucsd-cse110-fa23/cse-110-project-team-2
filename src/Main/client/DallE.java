@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class DallE {
+public class DallE implements DallEInterface{
     private static final String API_ENDPOINT = "https://api.openai.com/v1/images/generations";
     private static final String API_KEY = "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";
     private static final String MODEL = "dall-e-2";
@@ -59,13 +59,12 @@ public class DallE {
         // Process the response
         String responseBody = response.body();
 
-
         JSONObject responseJson = new JSONObject(responseBody);
         
         String generatedImageURL = responseJson.getJSONArray("data").getJSONObject(0).getString("url");
         
-        System.out.println("DALL-E Response: ");
-        System.out.println(generatedImageURL);
+        // System.out.println("DALL-E Response: ");
+        // System.out.println(generatedImageURL);
 
 
         // Download the Generated Image to Current Directory
@@ -73,7 +72,7 @@ public class DallE {
             InputStream in = new URI(generatedImageURL).toURL().openStream()
         )
         {
-            Files.copy(in, Paths.get("image.jpg"));
+            Files.copy(in, Paths.get("recipeImage.png"));
         }
 
     }

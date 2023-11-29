@@ -5,6 +5,6 @@ import java.io.*;
 import java.net.*;
 import org.json.*;
 
-public class DallEInterface {
-    public String generate(String mealTitle) throws IOException, InterruptedException, URISyntaxException;
+public interface DallEInterface {
+    public void image(String mealTitle) throws IOException, InterruptedException, URISyntaxException;
 }

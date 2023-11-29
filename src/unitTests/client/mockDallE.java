@@ -7,5 +7,7 @@ import org.json.JSONException;
 
 public class mockDallE implements DallEInterface{
     @Override
-    public String generate(String mealType) {return "regenerated";}
+    public void image(String mealType) {
+        System.out.println("image generated");
+    }
 }

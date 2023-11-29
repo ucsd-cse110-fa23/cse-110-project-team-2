@@ -1,11 +1,13 @@
 package client;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 
 public class TranscriptionScreen extends Screen{
     public static String ingredients;
@@ -13,8 +15,10 @@ public class TranscriptionScreen extends Screen{
     private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
+    private Image recipeImage;
     private Date date;
     private TextArea ingredArea;
+    private DallE dallE;
 
     TranscriptionScreen(String transcription, String type){
         ingredients = transcription;
@@ -30,7 +34,7 @@ public class TranscriptionScreen extends Screen{
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe, recipeTitle, ingredients, mealType, date);
+        return new RecipeScreen(recipe, recipeTitle, ingredients, mealType, recipeImage, date);
     }
 
     @Override
@@ -48,9 +52,12 @@ public class TranscriptionScreen extends Screen{
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
         gpt = new ChatGPT();
+        dallE = new DallE();
         try {
             recipe = gpt.generate(ingredients, mealType);
             recipeTitle = gpt.generateTitle(ingredients, mealType);
+            dallE.image(recipeTitle);
+            recipeImage = new Image(new File("../../../recipeImage.png").toURI().toString());
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();

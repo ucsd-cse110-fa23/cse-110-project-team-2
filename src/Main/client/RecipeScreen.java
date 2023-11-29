@@ -1,12 +1,15 @@
 package client;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
@@ -14,17 +17,25 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private String ingreds;
     private String mealType;
+    private Image recipeImage;
+    private DallE dallE;
     private RequestSender request;
     private Recipe recipeObj;
     private Date date;
     private ChatGPT gpt;
 
-    RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, Date date){
+    RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, Image recipeImage, Date date){
         setHeaderText("Here is your recipe!");
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
+        this.mealType = mealType;
+        this.recipeImage = recipeImage;
         this.date = date;
         this.ingreds = ingreds;
+        ImageView recipeImageView = new ImageView(recipeImage);
+        recipeImageView.setFitHeight(50);
+        recipeImageView.setFitWidth(50);
+        recipeImageView.setPreserveRatio(true);
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
@@ -49,12 +60,12 @@ public class RecipeScreen extends Screen{
     }
 
     protected Screen createSameScreen() {
-        return new RecipeScreen(recipe, recipeTitle, ingreds, mealType, date);
+        return new RecipeScreen(recipe, recipeTitle, ingreds, mealType, recipeImage, date);
     }
 
     public void changeScreenSaveRecipe (ActionEvent e) {
         Screen nextScreen = new HomeScreen();
-        recipeObj = new Recipe(recipeTitle, recipe, date);
+        recipeObj = new Recipe(recipeTitle, recipe, mealType, recipeImage, date);
         AppFrame.getAppRecipeList().getChildren().add(0, recipeObj);
         changeScreen(nextScreen);
     } 
@@ -64,6 +75,8 @@ public class RecipeScreen extends Screen{
         try {
             recipe = gpt.generate(ingreds, mealType);
             recipeTitle = gpt.generateTitle(ingreds, mealType);
+            dallE.image(recipeTitle);
+            recipeImage = new Image(new File("../../../recipeImage.png").toURI().toString());;
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();
