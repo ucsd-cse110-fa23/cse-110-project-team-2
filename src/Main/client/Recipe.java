@@ -6,6 +6,8 @@ import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -13,12 +15,16 @@ import javafx.stage.Window;
 public class Recipe extends HBox{
     private String recipeTitle;
     private String recipe;
+    private String mealType;
+    private ImageView recipeImage;
     private Date date;
     private Button recipeButton;
 
-    Recipe(String recipeTitle, String recipe, Date date){
+    Recipe(String recipeTitle, String recipe, String mealType, ImageView recipeImage, Date date){
         this.recipeTitle = recipeTitle;
         this.recipe = recipe;
+        this.mealType = mealType;
+        this.recipeImage = recipeImage;
         this.date = date;
 
         this.setPrefSize(500, 20); // sets size of Contact
@@ -49,6 +55,10 @@ public class Recipe extends HBox{
 
     public Button getRecipeButton() {
         return recipeButton;
+    }
+
+    public ImageView getRecipeImage() {
+        return recipeImage;
     }
 
     //setter for recipe
