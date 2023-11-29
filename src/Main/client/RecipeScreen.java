@@ -76,7 +76,7 @@ public class RecipeScreen extends Screen{
             recipe = gpt.generate(ingreds, mealType);
             recipeTitle = gpt.generateTitle(ingreds, mealType);
             dallE.image(recipeTitle);
-            recipeImage = new Image(new File("../../../recipeImage.png").toURI().toString());;
+            recipeImage = new Image("file:../../../recipeImage.png");
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();

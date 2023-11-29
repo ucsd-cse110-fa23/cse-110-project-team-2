@@ -31,7 +31,7 @@ public class App extends Application {
             String recipeTitle = response.substring(0,response.indexOf(",")); 
             String recipe = response.substring(response.indexOf(",") + 1);
             String mealType = response.substring(response.indexOf(",") + 2);
-            Image recipeImage = new Image(new File("../../../recipeImage.png").toURI().toString());
+            Image recipeImage = new Image("file:../../../recipeImage.png");
             Date date = new Date(10);
             Recipe recipeObj = new Recipe(recipeTitle, recipe, mealType, recipeImage, date);
             AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
