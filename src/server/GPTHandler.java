@@ -31,16 +31,11 @@ public class GPTHandler implements HttpHandler{
             e.printStackTrace();
         }
         // Sending back response to the client
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream outStream = httpExchange.getResponseBody();
-        outStream.write(response.getBytes());
-        outStream.close();
-
-        /*httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream outStream = httpExchange.getResponseBody();
         OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
         out.write(response);
-        out.close();*/
+        out.close();
     }
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
