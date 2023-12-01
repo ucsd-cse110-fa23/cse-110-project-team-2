@@ -78,7 +78,7 @@ public class RecipeScreen extends Screen{
             String recipeData = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
             String[] parsedData = recipeData.split("@");
             recipeTitle = parsedData[0];
-            recipe = parsedData[1];
+            recipe = parsedData[1]; 
             date = new Date();
         Screen sameScreen = createSameScreen();
         changeScreen(sameScreen);
