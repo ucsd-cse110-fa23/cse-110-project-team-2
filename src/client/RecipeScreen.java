@@ -34,20 +34,7 @@ public class RecipeScreen extends Screen{
         generatedRecipe.setWrapText(true);
         setFooterButtons("Cancel", "Regenerate", "Save");
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
-        setCenterButtonAction("PantryPal", arg0 -> {
-            try {
-                changeScreenGenerateRecipeEvent(arg0);
-            } catch (URISyntaxException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        });
+        setCenterButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
         setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
         this.setCenter(generatedRecipe);
         this.request = new RequestSender();
@@ -74,16 +61,19 @@ public class RecipeScreen extends Screen{
         changeScreen(nextScreen);
     } 
 
-    public void changeScreenGenerateRecipeEvent (ActionEvent e) throws URISyntaxException, IOException, InterruptedException {
-            String data = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
+    public void changeScreenGenerateRecipeEvent (ActionEvent e) {
+        try {
+            String data = AppFrame.getRequest().performGenerateRecipe(ingreds, mealType);
+            System.out.println(data);
             JSONObject dataJson = new JSONObject(data);
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
-            /*String recipeData = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
-            String[] parsedData = recipeData.split("@");
-            recipeTitle = parsedData[0];
-            recipe = parsedData[1];
-            date = new Date();*/
+            date = new Date();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
         Screen sameScreen = createSameScreen();
         changeScreen(sameScreen);
     } 

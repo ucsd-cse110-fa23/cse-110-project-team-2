@@ -94,7 +94,7 @@ public class RequestSender {
             return "Error: File Not Found";
         }
     }
-    public String performGenerateRecipe(String method, String ingredients, String mealtype) throws IOException, InterruptedException {
+    public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {
         String urlString = "http://localhost:8100/generate";
             // Create a request body which you will pass into request object
             JSONObject requestBody = new JSONObject();
