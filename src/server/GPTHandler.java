@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 public class GPTHandler implements HttpHandler{
-
     BusinessLogic bl;
 
     public GPTHandler(BusinessLogic bl){
@@ -18,7 +17,6 @@ public class GPTHandler implements HttpHandler{
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "Request Received";
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
 
         try {
             if (method.equals("POST")) {
@@ -33,25 +31,26 @@ public class GPTHandler implements HttpHandler{
             e.printStackTrace();
         }
         // Sending back response to the client
-        //System.out.println(response);
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        // File f = new File("test.txt");
+        httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
-        // OutputStream outStream = new FileOutputStream(f);
+        outStream.write(response.getBytes());
+        outStream.close();
+
+        /*httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream outStream = httpExchange.getResponseBody();
         OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
         out.write(response);
-        out.close();
+        out.close();*/
     }
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String requestBody = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
-        System.out.println("request body: " + requestBody);
         
         //Expects a json to be used as request body, with ingredients and type as keys
-        /*JSONObject requestJson = new JSONObject(requestBody);
+        JSONObject requestJson = new JSONObject(requestBody);
         String ingredients = requestJson.getString("ingredients");
         String mealtype = requestJson.getString("type");
-        JSONObject responseJson = new JSONObject();*/
+        JSONObject responseJson = new JSONObject();
         String test = """
         Ingredients:
         
@@ -63,26 +62,13 @@ public class GPTHandler implements HttpHandler{
         
         -½ cup of shredded cheese (cheddar, Parmesan, or your preferred type)
         -½ teaspoon of Italian seasoning
-        -Salt and pepper to taste
-        
-        
+        -Salt and pepper to taste    
         """;
-        /*responseJson.put("recipe",test);
+        responseJson.put("recipe",test);
+        responseJson.put("title","fakeTitle");
         //responseJson.put("recipe",bl.generate(ingredients, mealtype));
-        responseJson.put("title",bl.generateTitle(ingredients, mealtype));
-        System.out.println(responseJson.getString("recipe"));
-        String response = responseJson.toString();*/
-
-        // new code starts here
-        String[] parseData = requestBody.split("@");
-        String ingredients = parseData[0];
-        String mealtype = parseData[1];
-
-        String recipe = test;
-        String recipeTitle = "title";
-
-        String response = recipeTitle + "@" + recipe;
-        System.out.println("response:" + response);
+        //responseJson.put("title",bl.generateTitle(ingredients, mealtype));
+        String response = responseJson.toString();
         
         return response;
     }

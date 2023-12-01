@@ -95,60 +95,12 @@ public class RequestSender {
         }
     }
     public String performGenerateRecipe(String method, String ingredients, String mealtype) throws IOException, InterruptedException {
-
-        try {
-            String urlString = "http://localhost:8100/generate";
-            // Create a request body which you will pass into request object
-            URL url = new URI(urlString).toURL();
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(method);
-            conn.setDoOutput(true);
-            ingredients = 
-            """
-            Ingredients:
-        
-        -2 large eggs
-        
-        -3 ounces of cooked ham, cubed
-        
-        -2 tablespoons of butter
-        
-        -½ cup of shredded cheese (cheddar, Parmesan, or your preferred type)
-        -½ teaspoon of Italian seasoning
-        -Salt and pepper to taste
-        
-        
-        """;
-            //JSONObject requestBody = new JSONObject();
-            //requestBody.put("ingredients", ingredients);
-            //requestBody.put("type", mealtype);
-            if (method.equals("POST")) {
-                OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                //out.write(requestBody.toString());
-                out.write(ingredients + "@" + mealtype);
-                out.flush();
-                out.close();
-            }
-            int responseCode = conn.getResponseCode();       
-            String response = "Failed";
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Reading the response from the server
-                response = new String(conn.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-                conn.disconnect();
-            }
-            System.out.println(response + "this is here");
-            return response;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "Error: " + ex.getMessage();
-        }
-    }
-        /*String urlString = "http://localhost:8100/generate";
+        String urlString = "http://localhost:8100/generate";
             // Create a request body which you will pass into request object
             JSONObject requestBody = new JSONObject();
             requestBody.put("ingredients", ingredients);
             requestBody.put("type", mealtype);
-            System.out.println(requestBody.toString());
+
             // Create the HTTP Client
             HttpClient client = HttpClient.newHttpClient();
 
@@ -161,8 +113,6 @@ public class RequestSender {
             .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
             .build();
 
-
-
             // Send the request and receive the response
             HttpResponse<String> response = client.send(
             request,
@@ -172,7 +122,7 @@ public class RequestSender {
             // Process the response
             String responseBody = response.body();
             return responseBody;
-    }*/
+    }
    
 }
 
