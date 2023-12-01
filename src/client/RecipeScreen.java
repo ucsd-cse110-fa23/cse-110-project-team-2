@@ -75,15 +75,11 @@ public class RecipeScreen extends Screen{
     } 
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) throws URISyntaxException, IOException, InterruptedException {
-            String data = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
-            JSONObject dataJson = new JSONObject(data);
-            recipe = dataJson.getString("recipe");
-            recipeTitle = dataJson.getString("title");
-            /*String recipeData = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
+            String recipeData = AppFrame.getRequest().performGenerateRecipe("POST", ingreds, mealType);
             String[] parsedData = recipeData.split("@");
             recipeTitle = parsedData[0];
             recipe = parsedData[1];
-            date = new Date();*/
+            date = new Date();
         Screen sameScreen = createSameScreen();
         changeScreen(sameScreen);
     } 
