@@ -64,7 +64,6 @@ public class RecipeScreen extends Screen{
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
         try {
             String data = AppFrame.getRequest().performGenerateRecipe(ingreds, mealType);
-            System.out.println(data);
             JSONObject dataJson = new JSONObject(data);
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");

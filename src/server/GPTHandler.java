@@ -34,6 +34,7 @@ public class GPTHandler implements HttpHandler{
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream outStream = httpExchange.getResponseBody();
         OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
+        //System.out.println(response);
         out.write(response);
         out.close();
     }

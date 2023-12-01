@@ -95,7 +95,7 @@ public class RequestSender {
         }
     }
     public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {
-        String urlString = "http://localhost:8100/generate";
+            String urlString = "http://localhost:8100/generate";
             // Create a request body which you will pass into request object
             JSONObject requestBody = new JSONObject();
             requestBody.put("ingredients", ingredients);
@@ -121,6 +121,7 @@ public class RequestSender {
             
             // Process the response
             String responseBody = response.body();
+            //System.out.println(responseBody);
             return responseBody;
     }
    
