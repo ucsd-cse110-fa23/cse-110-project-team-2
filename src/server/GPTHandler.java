@@ -46,24 +46,25 @@ public class GPTHandler implements HttpHandler{
         JSONObject requestJson = new JSONObject(requestBody);
         String ingredients = requestJson.getString("ingredients");
         String mealtype = requestJson.getString("type");
+        System.out.println(requestJson.toString());
         JSONObject responseJson = new JSONObject();
-        String test = """
-        Ingredients:
+        // String test = """
+        // Ingredients:
         
-        -2 large eggs
+        // -2 large eggs
         
-        -3 ounces of cooked ham, cubed
+        // -3 ounces of cooked ham, cubed
         
-        -2 tablespoons of butter
+        // -2 tablespoons of butter
         
-        -½ cup of shredded cheese (cheddar, Parmesan, or your preferred type)
-        -½ teaspoon of Italian seasoning
-        -Salt and pepper to taste    
-        """;
-        responseJson.put("recipe",test);
-        responseJson.put("title","fakeTitle");
-        //responseJson.put("recipe",bl.generate(ingredients, mealtype));
-        //responseJson.put("title",bl.generateTitle(ingredients, mealtype));
+        // -½ cup of shredded cheese (cheddar, Parmesan, or your preferred type)
+        // -½ teaspoon of Italian seasoning
+        // -Salt and pepper to taste    
+        // """;
+        // responseJson.put("recipe",test);
+        // responseJson.put("title","fakeTitle");
+        responseJson.put("recipe",bl.generate(ingredients, mealtype));
+        responseJson.put("title",bl.generateTitle(ingredients, mealtype));
         String response = responseJson.toString();
         
         return response;

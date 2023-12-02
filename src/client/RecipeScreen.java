@@ -27,6 +27,7 @@ public class RecipeScreen extends Screen{
         this.recipeTitle = recipeTitle;
         this.date = date;
         this.ingreds = ingreds;
+        this.mealType = mealType;
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
