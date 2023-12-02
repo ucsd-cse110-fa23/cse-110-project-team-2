@@ -18,7 +18,7 @@ public class GPTHandler implements HttpHandler{
         String response = "Request Received";
         String method = httpExchange.getRequestMethod();
 
-        try {
+        try {// Throwing exception so nothing is being written to response
             if (method.equals("POST")) {
                 response = handlePost(httpExchange);
             }
@@ -31,6 +31,7 @@ public class GPTHandler implements HttpHandler{
             e.printStackTrace();
         }
         // Sending back response to the client
+        //System.out.println(response);
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream outStream = httpExchange.getResponseBody();
         OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
@@ -41,6 +42,7 @@ public class GPTHandler implements HttpHandler{
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String requestBody = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
+        System.out.println(requestBody);
         
         //Expects a json to be used as request body, with ingredients and type as keys
         JSONObject requestJson = new JSONObject(requestBody);
