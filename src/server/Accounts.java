@@ -41,6 +41,24 @@ public class Accounts {
         }
     }
 
+    public void writeToFilePw() throws IOException{ //writes jsonObjects to Json files
+        File f = new File("userPw.json");
+        FileOutputStream fw = new FileOutputStream(f);
+        OutputStreamWriter writer = new OutputStreamWriter(fw);
+        writer.write(this.userPw.toString());
+        writer.flush();
+        writer.close();
+    }
+
+    public void writeToFileRecipes() throws IOException{ //writes jsonObjects to Json files
+        File f = new File("allRecipes.json");
+        FileOutputStream fw = new FileOutputStream(f);
+        OutputStreamWriter writer = new OutputStreamWriter(fw);
+        writer.write(this.allRecipes.toString());
+        writer.flush();
+        writer.close();
+    }
+
     public boolean checkLogin(String username, String password){ //checks if login is valid
         return password.equals(userPw.getString(username));
     }
@@ -48,4 +66,5 @@ public class Accounts {
     public String getUserRecipes(String username){
         return ((JSONObject)allRecipes.getJSONArray(username).get(0)).toString();
     }
+
 }

@@ -49,7 +49,6 @@ public class ChatGPT implements ChatGPTInterface{
         String responseBody = response.body();
 
         JSONObject responseJson = new JSONObject(responseBody);
-        responseJson.key
         JSONArray choices = responseJson.getJSONArray("choices");
         String generatedText = choices.getJSONObject(0).getString("text");
         //System.out.println(generatedText);
