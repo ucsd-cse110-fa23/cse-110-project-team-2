@@ -13,6 +13,7 @@ public class HomeScreen extends Screen {
         this.setCenter(recipeDisplay);
     }
 
+    // This should be a server request
     public RecipeDisplay getRecipeDisplay() {
         return this.recipeDisplay;
     }
