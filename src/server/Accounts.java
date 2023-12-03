@@ -2,24 +2,50 @@ package server;
 
 import java.util.*;
 import java.io.*;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.nio.file.Files;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class Accounts {
-    private HashMap<String,String> accounts;
-    Accounts(File accountsJSON){
-        //Code taken from Dirk Schumacher on Stack Overflow
-        /*
-         https://stackoverflow.com/questions/7463414/what-s-the-best-way-to-load-a-jsonobject-from-a-json-text-file
-         */
-        JsonElement json = null;
-        try (Reader reader = new InputStreamReader(new FileInputStream(accountsJSON), "UTF-8")) {
-            json = JsonParser.parseReader( reader );
-            JsonObject accounts = json.getAsJsonObject();
-            accounts.getAsJsonArray("accounts");
-        } catch (Exception e) {
-            accounts = new HashMap<String,String>();
+    //all the user account : password pairs in one JSON
+    private JSONObject userPw; 
+    //separate arrays key'd by username, arrays contain a singular JSONObject containing all recipe-title:recipe pairs for that account
+    private JSONObject allRecipes; 
+    Accounts(){
+        userPw = null;
+        allRecipes = null;
+    }
+
+    public void loaduserPW(File userPw){ //loads user:password pairs from json file
+        try{
+            this.userPw = new JSONObject(Files.readString(userPw.toPath()));
+        }catch(FileNotFoundException e){
+            this.userPw = new JSONObject();
         }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public void loadallRecipes(File allRecipes){ //loads allreacipes from json file
+        try{
+            this.allRecipes = new JSONObject(Files.readString(allRecipes.toPath()));
+        }catch(FileNotFoundException e){
+            this.allRecipes = new JSONObject();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkLogin(String username, String password){ //checks if login is valid
+        return password.equals(userPw.getString(username));
+    }
+
+    public String getUserRecipes(String username){
+        return ((JSONObject)allRecipes.getJSONArray(username).get(0)).toString();
     }
 }
