@@ -1,6 +1,5 @@
 package server;
 
-import java.util.*;
 import java.io.*;
 import java.nio.file.Files;
 
@@ -59,11 +58,31 @@ public class Accounts {
         writer.close();
     }
 
+    //when user creates new account, adds login details to database json
+    public boolean addUserAccount(String username, String password) throws IOException{ 
+        if(userPw.isNull(username)){
+            userPw.put(username,password);
+            allRecipes.put(username, new JSONArray());
+            writeToFilePw();
+            writeToFileRecipes();
+            return true;
+        }
+        return false;
+
+    }
+
+    //when user saves
+    public void saveRecipeToAccount(String username, String recipe) throws IOException{
+        ((JSONObject) allRecipes.getJSONArray(username).get(0)).put(username,recipe);
+        writeToFileRecipes();
+    }
+    
+
     public boolean checkLogin(String username, String password){ //checks if login is valid
         return password.equals(userPw.getString(username));
     }
 
-    public String getUserRecipes(String username){
+    public String getUserRecipes(String username){ //gets all recipes from a user and returns the JSON as a string
         return ((JSONObject)allRecipes.getJSONArray(username).get(0)).toString();
     }
 
