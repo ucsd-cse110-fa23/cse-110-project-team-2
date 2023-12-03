@@ -58,6 +58,10 @@ public class TranscriptionScreen extends Screen {
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
             date = new Date();
+
+            // Testing if url page works
+            // String url = AppFrame.getRequest().performGenerateURL("testtitle");
+            // System.out.println(url);
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {

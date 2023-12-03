@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
- 
 
 public class RequestSender {
     public String performRequest(String method, String language, String query) {
@@ -48,37 +47,38 @@ public class RequestSender {
         }
     }
 
-    public String performTranscribe(File recording){
-        //Code taken from ChatGPT 3.5
-        //Prompt used; write me code to send a file to this server using java
-        //Done after the prompt used in WhisperHandler
-        try{
+    public String performTranscribe(File recording) {
+        // Code taken from ChatGPT 3.5
+        // Prompt used; write me code to send a file to this server using java
+        // Done after the prompt used in WhisperHandler
+        try {
             String serverUrl = "http://localhost:8100/transcribe";
             if (!recording.exists()) {
                 throw new FileNotFoundException("File Not Found");
             }
-    
+
             URL url = new URI(serverUrl).toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    
+
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-            connection.setRequestProperty("Content-Disposition", "attachment; filename=\"" + recording.getName() + "\"");
-    
+            connection.setRequestProperty("Content-Disposition",
+                    "attachment; filename=\"" + recording.getName() + "\"");
+
             OutputStream outputStream = connection.getOutputStream();
             FileInputStream fileInputStream = new FileInputStream(recording);
-    
+
             byte[] buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = fileInputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-    
+
             outputStream.flush();
             outputStream.close();
             fileInputStream.close();
-    
+
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // Reading the response from the server
@@ -88,77 +88,94 @@ public class RequestSender {
             } else {
                 connection.disconnect();
                 return "File upload failed with response code: " + responseCode;
-            }   
-        } catch (Exception e){
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return "Error: File Not Found";
         }
     }
+
     public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {
-            String urlString = "http://localhost:8100/generate";
-            // Create a request body which you will pass into request object
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("ingredients", ingredients);
-            requestBody.put("type", mealtype);
+        String urlString = "http://localhost:8100/generate";
+        // Create a request body which you will pass into request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("ingredients", ingredients);
+        requestBody.put("type", mealtype);
 
-            // Create the HTTP Client
-            HttpClient client = HttpClient.newHttpClient();
+        // Create the HTTP Client
+        HttpClient client = HttpClient.newHttpClient();
 
-            URI ur = URI.create(urlString);
-            // Create the request object
-            HttpRequest request = HttpRequest
-            .newBuilder()
-            .uri(ur)
-            .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-            .build();
+        URI ur = URI.create(urlString);
+        // Create the request object
+        HttpRequest request = HttpRequest
+                .newBuilder()
+                .uri(ur)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+                .build();
 
-            // Send the request and receive the response
-            HttpResponse<String> response = client.send(
-            request,
-            HttpResponse.BodyHandlers.ofString()
-            );
-            
-            // Process the response
-            String responseBody = response.body();
-            //System.out.println(responseBody);
-            return responseBody;
+        // Send the request and receive the response
+        HttpResponse<String> response = client.send(
+                request,
+                HttpResponse.BodyHandlers.ofString());
+
+        // Process the response
+        String responseBody = response.body();
+        // System.out.println(responseBody);
+        return responseBody;
     }
-    
-    public String performLogin(String username, String password){
+
+    public String performLogin(String username, String password) {
         String urlString = "http://localhost:8100/login";
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
         requestBody.put("user", username);
         requestBody.put("pw", password);
 
-        try{
+        try {
             // Create the HTTP Client
             HttpClient client = HttpClient.newHttpClient();
 
             URI ur = URI.create(urlString);
             // Create the request object
             HttpRequest request = HttpRequest
-            .newBuilder()
-            .uri(ur)
-            .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-            .build();
+                    .newBuilder()
+                    .uri(ur)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+                    .build();
 
             // Send the request and receive the response
             HttpResponse<String> response = client.send(
-            request,
-            HttpResponse.BodyHandlers.ofString());
+                    request,
+                    HttpResponse.BodyHandlers.ofString());
             // Process the response
             String responseBody = response.body();
-            //System.out.println(responseBody);
+            // System.out.println(responseBody);
             return responseBody;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return "Error";
         }
 
     }
-}
 
+    public String performGenerateURL(String title) throws IOException, InterruptedException {
+        try {
+            // Replace spaces in title with a unique character HERE
+            String urlString = "http://localhost:8100/share";
+            urlString = urlString + "?=" + title;
+            URL url = new URI(urlString).toURL();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+
+            String response = urlString;
+            return response;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Error: " + ex.getMessage();
+        }
+    }
+}

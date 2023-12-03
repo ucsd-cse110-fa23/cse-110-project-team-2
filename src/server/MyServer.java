@@ -39,6 +39,10 @@ public class MyServer {
 
     LoginHandler loginhandler = new LoginHandler(bl);
     server.createContext("/login", loginhandler);
+
+    URLHandler urlHandler = new URLHandler();
+    server.createContext("/share", urlHandler);
+
     server.setExecutor(threadPoolExecutor);
 
     server.start();
