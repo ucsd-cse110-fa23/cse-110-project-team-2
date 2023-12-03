@@ -37,6 +37,8 @@ public class MyServer {
       
     server.createContext("/transcribe", whisperhandler);
 
+    LoginHandler loginhandler = new LoginHandler(bl);
+    server.createContext("/login", loginhandler);
     server.setExecutor(threadPoolExecutor);
 
     server.start();

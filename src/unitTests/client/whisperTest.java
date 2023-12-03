@@ -1,9 +1,11 @@
-package client;
+package unitTests.client;
 
 import java.io.*;
 import java.net.*;
 import org.json.*;
 import org.junit.jupiter.api.Test;
+
+import client.Recorder;
 
 import javax.sound.sampled.*;
 

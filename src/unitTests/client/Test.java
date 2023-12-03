@@ -1,4 +1,4 @@
-package client;
+package unitTests.client;
 
 import java.io.IOException;
 

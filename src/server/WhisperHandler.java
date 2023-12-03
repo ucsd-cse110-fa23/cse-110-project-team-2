@@ -5,7 +5,7 @@ import com.sun.net.httpserver.*;
 import java.io.*;
 
 public class WhisperHandler implements HttpHandler{
-    BusinessLogic bl;
+    private BusinessLogic bl;
 
     public WhisperHandler(BusinessLogic bl){
         this.bl = bl;

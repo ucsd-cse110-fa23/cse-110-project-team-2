@@ -19,6 +19,7 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.show(); 
 
+        System.out.println(request.performLogin("test_user", "1234"));
         String query = "getNext"; 
         while (true) {
             String response = request.performRequest("GET", null, query);

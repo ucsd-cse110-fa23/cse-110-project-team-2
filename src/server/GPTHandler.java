@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 public class GPTHandler implements HttpHandler{
-    BusinessLogic bl;
+    private BusinessLogic bl;
 
     public GPTHandler(BusinessLogic bl){
         this.bl = bl;

@@ -1,5 +1,6 @@
 package server;
 
+import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -12,9 +13,11 @@ import client.Whisper;
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
+    private HashMap<String,String> accounts;
     public BusinessLogic(){
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
+        this.accounts = new HashMap<String,String>();
     }
     //Generates using chatgpt
     public String generate(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
@@ -27,6 +30,15 @@ public class BusinessLogic {
     //Transcribes using whisper
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         return wspr.transcribe(recording);
+    }
+
+    public boolean checkLogin(String username, String password){
+        if(accounts.containsKey(username)){ //returns true iff the hashmap contains both username and matching password
+            if(accounts.get(username).equals(password)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
