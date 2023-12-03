@@ -1,9 +1,14 @@
 package client;
 
 
+import java.util.Date;
+
 import javafx.scene.layout.VBox;
 
 public class RecipeList extends VBox {
+    private boolean namesAscending = false;
+    private boolean datesAscending = true;
+
     RecipeList() {
         this.setSpacing(5); // sets spacing between Recipes
         this.setPrefSize(500, 560);
@@ -41,5 +46,47 @@ public class RecipeList extends VBox {
             Recipe current = ((Recipe) this.getChildren().get(i));
             current.setVisible(true);
         }
+    }
+
+    public void sortRecipesByName() {
+        int max;
+        for (int i = 0; i < this.getChildren().size(); i++) {
+            max = i;
+            for(int j = i; j < this.getChildren().size(); ++j) {
+                String r1 = ((Recipe)this.getChildren().get(max)).getRecipeTitle();
+                String r2 = ((Recipe)this.getChildren().get(j)).getRecipeTitle();
+                if(r1.compareToIgnoreCase(r2) < 0) {
+                    if(!namesAscending) {
+                        max = j;
+                    }
+                    else {
+                        max = i;
+                    }
+                }
+            }
+            this.getChildren().get(max).toBack();
+        }
+        namesAscending = !namesAscending;
+    }
+
+    public void sortRecipesByDate() {
+        int max;
+        for (int i = 0; i < this.getChildren().size(); i++) {
+            max = i;
+            for(int j = i; j < this.getChildren().size(); ++j) {
+                Date r1 = ((Recipe)this.getChildren().get(max)).getDate();
+                Date r2 = ((Recipe)this.getChildren().get(j)).getDate();
+                if(r1.compareTo(r2) < 0) {
+                    if(!datesAscending) {
+                        max = j;
+                    }
+                    else {
+                        max = i;
+                    }
+                }
+            }
+            this.getChildren().get(max).toBack();
+        }
+        datesAscending = !datesAscending;
     }
 }
