@@ -11,7 +11,7 @@ public class Accounts {
     //all the user account : password pairs in one JSON
     private JSONObject userPw; 
     /*separate JSONObjects key'd by username, username object contains object keyd by recipetitle+date, recipetitle+date objects contain 4
-     key value pairs, mealtype:mealtype(ex breakfast), date:creation date, title:recipe title, recipe: actual recipe*/
+    key value pairs, mealtype:mealtype(ex breakfast), date:creation date, title:recipe title, recipe: actual recipe*/
     private JSONObject allRecipes; 
     Accounts(){
         userPw = null;
@@ -23,10 +23,9 @@ public class Accounts {
     private void loaduserPW(File userPw){ //loads user:password pairs from json file
         try{
             this.userPw = new JSONObject(Files.readString(userPw.toPath()));
-        }catch(FileNotFoundException e){
-            this.userPw = new JSONObject();
         }
         catch(Exception e){
+            this.userPw = new JSONObject();
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -35,9 +34,8 @@ public class Accounts {
     private void loadallRecipes(File allRecipes){ //loads allreacipes from json file
         try{
             this.allRecipes = new JSONObject(Files.readString(allRecipes.toPath()));
-        }catch(FileNotFoundException e){
-            this.allRecipes = new JSONObject();
         }catch(Exception e){
+            this.allRecipes = new JSONObject();
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -83,7 +81,7 @@ public class Accounts {
             e.printStackTrace();
             return false;
         }
-       return true;
+        return true;
     }
     //when user saves
     public boolean saveRecipeToAccount(String username, JSONObject recipe){

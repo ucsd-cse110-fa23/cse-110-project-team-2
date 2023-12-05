@@ -14,11 +14,11 @@ public class LoginScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new HomeScreen();
+        return new HomeScreen(login.getUsernameInput());
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(login.getUsernameInput());
     }
 }

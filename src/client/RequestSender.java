@@ -196,7 +196,7 @@ public class RequestSender {
         JSONObject requestBody = new JSONObject();
         requestBody.put("user", username);
         requestBody.put("pw", password);
-
+        System.out.println(requestBody);
         try{
             // Create the HTTP Client
             HttpClient client = HttpClient.newHttpClient();
@@ -216,8 +216,9 @@ public class RequestSender {
             HttpResponse.BodyHandlers.ofString());
             // Process the response
             String responseBody = response.body();
-            //System.out.println(responseBody);
+            // System.out.println(responseBody);
             //response will be "true" upon valid account creation, and error message to be displayed upon invalid creation
+            System.out.println(responseBody);
             return responseBody;
         }catch (Exception e){
             System.out.println(e.getMessage());

@@ -68,7 +68,6 @@ public class GPTHandler implements HttpHandler{
         responseJson.put("recipe",bl.generate(ingredients, mealtype));
         responseJson.put("title",bl.generateTitle(ingredients, mealtype));
         String response = responseJson.toString();
-        
         return response;
     }
 }

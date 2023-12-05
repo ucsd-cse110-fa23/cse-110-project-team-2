@@ -21,9 +21,11 @@ public class RecordScreen extends Screen {
     private Recorder recorder;
     private Whisper testWhisper = new Whisper();
     private RequestSender request = new RequestSender();
+    private String currentUsername;
 
-    RecordScreen(String type) {
+    RecordScreen(String type, String username) {
         recipeType = type;
+        currentUsername = username;
         setHeaderText("What ingredients do you have now? You said you wanted: " + getRecipeType());
         setFooterButtons("Back", "", "");
         setLeftButtonAction("PantryPal", this::changePreviousScreenEvent);
@@ -36,12 +38,12 @@ public class RecordScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new TranscriptionScreen(transcript, recipeType);
+        return new TranscriptionScreen(currentUsername, transcript, recipeType);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(currentUsername);
     }
 
     public String getRecipeType() {
@@ -84,7 +86,7 @@ public class RecordScreen extends Screen {
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            TranscriptionScreen screenTwo = new TranscriptionScreen(transcription, mealType);
+            TranscriptionScreen screenTwo = new TranscriptionScreen(currentUsername, transcription, mealType);
             current.setTitle("Ingredients");
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);

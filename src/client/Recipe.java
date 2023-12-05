@@ -13,13 +13,17 @@ import javafx.stage.Window;
 public class Recipe extends HBox{
     private String recipeTitle;
     private String recipe;
+    private String recipeType;
     private Date date;
     private Button recipeButton;
+    private String currentUsername;
 
-    Recipe(String recipeTitle, String recipe, Date date){
+    Recipe(String username, String recipeTitle, String recipe, String recipeType, Date date){
         this.recipeTitle = recipeTitle;
         this.recipe = recipe;
+        this.recipeType = recipeType;
         this.date = date;
+        this.currentUsername = username;
 
         this.setPrefSize(500, 20); // sets size of Contact
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of Contact
@@ -61,7 +65,7 @@ public class Recipe extends HBox{
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            Screen nextScreen = new DetailedViewScreen(this);
+            Screen nextScreen = new DetailedViewScreen(currentUsername, this);
             current.setTitle("Detailed View");
             current.setScene(new Scene(nextScreen, 500, 500));
             current.setResizable(false);
