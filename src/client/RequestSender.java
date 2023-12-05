@@ -221,33 +221,100 @@ public class RequestSender {
 
     public String performDeleteRecipe(String username, String recipeTitleDate) throws IOException, InterruptedException{
         String urlString = "http://localhost:8100/deleteRecipe";
-            // Create a request body which you will pass into request object
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("username", username);
-            requestBody.put("titleDate", recipeTitleDate);
+        // Create a request body which you will pass into request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("username", username);
+        requestBody.put("titleDate", recipeTitleDate);
 
-            // Create the HTTP Client
-            HttpClient client = HttpClient.newHttpClient();
+        // Create the HTTP Client
+        HttpClient client = HttpClient.newHttpClient();
 
-            URI ur = URI.create(urlString);
-            // Create the request object
-            HttpRequest request = HttpRequest
-            .newBuilder()
-            .uri(ur)
-            .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-            .build();
+        URI ur = URI.create(urlString);
+        // Create the request object
+        HttpRequest request = HttpRequest
+        .newBuilder()
+        .uri(ur)
+        .header("Content-Type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+        .build();
 
-            // Send the request and receive the response
-            HttpResponse<String> response = client.send(
-            request,
-            HttpResponse.BodyHandlers.ofString()
-            );
-            
-            // Process the response
-            String responseBody = response.body();
-            //System.out.println(responseBody);
-            return responseBody;
+        // Send the request and receive the response
+        HttpResponse<String> response = client.send(
+        request,
+        HttpResponse.BodyHandlers.ofString()
+        );
+        
+        // Process the response
+        String responseBody = response.body();
+        //System.out.println(responseBody);
+        return responseBody;
     }
+
+    public String performGetAllRecipes(String username) throws IOException, InterruptedException{
+        String urlString = "http://localhost:8100/requestAll";
+        // Create a request body which you will pass into request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("username", username);
+
+        // Create the HTTP Client
+        HttpClient client = HttpClient.newHttpClient();
+
+        URI ur = URI.create(urlString);
+        // Create the request object
+        HttpRequest request = HttpRequest
+        .newBuilder()
+        .uri(ur)
+        .header("Content-Type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+        .build();
+
+        // Send the request and receive the response
+        HttpResponse<String> response = client.send(
+        request,
+        HttpResponse.BodyHandlers.ofString()
+        );
+        
+        // Process the response
+        String responseBody = response.body();
+        //System.out.println(responseBody);
+        return responseBody;
+    }
+
+    public String performSaveRecipe(String username, String title, String date, String recipe, String mealType) throws IOException, InterruptedException{
+        String urlString = "http://localhost:8100/requestAll";
+        // Create a request body which you will pass into request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("user", username);
+        JSONObject recipeJSON = new JSONObject();
+        recipeJSON.put("title",title);
+        recipeJSON.put("date", date);
+        recipeJSON.put("mealType",mealType);
+        recipeJSON.put("recipe",recipe);
+        requestBody.put(title+"@"+date,recipeJSON);
+
+        // Create the HTTP Client
+        HttpClient client = HttpClient.newHttpClient();
+
+        URI ur = URI.create(urlString);
+        // Create the request object
+        HttpRequest request = HttpRequest
+        .newBuilder()
+        .uri(ur)
+        .header("Content-Type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+        .build();
+
+        // Send the request and receive the response
+        HttpResponse<String> response = client.send(
+        request,
+        HttpResponse.BodyHandlers.ofString()
+        );
+        
+        // Process the response
+        String responseBody = response.body();
+        //System.out.println(responseBody);
+        return responseBody;
+}
+
 }
 

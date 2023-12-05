@@ -59,4 +59,8 @@ public class BusinessLogic {
         return accounts.getUserRecipes(username);
     }
 
+    public boolean saveRecipeToAccount(String username, JSONObject recipe){
+        return accounts.saveRecipeToAccount(username, recipe);
+    }
+
 }

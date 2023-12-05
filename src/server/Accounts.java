@@ -86,14 +86,9 @@ public class Accounts {
        return true;
     }
     //when user saves
-    public boolean saveRecipeToAccount(String username, String recipeTitle, String recipe, String date, String mealType){
+    public boolean saveRecipeToAccount(String username, JSONObject recipe){
         try{
-            JSONObject jsonRecipe = new JSONObject();
-            jsonRecipe.put("date",date);
-            jsonRecipe.put("title", recipeTitle);
-            jsonRecipe.put("mealtype",mealType);
-            jsonRecipe.put("recipe",recipe);
-            allRecipes.getJSONObject(username).put(recipeTitle+"@"+date,jsonRecipe);
+            allRecipes.getJSONObject(username).put(recipe.getString("title")+"@"+recipe.getString("date"),recipe);
             writeToFileRecipes();
         } catch (Exception e){
             e.printStackTrace();
