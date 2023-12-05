@@ -13,10 +13,12 @@ import client.Whisper;
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
+    private DallE dall;
     private HashMap<String,String> accounts;
     public BusinessLogic(){
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
+        this.dall = new DallE();
         this.accounts = new HashMap<String,String>();
     }
     //Generates using chatgpt
@@ -30,6 +32,10 @@ public class BusinessLogic {
     //Transcribes using whisper
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         return wspr.transcribe(recording);
+    }
+
+    public String generateImage(String title) throws IOException, URISyntaxException, JSONException {
+        return dall.image(title);
     }
 
     public boolean checkLogin(String username, String password){

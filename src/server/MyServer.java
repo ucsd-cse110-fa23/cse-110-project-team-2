@@ -42,6 +42,10 @@ public class MyServer {
 
     AccountHandler accounthandler = new AccountHandler(bl);
     server.createContext("/createAccount", accounthandler);
+
+    ImageHandler imageHandler = new ImageHandler(bl);
+    server.createContext("/image", imageHandler);
+
     server.setExecutor(threadPoolExecutor);
 
     server.start();
