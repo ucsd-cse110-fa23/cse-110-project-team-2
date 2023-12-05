@@ -46,14 +46,30 @@ sourceSets {
     }
 }
 
+// application {
+//     mainClass = 'App'
+// }
+
+// task runServer(type: JavaExec) {
+//     main = 'MyServer'
+//     classpath = sourceSets.main.runtimeClasspath
+// }
+task startServer {
+    doLast {
+        def server = new ProcessBuilder('java', '-cp', sourceSets.main.runtimeClasspath.asPath, 'MyServer')
+            .redirectOutput(new File('server.log'))
+            .redirectError(new File('server.log'))
+            .start()
+    }
+}
+
 application {
     mainClass = 'App'
 }
 
-task runServer(type: JavaExec) {
-    main = 'MyServer'
-    classpath = sourceSets.main.runtimeClasspath
-}
+run.mustRunAfter(startServer)
+
+task runApp(dependsOn: ['startServer', 'run'])
 
 // task runApp(type: JavaExec, dependsOn: runServer) {
 //     main = 'src.main.java.App'
