@@ -42,6 +42,13 @@ public class MyServer {
 
     AccountHandler accounthandler = new AccountHandler(bl);
     server.createContext("/createAccount", accounthandler);
+
+    DeleteHandler deletehandler = new DeleteHandler(bl);
+    server.createContext("/deleteRecipe", deletehandler);
+
+    AllRecipeRequestHandler arrh = new AllRecipeRequestHandler(bl);
+    server.createContext("/requestAll",arrh);
+    
     server.setExecutor(threadPoolExecutor);
 
     server.start();

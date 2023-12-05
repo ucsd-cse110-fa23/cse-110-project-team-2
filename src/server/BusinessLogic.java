@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import client.ChatGPT;
 import client.Whisper;
@@ -36,6 +37,18 @@ public class BusinessLogic {
 
     public boolean checkLogin(String username, String password){
         return accounts.checkLogin(username, password);
+    }
+
+    public boolean addUserAccount(String username, String password) throws IOException{
+        return accounts.addUserAccount(username, password);
+    }
+
+    public boolean deleteRecipe(String username, String recipeTitleDate){
+        return accounts.deleteRecipeFromAccount(username, recipeTitleDate);
+    }
+
+    public JSONObject getAllRecipes(String username){
+        return accounts.getUserRecipes(username);
     }
 
 }

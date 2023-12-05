@@ -152,13 +152,79 @@ public class RequestSender {
             // Process the response
             String responseBody = response.body();
             //System.out.println(responseBody);
+            //response will be "true" upon valid login, and error message to be displayed upon invalid login
             return responseBody;
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
             return "Error";
         }
+    }
 
+    public String performCreateAccount(String username, String password){
+        String urlString = "http://localhost:8100/createAccount";
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("user", username);
+        requestBody.put("pw", password);
+
+        try{
+            // Create the HTTP Client
+            HttpClient client = HttpClient.newHttpClient();
+
+            URI ur = URI.create(urlString);
+            // Create the request object
+            HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(ur)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .build();
+
+            // Send the request and receive the response
+            HttpResponse<String> response = client.send(
+            request,
+            HttpResponse.BodyHandlers.ofString());
+            // Process the response
+            String responseBody = response.body();
+            //System.out.println(responseBody);
+            //response will be "true" upon valid account creation, and error message to be displayed upon invalid creation
+            return responseBody;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return "Error";
+        }
+    }
+
+    public String performDeleteRecipe(String username, String recipeTitleDate) throws IOException, InterruptedException{
+        String urlString = "http://localhost:8100/deleteRecipe";
+            // Create a request body which you will pass into request object
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("username", username);
+            requestBody.put("titleDate", recipeTitleDate);
+
+            // Create the HTTP Client
+            HttpClient client = HttpClient.newHttpClient();
+
+            URI ur = URI.create(urlString);
+            // Create the request object
+            HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(ur)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .build();
+
+            // Send the request and receive the response
+            HttpResponse<String> response = client.send(
+            request,
+            HttpResponse.BodyHandlers.ofString()
+            );
+            
+            // Process the response
+            String responseBody = response.body();
+            //System.out.println(responseBody);
+            return responseBody;
     }
 }
 
