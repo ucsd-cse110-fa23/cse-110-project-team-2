@@ -1,23 +1,20 @@
-package server;
+package server.project;
 
-import com.sun.net.httpserver.*;
 import java.io.*;
-import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import com.sun.net.httpserver.*;
 
 import org.json.JSONObject;
 
-public class SaveRecipeHandler implements HttpHandler{
-
+public class LoginHandler implements HttpHandler{
     private BusinessLogic bl;
 
-    SaveRecipeHandler(BusinessLogic bl){
+    LoginHandler(BusinessLogic bl){
         this.bl = bl;
     }
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        String response = "Request received";
+        String response = "Invalid username or password, please try again.";
         try{
             if(exchange.getRequestMethod().equals("POST")){
                 response = handlePost(exchange);
@@ -43,10 +40,13 @@ public class SaveRecipeHandler implements HttpHandler{
         System.out.println(requestBody);
 
         //takes json from request body and gets login details
-        JSONObject requestDetails = new JSONObject(requestBody);
+        JSONObject loginDetails = new JSONObject(requestBody);
+        String user = loginDetails.getString("user");
+        String password = loginDetails.getString("pw");
 
         //matches login details to known database
-        response = bl.saveRecipeToAccount(requestDetails.getString("user"), requestDetails.getJSONObject(requestDetails.getString("titleDate"))) ? "true": "Recipe failed to save";
+        response = bl.checkLogin(user, password) ? "true": "Invalid username or password please try again";
         return response;
     }
+    
 }

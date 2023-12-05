@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TranscriptionScreen extends Screen {
     public static String ingredients;
@@ -17,6 +19,7 @@ public class TranscriptionScreen extends Screen {
     private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
+    private ImageView recipeImage;
     private Date date;
     private TextArea ingredArea;
     private RequestSender request = new RequestSender();

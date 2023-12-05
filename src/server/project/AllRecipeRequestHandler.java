@@ -1,20 +1,21 @@
-package server;
+package server.project;
 
+import com.sun.net.httpserver.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import com.sun.net.httpserver.*;
 
 import org.json.JSONObject;
 
-public class LoginHandler implements HttpHandler{
+public class AllRecipeRequestHandler implements HttpHandler{
+
     private BusinessLogic bl;
 
-    LoginHandler(BusinessLogic bl){
+    AllRecipeRequestHandler(BusinessLogic bl){
         this.bl = bl;
     }
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        String response = "Invalid username or password, please try again.";
+        String response = "Request received";
         try{
             if(exchange.getRequestMethod().equals("POST")){
                 response = handlePost(exchange);
@@ -39,14 +40,12 @@ public class LoginHandler implements HttpHandler{
 
         System.out.println(requestBody);
 
-        //takes json from request body and gets login details
-        JSONObject loginDetails = new JSONObject(requestBody);
-        String user = loginDetails.getString("user");
-        String password = loginDetails.getString("pw");
+        //takes json from request body and gets request details
+        JSONObject requestDetails = new JSONObject(requestBody);
+        String user = requestDetails.getString("user");
 
         //matches login details to known database
-        response = bl.checkLogin(user, password) ? "true": "Invalid username or password please try again";
+        response = bl.getAllRecipes(user).toString();
         return response;
     }
-    
 }

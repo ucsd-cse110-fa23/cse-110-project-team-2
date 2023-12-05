@@ -1,6 +1,7 @@
 package client;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -9,6 +10,9 @@ import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Pair;
 
 public class RecipeScreen extends Screen{
     private TextArea generatedRecipe;
@@ -27,6 +31,7 @@ public class RecipeScreen extends Screen{
         this.currentUsername = username;
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
+        this.mealType = mealType;
         this.date = date;
         this.ingreds = ingreds;
         this.mealType = mealType;

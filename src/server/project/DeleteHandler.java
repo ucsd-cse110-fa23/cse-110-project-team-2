@@ -1,4 +1,5 @@
-package server;
+package server.project;
+
 
 import com.sun.net.httpserver.*;
 import java.io.*;
@@ -6,10 +7,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 
-public class AccountHandler implements HttpHandler{
+public class DeleteHandler implements HttpHandler{
     private BusinessLogic bl;
 
-    AccountHandler(BusinessLogic bl){
+    DeleteHandler(BusinessLogic bl){
         this.bl = bl;
     }
     @Override
@@ -39,13 +40,12 @@ public class AccountHandler implements HttpHandler{
 
         System.out.println(requestBody);
 
-        //takes json from request body and gets login details
-        JSONObject loginDetails = new JSONObject(requestBody);
-        String user = loginDetails.getString("user");
-        String password = loginDetails.getString("pw");
-
+        //takes json from request body and gets recipe details
+        JSONObject recipeDetails = new JSONObject(requestBody);
+        String titleDate = recipeDetails.getString("titleDate");
+        String username = recipeDetails.getString("username");
         //matches login details to known database
-        response = bl.addUserAccount(user, password) ? "true":"Username already taken";
+        response = bl.deleteRecipe(username,titleDate) ? "true":"Recipe not found";
         return response;
     }
 }

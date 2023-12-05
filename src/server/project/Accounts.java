@@ -1,4 +1,4 @@
-package server;
+package server.project;
 
 import java.io.*;
 import java.nio.file.Files;
