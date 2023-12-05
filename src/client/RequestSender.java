@@ -124,6 +124,28 @@ public class RequestSender {
             return null;
         }
     }
+    public String performDeleteImage(String title) {
+        try {
+            String serverUrl = "http://localhost:8100/deleteimage";
+            URL url = new URI(serverUrl).toURL();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setDoOutput(true); 
+
+            OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+            out.write(title);
+            out.flush();
+            out.close();
+
+            InputStream in = connection.getInputStream();
+            String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            in.close();
+            return response;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Error: " + ex.getMessage();
+        }
+    }
     public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {
             String urlString = "http://localhost:8100/generate";
             // Create a request body which you will pass into request object

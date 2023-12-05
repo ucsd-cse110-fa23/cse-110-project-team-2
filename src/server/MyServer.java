@@ -55,6 +55,9 @@ public class MyServer {
     ImageHandler imageHandler = new ImageHandler(bl);
     server.createContext("/image", imageHandler);
 
+    DeleteImageHandler delImageHandler = new DeleteImageHandler();
+    server.createContext("/deleteimage", delImageHandler);
+
     SaveRecipeHandler srh = new SaveRecipeHandler(bl);
     server.createContext("/saveRecipe", srh);
 

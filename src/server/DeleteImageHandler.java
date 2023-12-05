@@ -2,14 +2,16 @@ package server;
 
 import java.net.URISyntaxException;
 import com.sun.net.httpserver.*;
+
+import javafx.scene.shape.Path;
+import java.nio.file.Paths;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class ImageHandler implements HttpHandler{
-    private BusinessLogic bl;
+public class DeleteImageHandler implements HttpHandler {
 
-    public ImageHandler(BusinessLogic bl){
-        this.bl = bl;
+    public DeleteImageHandler() {
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -17,8 +19,8 @@ public class ImageHandler implements HttpHandler{
         String method = httpExchange.getRequestMethod();
 
         try {
-            if (method.equals("POST")) {
-                response = handlePost(httpExchange);
+            if (method.equals("DELETE")) {
+                response = handleDelete(httpExchange);
             }
             else {
                 throw new Exception("Not Valid Request Method");
@@ -35,11 +37,16 @@ public class ImageHandler implements HttpHandler{
         outStream.close();
     }
 
-    private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
+    private String handleDelete(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String response = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
 
-        bl.generateImage(response);
-        return response;
+        Path image = (Path) Paths.get(response + ".png");
+        File f = ((java.nio.file.Path) image).toFile();
+        
+        if (f.exists()) {
+            f.delete();
+        }
+        return "true";
     }
 }
