@@ -1,8 +1,10 @@
-package client;
+package unitTests.client;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import org.json.JSONException;
+
+import client.RegenInterface;
 import javafx.util.Pair;
 
 public class mockRegen implements RegenInterface{

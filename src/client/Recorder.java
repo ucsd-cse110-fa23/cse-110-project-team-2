@@ -11,7 +11,7 @@ public class Recorder {
     private TargetDataLine targetDataLine;
     private File recordingFile;
     
-    Recorder(){
+    public Recorder(){
         audioFormat = getAudioFormat();
     }
     private AudioFormat getAudioFormat() {

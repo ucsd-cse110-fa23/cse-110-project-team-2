@@ -22,24 +22,21 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.show(); 
 
-        String query = "getNext"; 
-        while (true) {
-            String response = request.performRequest("GET", null, query);
-            System.out.println(response);
-            if (response.equals("Invalid")) {
-                break;
-            }
-            String recipeTitle = response.substring(0,response.indexOf(",")); 
-            String recipe = response.substring(response.indexOf(",") + 1);
-            String mealType = response.substring(response.indexOf(",") + 2);
-            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
-            Image currImage = new Image("file:"+recipeFileName+".png");
-            ImageView recipeImage = new ImageView();
-            recipeImage.setImage(currImage);
-            Date date = new Date(10);
-            Recipe recipeObj = new Recipe(recipeTitle, recipe, mealType, recipeImage, date);
-            AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
-        }
+        // System.out.println("TEST LOGIN" + request.performLogin("test_user", "1234"));
+        // System.out.println("TEST ACC CREATE: " + request.performCreateAccount("test_user", "1234"));
+        // String query = "getNext"; 
+        // while (true) {
+        //     String response = request.performRequest("GET", null, query);
+        //     System.out.println(response);
+        //     if (response.equals("Invalid")) {
+        //         break;
+        //     }
+        //     String recipeTitle = response.substring(0,response.indexOf(",")); 
+        //     String recipe = response.substring(response.indexOf(",") + 1);
+        //     Date date = new Date(10);
+        //     Recipe recipeObj = new Recipe("test", recipeTitle, recipe, "Breakfast", date);
+        //     AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
+        // }
     }
     @Override
     public void stop() {

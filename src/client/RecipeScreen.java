@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import org.json.JSONObject;
+
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -18,27 +20,21 @@ public class RecipeScreen extends Screen{
     private String recipeTitle;
     private String ingreds;
     private String mealType;
-    private ImageView recipeImage;
-    private DallE dallE;
-    private RequestSender request;
+    private RequestSender request = new RequestSender();
     private Recipe recipeObj;
     private Date date;
     private ChatGPT gpt;
-    private Regenerate regen;
-    private Pair<String, String> recipePair;
+    private String currentUsername;
 
-    RecipeScreen(String recipe, String recipeTitle, String ingreds, String mealType, ImageView recipeImage, Date date){
+    RecipeScreen(String username, String recipe, String recipeTitle, String ingreds, String mealType, Date date){
         setHeaderText("Here is your recipe!");
+        this.currentUsername = username;
         this.recipe = recipe;
         this.recipeTitle = recipeTitle;
         this.mealType = mealType;
-        this.recipeImage = recipeImage;
         this.date = date;
         this.ingreds = ingreds;
-        System.out.println("RECIPE IMAGE IS: " + recipeImage);
-        recipeImage.setFitHeight(250);
-        recipeImage.setFitWidth(250);
-        recipeImage.setPreserveRatio(true);
+        this.mealType = mealType;
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
@@ -47,49 +43,50 @@ public class RecipeScreen extends Screen{
         setFooterButtons("Cancel", "Regenerate", "Save");
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
         setCenterButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
-        setRightButtonAction("PantryPal", this::changeScreenSaveRecipe);
-        this.setTop(recipeImage);
+        setRightButtonAction("PantryPal", arg0 -> {
+            try {
+                changeScreenSaveRecipe(arg0);
+            } catch (IOException | InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         this.setCenter(generatedRecipe);
         this.request = new RequestSender();
     }
 
     @Override
     protected Screen createNextScreen() {
-        return new HomeScreen();
+        return new HomeScreen(currentUsername);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(currentUsername);
     }
 
     protected Screen createSameScreen() {
-        return new RecipeScreen(recipe, recipeTitle, ingreds, mealType, recipeImage, date);
+        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingreds, mealType, date);
     }
 
-    public void changeScreenSaveRecipe (ActionEvent e) {
-        Screen nextScreen = new HomeScreen();
-        recipeObj = new Recipe(recipeTitle, recipe, mealType, recipeImage, date);
+    public void changeScreenSaveRecipe (ActionEvent e) throws IOException, InterruptedException {
+        Screen nextScreen = new HomeScreen(currentUsername);
+        recipeObj = new Recipe(currentUsername, recipeTitle, recipe, mealType, date);
+        AppFrame.getRequest().performSaveRecipe(currentUsername, recipeTitle, date.toString(), recipe, mealType);
         AppFrame.getAppRecipeList().getChildren().add(0, recipeObj);
         changeScreen(nextScreen);
     } 
 
     public void changeScreenGenerateRecipeEvent (ActionEvent e) {
-        gpt = new ChatGPT();
-        regen = new Regenerate();
         try {
-            recipePair = regen.regen(ingreds, mealType);
-            recipe = recipePair.getKey();
-            recipeTitle = recipePair.getValue();
-            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
-            Image currImage = new Image("file:"+recipeFileName+".png");
-            recipeImage.setImage(currImage);
+            String data = AppFrame.getRequest().performGenerateRecipe(ingreds, mealType);
+            JSONObject dataJson = new JSONObject(data);
+            recipe = dataJson.getString("recipe");
+            recipeTitle = dataJson.getString("title");
             date = new Date();
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
             e1.printStackTrace();
         }
         Screen sameScreen = createSameScreen();

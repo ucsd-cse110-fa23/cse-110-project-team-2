@@ -1,6 +1,8 @@
 package client;
 
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -11,16 +13,25 @@ public class DetailedViewScreen extends Screen {
     private Recipe currentRecipe;
     private TextField currentRecipeTitle;
     private TextArea currentRecipeBody;
+    private String currentUsername;
     private ImageView currentRecipeImage;
 
-    DetailedViewScreen(Recipe currentRecipe) {
+    DetailedViewScreen(String username, Recipe currentRecipe) {
+        currentUsername = username;
         this.currentRecipe = currentRecipe;
         this.currentRecipeImage = currentRecipe.getRecipeImage();
         
         setHeaderText("Current Recipe: " + currentRecipe.getRecipeTitle());
         setFooterButtons("Back", "Delete", "Edit");
         setLeftButtonAction("PantryPal", this::changeScreenUpdateRecipe);
-        setCenterButtonAction("PantryPal", this::changeScreenDeleteRecipe);
+        setCenterButtonAction("PantryPal", arg0 -> {
+            try {
+                changeScreenDeleteRecipe(arg0);
+            } catch (IOException | InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         setRightButtonAction("Editing", this::changeNextScreenEvent);
 
         System.out.println("CURRENT RECIPE IMAGE IS: " + currentRecipe.getRecipeImage());
@@ -44,12 +55,12 @@ public class DetailedViewScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new EditScreen(currentRecipe);
+        return new EditScreen(currentUsername, currentRecipe);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(currentUsername);
     }
     
     public void changeScreenUpdateRecipe(ActionEvent e) {
@@ -58,7 +69,8 @@ public class DetailedViewScreen extends Screen {
         changeScreen(previousScreen);
     }
     
-    public void changeScreenDeleteRecipe(ActionEvent e) {
+    public void changeScreenDeleteRecipe(ActionEvent e) throws IOException, InterruptedException {
+        AppFrame.getRequest().performDeleteRecipe(currentUsername, currentRecipe.getRecipeTitle()+"@"+currentRecipe.getDate().toString());
         AppFrame.getAppRecipeList().deleteRecipe(currentRecipe);
         Screen previouScreen = createPreviousScreen();
         changeScreen(previouScreen);

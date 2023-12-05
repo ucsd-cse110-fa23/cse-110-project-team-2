@@ -1,7 +1,9 @@
-package client;
+package unitTests.client;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import client.Recorder;
 
 import java.io.File;
 

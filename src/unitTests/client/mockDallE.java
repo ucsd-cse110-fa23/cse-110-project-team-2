@@ -1,4 +1,4 @@
-package client;
+package unitTests.client;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.json.JSONException;
+
+import client.DallEInterface;
 
 public class mockDallE implements DallEInterface{
     @Override

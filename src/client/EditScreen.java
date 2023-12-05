@@ -7,9 +7,11 @@ import javafx.scene.control.TextArea;
 public class EditScreen extends Screen {
     private Recipe currentRecipe;
     private TextArea editRecipeBox;
+    private String currentUsername;
 
-    EditScreen(Recipe currentRecipe) {
+    EditScreen(String username, Recipe currentRecipe) {
         this.currentRecipe = currentRecipe;
+        this.currentUsername = username;
         editRecipeBox = new TextArea(currentRecipe.getRecipe());
         editRecipeBox.setMaxHeight(400);
         editRecipeBox.setMaxWidth(400);
@@ -24,12 +26,12 @@ public class EditScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new DetailedViewScreen(currentRecipe);
+        return new DetailedViewScreen(currentUsername, currentRecipe);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new DetailedViewScreen(currentRecipe);
+        return new DetailedViewScreen(currentUsername, currentRecipe);
     }
 
     public Recipe getCurrentRecipe() {
