@@ -17,7 +17,7 @@ public class Accounts {
         userPw = null;
         allRecipes = null;
     }
-
+    
     public void loaduserPW(File userPw){ //loads user:password pairs from json file
         try{
             this.userPw = new JSONObject(Files.readString(userPw.toPath()));
@@ -29,6 +29,7 @@ public class Accounts {
             e.printStackTrace();
         }
     }
+    
     public void loadallRecipes(File allRecipes){ //loads allreacipes from json file
         try{
             this.allRecipes = new JSONObject(Files.readString(allRecipes.toPath()));
@@ -118,5 +119,5 @@ public class Accounts {
     public String getUserRecipes(String username){ //gets all recipes from a user and returns the JSON as a string
         return allRecipes.getJSONObject(username).toString();
     }
-    
+
 }
