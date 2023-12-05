@@ -100,13 +100,23 @@ public class Accounts {
         return true;
     }
 
+    public boolean deleteRecipeFromAccount(String username, String recipeTitleDate){
+        try{
+            allRecipes.getJSONObject(username).remove(recipeTitleDate);
+            writeToFileRecipes();
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public boolean checkLogin(String username, String password){ //checks if login is valid
         return password.equals(userPw.getString(username));
     }
 
     public String getUserRecipes(String username){ //gets all recipes from a user and returns the JSON as a string
-        return ((JSONObject)allRecipes.getJSONArray(username).get(0)).toString();
+        return allRecipes.getJSONObject(username).toString();
     }
-
+    
 }
