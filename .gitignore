@@ -8,3 +8,5 @@ bin/
 build
 *.wav
 recording.wav
+*.png
+*.json
