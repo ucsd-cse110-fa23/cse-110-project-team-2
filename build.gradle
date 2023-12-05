@@ -39,7 +39,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'App'
+    mainClass = 'src.main.java.App'
 }
 
 tasks.named('test') {
