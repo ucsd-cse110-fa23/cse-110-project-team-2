@@ -25,7 +25,7 @@ public class testRecorder {
         recorder.startRecording();
         //record something for 2 secs
         try {
-            Thread.sleep(2000); 
+            Thread.sleep(4000); 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
