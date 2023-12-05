@@ -1,17 +1,26 @@
 
 
+import java.awt.datatransfer.Clipboard;
+
+import com.sun.javafx.tk.Toolkit;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Clipboard;
 
 public class DetailedViewScreen extends Screen {
     private Recipe currentRecipe;
     private TextField currentRecipeTitle;
     private TextArea currentRecipeBody;
     private ImageView currentRecipeImage;
+    private Button shareButton;
+    private URLHandler urlHandler;
 
     DetailedViewScreen(Recipe currentRecipe) {
         this.currentRecipe = currentRecipe;
@@ -58,9 +67,19 @@ public class DetailedViewScreen extends Screen {
         changeScreen(previousScreen);
     }
     
+
     public void changeScreenDeleteRecipe(ActionEvent e) {
         AppFrame.getAppRecipeList().deleteRecipe(currentRecipe);
         Screen previouScreen = createPreviousScreen();
         changeScreen(previouScreen);
+    }
+
+    public void shareButtonAction(EventHandler<ActionEvent> eventHandler) {
+        shareButton.setOnAction(eventHandler);
+    }
+
+    public void copyURL(){
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clip.setContents();//inside: (link, link)
     }
 }
