@@ -47,13 +47,13 @@ sourceSets {
 }
 
 application {
-    mainClass = 'src.main.java.App'
+    mainClass = 'App'
 }
 
-task runServer(type: JavaExec) {
-    main = 'src.server.java.MyServer'
-    classpath = sourceSets.main.runtimeClasspath
-}
+// task runServer(type: JavaExec) {
+//     main = 'src.server.java.MyServer'
+//     classpath = sourceSets.main.runtimeClasspath
+// }
 
 // task runApp(type: JavaExec, dependsOn: runServer) {
 //     main = 'src.main.java.App'
