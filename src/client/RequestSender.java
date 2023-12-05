@@ -13,6 +13,10 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.scene.shape.Path;
+
+import java.nio.file.Paths;
+
 import java.net.URI;
 import java.net.URISyntaxException;
  
@@ -94,7 +98,7 @@ public class RequestSender {
             return "Error: File Not Found";
         }
     }
-    public String performGenerateImage(String title){
+    public File performGenerateImage(String title){
         try{
             String serverUrl = "http://localhost:8100/image";
             URL url = new URI(serverUrl).toURL();
@@ -111,10 +115,13 @@ public class RequestSender {
             InputStream in = connection.getInputStream();
             String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             in.close();
-            return response;
+            Path image = (Path) Paths.get(response + ".png");
+            File f = ((java.nio.file.Path) image).toFile();
+
+            return f;
         } catch (Exception e){
             e.printStackTrace();
-            return "Error: " + e.getMessage();
+            return null;
         }
     }
     public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {

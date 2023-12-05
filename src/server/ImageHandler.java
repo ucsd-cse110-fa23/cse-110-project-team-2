@@ -38,7 +38,7 @@ public class ImageHandler implements HttpHandler{
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
         String response = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
-        
+
         b1.generateImage(response);
         return response;
     }
