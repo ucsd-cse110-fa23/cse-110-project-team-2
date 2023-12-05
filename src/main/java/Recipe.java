@@ -63,6 +63,10 @@ public class Recipe extends HBox{
         return recipeImage;
     }
 
+    public String getMealType() {
+        return recipeType;
+    } 
+
     //setter for recipe
     public void setRecipe(String recipe) {
         this.recipe = recipe;
@@ -79,5 +83,5 @@ public class Recipe extends HBox{
             current.setResizable(false);
             current.show();
         }
-    } 
+    }
 }

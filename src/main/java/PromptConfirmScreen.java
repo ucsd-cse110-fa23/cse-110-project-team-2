@@ -39,7 +39,15 @@ public class PromptConfirmScreen extends Screen{
 
     public void validateMealType() {
         if(getValidMealType()) {
-            this.recipeType = mealTypeTranscript;
+            if(mealTypeTranscript.contains("breakfast")) {
+                this.recipeType = "Breakfast";
+            }
+            else if (mealTypeTranscript.contains("lunch")) {
+                this.recipeType = "Lunch";
+            }
+            else {
+                this.recipeType = "Dinner";
+            }
         }
         else if(mealTypeTranscript.equals("")) {
             
