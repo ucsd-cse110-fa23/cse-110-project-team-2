@@ -3,7 +3,6 @@ package server;
 import java.io.*;
 import java.nio.file.Files;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -87,6 +86,7 @@ public class Accounts {
     public boolean saveRecipeToAccount(String username, JSONObject recipe){
         try{
             allRecipes.getJSONObject(username).put(recipe.getString("title")+"@"+recipe.getString("date"),recipe);
+            System.out.println(allRecipes.toString());
             writeToFileRecipes();
         } catch (Exception e){
             e.printStackTrace();

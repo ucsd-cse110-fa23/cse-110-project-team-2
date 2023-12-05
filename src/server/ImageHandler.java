@@ -39,7 +39,7 @@ public class ImageHandler implements HttpHandler{
         InputStream inStream = httpExchange.getRequestBody();
         String response = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
 
-        b1.generateImage(response);
+        bl.generateImage(response);
         return response;
     }
 }

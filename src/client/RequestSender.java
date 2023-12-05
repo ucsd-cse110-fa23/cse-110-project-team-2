@@ -262,7 +262,7 @@ public class RequestSender {
         String urlString = "http://localhost:8100/requestAll";
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
-        requestBody.put("username", username);
+        requestBody.put("user", username);
 
         // Create the HTTP Client
         HttpClient client = HttpClient.newHttpClient();
@@ -289,7 +289,7 @@ public class RequestSender {
     }
 
     public String performSaveRecipe(String username, String title, String date, String recipe, String mealType) throws IOException, InterruptedException{
-        String urlString = "http://localhost:8100/requestAll";
+        String urlString = "http://localhost:8100/saveRecipe";
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
         requestBody.put("user", username);
@@ -299,6 +299,7 @@ public class RequestSender {
         recipeJSON.put("mealType",mealType);
         recipeJSON.put("recipe",recipe);
         requestBody.put(title+"@"+date,recipeJSON);
+        requestBody.put("titleDate",title+"@"+date);
 
         // Create the HTTP Client
         HttpClient client = HttpClient.newHttpClient();

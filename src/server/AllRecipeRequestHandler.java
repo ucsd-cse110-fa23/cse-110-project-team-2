@@ -2,7 +2,6 @@ package server;
 
 import com.sun.net.httpserver.*;
 import java.io.*;
-import java.net.*;
 import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
@@ -44,7 +43,6 @@ public class AllRecipeRequestHandler implements HttpHandler{
         //takes json from request body and gets request details
         JSONObject requestDetails = new JSONObject(requestBody);
         String user = requestDetails.getString("user");
-        JSONObject recipe = requestDetails.getJSONObject("recipe");
 
         //matches login details to known database
         response = bl.getAllRecipes(user).toString();

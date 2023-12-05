@@ -46,7 +46,7 @@ public class SaveRecipeHandler implements HttpHandler{
         JSONObject requestDetails = new JSONObject(requestBody);
 
         //matches login details to known database
-        response = bl.saveRecipeToAccount(requestDetails.getString("user"), requestDetails.getJSONObject("recipe")) ? "true": "Recipe failed to save";
+        response = bl.saveRecipeToAccount(requestDetails.getString("user"), requestDetails.getJSONObject(requestDetails.getString("titleDate"))) ? "true": "Recipe failed to save";
         return response;
     }
 }
