@@ -14,6 +14,7 @@ import client.Whisper;
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
+<<<<<<< HEAD
     //private HashMap<String,String> accounts;
     private Accounts accounts;
     public BusinessLogic(){
@@ -21,6 +22,15 @@ public class BusinessLogic {
         this.wspr = new Whisper();
         //this.accounts = new HashMap<String,String>();
         this.accounts = new Accounts();
+=======
+    private DallE dall;
+    private HashMap<String,String> accounts;
+    public BusinessLogic(){
+        this.cgpt = new ChatGPT();
+        this.wspr = new Whisper();
+        this.dall = new DallE();
+        this.accounts = new HashMap<String,String>();
+>>>>>>> 0bf28738082f4f8f283dc12a1dc72243331035ed
     }
     //Generates using chatgpt
     public String generate(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
@@ -33,6 +43,10 @@ public class BusinessLogic {
     //Transcribes using whisper
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {
         return wspr.transcribe(recording);
+    }
+
+    public String generateImage(String title) throws IOException, URISyntaxException, JSONException {
+        return dall.image(title);
     }
 
     public boolean checkLogin(String username, String password){

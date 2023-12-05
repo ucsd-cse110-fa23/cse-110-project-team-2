@@ -49,6 +49,10 @@ public class MyServer {
     AllRecipeRequestHandler arrh = new AllRecipeRequestHandler(bl);
     server.createContext("/requestAll",arrh);
     
+
+    ImageHandler imageHandler = new ImageHandler(bl);
+    server.createContext("/image", imageHandler);
+
     server.setExecutor(threadPoolExecutor);
 
     server.start();
