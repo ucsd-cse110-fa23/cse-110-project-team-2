@@ -39,6 +39,9 @@ public class MyServer {
 
     LoginHandler loginhandler = new LoginHandler(bl);
     server.createContext("/login", loginhandler);
+
+    AccountHandler accounthandler = new AccountHandler(bl);
+    server.createContext("/createAccount", accounthandler);
     server.setExecutor(threadPoolExecutor);
 
     server.start();
