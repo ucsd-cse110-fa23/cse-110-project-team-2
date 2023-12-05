@@ -9,29 +9,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import client.ChatGPT;
+import client.DallE;
 import client.Whisper;
 
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
-<<<<<<< HEAD
     //private HashMap<String,String> accounts;
     private Accounts accounts;
+    private DallE dall;
     public BusinessLogic(){
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
         //this.accounts = new HashMap<String,String>();
         this.accounts = new Accounts();
-=======
-    private DallE dall;
-    private HashMap<String,String> accounts;
-    public BusinessLogic(){
-        this.cgpt = new ChatGPT();
-        this.wspr = new Whisper();
         this.dall = new DallE();
-        this.accounts = new HashMap<String,String>();
->>>>>>> 0bf28738082f4f8f283dc12a1dc72243331035ed
     }
+
     //Generates using chatgpt
     public String generate(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
         return cgpt.generate(ingredients, mealtype);
@@ -46,7 +40,7 @@ public class BusinessLogic {
     }
 
     public String generateImage(String title) throws IOException, URISyntaxException, JSONException {
-        return dall.image(title);
+        return "hi";
     }
 
     public boolean checkLogin(String username, String password){
