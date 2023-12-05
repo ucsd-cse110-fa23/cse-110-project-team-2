@@ -218,7 +218,7 @@ public class RequestSender {
         JSONObject requestBody = new JSONObject();
         requestBody.put("user", username);
         requestBody.put("pw", password);
-
+        System.out.println(requestBody);
         try{
             // Create the HTTP Client
             HttpClient client = HttpClient.newHttpClient();
@@ -238,8 +238,9 @@ public class RequestSender {
             HttpResponse.BodyHandlers.ofString());
             // Process the response
             String responseBody = response.body();
-            //System.out.println(responseBody);
+            // System.out.println(responseBody);
             //response will be "true" upon valid account creation, and error message to be displayed upon invalid creation
+            System.out.println(responseBody);
             return responseBody;
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -283,7 +284,7 @@ public class RequestSender {
         String urlString = "http://localhost:8100/requestAll";
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
-        requestBody.put("username", username);
+        requestBody.put("user", username);
 
         // Create the HTTP Client
         HttpClient client = HttpClient.newHttpClient();
@@ -310,7 +311,7 @@ public class RequestSender {
     }
 
     public String performSaveRecipe(String username, String title, String date, String recipe, String mealType) throws IOException, InterruptedException{
-        String urlString = "http://localhost:8100/requestAll";
+        String urlString = "http://localhost:8100/saveRecipe";
         // Create a request body which you will pass into request object
         JSONObject requestBody = new JSONObject();
         requestBody.put("user", username);
@@ -320,6 +321,7 @@ public class RequestSender {
         recipeJSON.put("mealType",mealType);
         recipeJSON.put("recipe",recipe);
         requestBody.put(title+"@"+date,recipeJSON);
+        requestBody.put("titleDate",title+"@"+date);
 
         // Create the HTTP Client
         HttpClient client = HttpClient.newHttpClient();

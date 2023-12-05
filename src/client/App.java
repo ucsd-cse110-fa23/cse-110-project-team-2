@@ -1,10 +1,13 @@
 package client;
 
 
+import java.io.File;
 import java.sql.Date;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -19,20 +22,21 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.show(); 
 
-        System.out.println(request.performLogin("test_user", "1234"));
-        String query = "getNext"; 
-        while (true) {
-            String response = request.performRequest("GET", null, query);
-            System.out.println(response);
-            if (response.equals("Invalid")) {
-                break;
-            }
-            String recipeTitle = response.substring(0,response.indexOf(",")); 
-            String recipe = response.substring(response.indexOf(",") + 1);
-            Date date = new Date(10);
-            Recipe recipeObj = new Recipe(recipeTitle, recipe, date);
-            AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
-        }
+        // System.out.println("TEST LOGIN" + request.performLogin("test_user", "1234"));
+        // System.out.println("TEST ACC CREATE: " + request.performCreateAccount("test_user", "1234"));
+        // String query = "getNext"; 
+        // while (true) {
+        //     String response = request.performRequest("GET", null, query);
+        //     System.out.println(response);
+        //     if (response.equals("Invalid")) {
+        //         break;
+        //     }
+        //     String recipeTitle = response.substring(0,response.indexOf(",")); 
+        //     String recipe = response.substring(response.indexOf(",") + 1);
+        //     Date date = new Date(10);
+        //     Recipe recipeObj = new Recipe("test", recipeTitle, recipe, "Breakfast", date);
+        //     AppFrame.getAppRecipeList().getChildren().add(recipeObj); 
+        // }
     }
     @Override
     public void stop() {

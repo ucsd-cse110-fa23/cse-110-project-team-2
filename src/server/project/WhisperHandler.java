@@ -1,14 +1,13 @@
-package server;
+package server.project;
 
 import java.net.URISyntaxException;
 import com.sun.net.httpserver.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
-public class ImageHandler implements HttpHandler{
+public class WhisperHandler implements HttpHandler{
     private BusinessLogic bl;
 
-    public ImageHandler(BusinessLogic bl){
+    public WhisperHandler(BusinessLogic bl){
         this.bl = bl;
     }
 
@@ -37,9 +36,25 @@ public class ImageHandler implements HttpHandler{
 
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
         InputStream inStream = httpExchange.getRequestBody();
-        String response = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
+        //Get filename from header - taken from ChatGPT 3.5
+        // prompt used: "write me code for receiving a file through an http request using java"
+        String fileName = httpExchange.getRequestHeaders().getFirst("Content-Disposition")
+                        .replaceFirst(".*filename=\"([^\"]+)\".*", "$1");
 
-        bl.generateImage(response);
+        // Save the uploaded file to the server
+        OutputStream outputStream = new FileOutputStream("recording2.wav");
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        outputStream.close();
+        inStream.close();
+        //end of ChatGPT code
+
+        //Create response through Whisper
+        File f = new File("recording2.wav");
+        String response = bl.transcribe(f);
         return response;
     }
 }

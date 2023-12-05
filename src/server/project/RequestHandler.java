@@ -1,5 +1,4 @@
-//package server;
-package server;
+package server.project;
 
 import com.sun.net.httpserver.*;
 import java.io.*;
@@ -7,14 +6,14 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class RecipeRequestHandler implements HttpHandler {
+public class RequestHandler implements HttpHandler {
     //private final Map<String, String> data;
     private ArrayList<String> data;
     //private int postCount = 0;
     //private int getCount = 0;
     private int count = 0;
 
-    public RecipeRequestHandler(ArrayList<String> data) {
+    public RequestHandler(ArrayList<String> data) {
         this.data = data;
     }
 

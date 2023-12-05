@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TranscriptionScreen extends Screen {
     public static String ingredients;
@@ -17,11 +19,14 @@ public class TranscriptionScreen extends Screen {
     private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
+    private ImageView recipeImage;
     private Date date;
     private TextArea ingredArea;
     private RequestSender request = new RequestSender();
+    private String currentUsername;
 
-    TranscriptionScreen(String transcription, String type) {
+    TranscriptionScreen(String username, String transcription, String type) {
+        currentUsername = username;
         ingredients = transcription;
         mealType = type;
         setHeaderText("This is what we heard from you. Confirm your ingredients:");
@@ -35,12 +40,12 @@ public class TranscriptionScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(recipe, recipeTitle, ingredients, mealType, date);
+        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingredients, mealType, date);
     }
 
     @Override
     protected Screen createPreviousScreen() {
-        return new HomeScreen();
+        return new HomeScreen(currentUsername);
     }
 
     public static String getTranscription() {

@@ -1,6 +1,5 @@
-package server;
+package server.project;
 
-import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -60,6 +59,9 @@ public class BusinessLogic {
     }
 
     public boolean saveRecipeToAccount(String username, JSONObject recipe){
+        System.out.println("What am I saving?");
+        System.out.println(username);
+        System.out.println(recipe.toString());
         return accounts.saveRecipeToAccount(username, recipe);
     }
 

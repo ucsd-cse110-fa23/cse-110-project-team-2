@@ -1,18 +1,16 @@
-package server;
+package server.project;
+
 
 import com.sun.net.httpserver.*;
 import java.io.*;
-import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
 
 import org.json.JSONObject;
 
-public class SaveRecipeHandler implements HttpHandler{
-
+public class DeleteHandler implements HttpHandler{
     private BusinessLogic bl;
 
-    SaveRecipeHandler(BusinessLogic bl){
+    DeleteHandler(BusinessLogic bl){
         this.bl = bl;
     }
     @Override
@@ -42,11 +40,12 @@ public class SaveRecipeHandler implements HttpHandler{
 
         System.out.println(requestBody);
 
-        //takes json from request body and gets login details
-        JSONObject requestDetails = new JSONObject(requestBody);
-
+        //takes json from request body and gets recipe details
+        JSONObject recipeDetails = new JSONObject(requestBody);
+        String titleDate = recipeDetails.getString("titleDate");
+        String username = recipeDetails.getString("username");
         //matches login details to known database
-        response = bl.saveRecipeToAccount(requestDetails.getString("user"), requestDetails.getJSONObject("recipe")) ? "true": "Recipe failed to save";
+        response = bl.deleteRecipe(username,titleDate) ? "true":"Recipe not found";
         return response;
     }
 }

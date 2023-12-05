@@ -1,12 +1,23 @@
 package client;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
@@ -19,6 +30,7 @@ class LoginUI extends GridPane {
     private Button createButton;
     private Button loginButton;
     private CheckBox rememberOption;
+    private Alert alert;
 
     LoginUI() {
         username = new Label("Username:");
@@ -46,7 +58,9 @@ class LoginUI extends GridPane {
         this.setVgap(5);
         this.setAlignment(Pos.CENTER);
         addListeners();
-    }
+
+        this.alert = new Alert(Alert.AlertType.WARNING);
+        }
 
     public String getUsernameInput() {
         return usernameInput.getText();
@@ -69,7 +83,40 @@ class LoginUI extends GridPane {
             System.out.println(username);
             System.out.println(password);
             // Check login validation here
-            moveToNextScreen();
+            String response = AppFrame.getRequest().performLogin(username, password);
+            if(response.equals("true")) {
+                try {
+                    JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
+                    for(String key : recipes.keySet()){
+                        JSONObject recipe = recipes.getJSONObject(key);
+                        String rTitle = recipe.getString("title");
+                        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                        Date rDate = df.parse(recipe.getString("date"));
+                        String rType = recipe.getString("mealType");
+                        String rBody = recipe.getString("recipe");
+
+                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+                        AppFrame.getAppRecipeList().getChildren().add(currRecipe);
+                    }
+                } catch (JSONException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                moveToNextScreen(username);
+            }
+            else {
+                alert.setContentText(response);
+                alert.showAndWait();
+            }
         });
 
         createButton.setOnAction(e -> {
@@ -81,15 +128,23 @@ class LoginUI extends GridPane {
             System.out.println(username);
             System.out.println(password);
             // Post username key if it doesn't exist before moving to next screen
-            moveToNextScreen();
+            String response = AppFrame.getRequest().performCreateAccount(username, password);
+            if(response.equals("true")) {
+                moveToNextScreen(username);
+            }
+            else {
+                alert.setContentText("Error: " + response);
+                alert.showAndWait();
+            }
+            
         });
     }
-    public void moveToNextScreen() {
+    public void moveToNextScreen(String username) {
         Scene scene = getScene();
         Window screen = scene.getWindow();
         if (screen instanceof Stage) {
             Stage current = (Stage) screen;
-            HomeScreen screenTwo = new HomeScreen();
+            HomeScreen screenTwo = new HomeScreen(username);
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);
             current.show();
