@@ -3,6 +3,9 @@ package server;
 
 //import java.io.IOException;
 import com.sun.net.httpserver.*;
+
+import client.Recipe;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -43,8 +46,18 @@ public class MyServer {
     AccountHandler accounthandler = new AccountHandler(bl);
     server.createContext("/createAccount", accounthandler);
 
+    DeleteHandler deletehandler = new DeleteHandler(bl);
+    server.createContext("/deleteRecipe", deletehandler);
+
+    AllRecipeRequestHandler arrh = new AllRecipeRequestHandler(bl);
+    server.createContext("/requestAll",arrh);
+
     ImageHandler imageHandler = new ImageHandler(bl);
     server.createContext("/image", imageHandler);
+
+    SaveRecipeHandler srh = new SaveRecipeHandler(bl);
+    server.createContext("/saveRecipe", srh);
+
 
     server.setExecutor(threadPoolExecutor);
 

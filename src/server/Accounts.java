@@ -16,9 +16,11 @@ public class Accounts {
     Accounts(){
         userPw = null;
         allRecipes = null;
+        loaduserPW(new File("userPw.json"));
+        loadallRecipes(new File("allRecipes.json"));
     }
-
-    public void loaduserPW(File userPw){ //loads user:password pairs from json file
+    
+    private void loaduserPW(File userPw){ //loads user:password pairs from json file
         try{
             this.userPw = new JSONObject(Files.readString(userPw.toPath()));
         }catch(FileNotFoundException e){
@@ -29,7 +31,8 @@ public class Accounts {
             e.printStackTrace();
         }
     }
-    public void loadallRecipes(File allRecipes){ //loads allreacipes from json file
+    
+    private void loadallRecipes(File allRecipes){ //loads allreacipes from json file
         try{
             this.allRecipes = new JSONObject(Files.readString(allRecipes.toPath()));
         }catch(FileNotFoundException e){
@@ -40,7 +43,7 @@ public class Accounts {
         }
     }
 
-    public void writeToFilePw() throws IOException{ //writes jsonObjects to Json files
+    private void writeToFilePw() throws IOException{ //writes jsonObjects to Json files
         File f = new File("userPw.json");
         FileOutputStream fw = new FileOutputStream(f);
         OutputStreamWriter writer = new OutputStreamWriter(fw);
@@ -49,7 +52,7 @@ public class Accounts {
         writer.close();
     }
 
-    public void writeToFileRecipes() throws IOException{ //writes jsonObjects to Json files
+    private void writeToFileRecipes() throws IOException{ //writes jsonObjects to Json files
         File f = new File("allRecipes.json");
         FileOutputStream fw = new FileOutputStream(f);
         OutputStreamWriter writer = new OutputStreamWriter(fw);
@@ -82,16 +85,10 @@ public class Accounts {
         }
        return true;
     }
-
     //when user saves
-    public boolean saveRecipeToAccount(String username, String recipeTitle, String recipe, String date, String mealType){
+    public boolean saveRecipeToAccount(String username, JSONObject recipe){
         try{
-            JSONObject jsonRecipe = new JSONObject();
-            jsonRecipe.put("date",date);
-            jsonRecipe.put("title", recipeTitle);
-            jsonRecipe.put("mealtype",mealType);
-            jsonRecipe.put("recipe",recipe);
-            allRecipes.getJSONObject(username).put(recipeTitle+"@"+date,jsonRecipe);
+            allRecipes.getJSONObject(username).put(recipe.getString("title")+"@"+recipe.getString("date"),recipe);
             writeToFileRecipes();
         } catch (Exception e){
             e.printStackTrace();
@@ -115,8 +112,8 @@ public class Accounts {
         return password.equals(userPw.getString(username));
     }
 
-    public String getUserRecipes(String username){ //gets all recipes from a user and returns the JSON as a string
-        return allRecipes.getJSONObject(username).toString();
+    public JSONObject getUserRecipes(String username){ //gets all recipes from a user and returns the JSONObject
+        return allRecipes.getJSONObject(username);
     }
-    
+
 }

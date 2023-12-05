@@ -6,21 +6,26 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import client.ChatGPT;
+import client.DallE;
 import client.Whisper;
 
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
+    //private HashMap<String,String> accounts;
+    private Accounts accounts;
     private DallE dall;
-    private HashMap<String,String> accounts;
     public BusinessLogic(){
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
+        //this.accounts = new HashMap<String,String>();
+        this.accounts = new Accounts();
         this.dall = new DallE();
-        this.accounts = new HashMap<String,String>();
     }
+
     //Generates using chatgpt
     public String generate(String ingredients, String mealtype) throws IOException, InterruptedException, URISyntaxException{
         return cgpt.generate(ingredients, mealtype);
@@ -35,16 +40,27 @@ public class BusinessLogic {
     }
 
     public String generateImage(String title) throws IOException, URISyntaxException, JSONException {
-        return dall.image(title);
+        return "hi";
     }
 
     public boolean checkLogin(String username, String password){
-        if(accounts.containsKey(username)){ //returns true iff the hashmap contains both username and matching password
-            if(accounts.get(username).equals(password)){
-                return true;
-            }
-        }
-        return false;
+        return accounts.checkLogin(username, password);
+    }
+
+    public boolean addUserAccount(String username, String password) throws IOException{
+        return accounts.addUserAccount(username, password);
+    }
+
+    public boolean deleteRecipe(String username, String recipeTitleDate){
+        return accounts.deleteRecipeFromAccount(username, recipeTitleDate);
+    }
+
+    public JSONObject getAllRecipes(String username){
+        return accounts.getUserRecipes(username);
+    }
+
+    public boolean saveRecipeToAccount(String username, JSONObject recipe){
+        return accounts.saveRecipeToAccount(username, recipe);
     }
 
 }
