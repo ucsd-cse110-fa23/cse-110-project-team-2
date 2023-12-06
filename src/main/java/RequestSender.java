@@ -20,14 +20,8 @@ import java.net.URI;
 
 public class RequestSender {
     public String performCheck() {
-        // Implement your HTTP request logic here and return the response
-
         try {
-            String urlString = "http://localhost:8100/";
-
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("check","true");
-
+            String urlString = "http://localhost:8100/connectionTest";
             // Create the HTTP Client
             HttpClient client = HttpClient.newHttpClient();
             URI ur = URI.create(urlString);
@@ -36,7 +30,7 @@ public class RequestSender {
             .newBuilder()
             .uri(ur)
             .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .POST(HttpRequest.BodyPublishers.ofString("test"))
             .build();
 
              // Send the request and receive the response
@@ -47,7 +41,6 @@ public class RequestSender {
             
             // Process the response
             String responseBody = response.body();
-            //System.out.println(responseBody);
             return responseBody;
         } catch (Exception ex) {
             ex.printStackTrace();
