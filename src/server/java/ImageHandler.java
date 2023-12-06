@@ -28,6 +28,7 @@ public class ImageHandler implements HttpHandler{
             e.printStackTrace();
         }
         // Sending back response to the client
+        // we get image from directory
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream outStream = httpExchange.getResponseBody();
         OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
