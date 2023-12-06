@@ -1,4 +1,4 @@
-package main.java;
+
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -176,7 +178,14 @@ class LoginUI extends GridPane {
                 String rType = recipe.getString("mealType");
                 String rBody = recipe.getString("recipe");
 
-                Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+
+                String recipeTitle = recipe.getString("title");
+                String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+                Image currImage = new Image("file:"+recipeFileName+".png");
+                ImageView recipeImage = new ImageView();
+                recipeImage.setImage(currImage);
+
+                Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate, recipeImage);
                 AppFrame.getAppRecipeList().getChildren().add(currRecipe);
             }
         } catch (Exception e){
