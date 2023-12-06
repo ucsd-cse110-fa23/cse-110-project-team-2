@@ -24,6 +24,7 @@ public class TranscriptionScreen extends Screen {
     private TextArea ingredArea;
     private RequestSender request = new RequestSender();
     private String currentUsername;
+    private DallE dallE;
 
     TranscriptionScreen(String username, String transcription, String type) {
         currentUsername = username;
@@ -40,7 +41,7 @@ public class TranscriptionScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingredients, mealType, date);
+        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingredients, mealType, date, recipeImage);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class TranscriptionScreen extends Screen {
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
             date = new Date();
+            recipeImage.setImage(AppFrame.getRequest().performGenerateImage(recipeTitle));
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {

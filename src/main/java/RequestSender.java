@@ -13,6 +13,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.scene.image.Image;
 import javafx.scene.shape.Path;
 
 import java.nio.file.Paths;
@@ -98,7 +99,7 @@ public class RequestSender {
             return "Error: File Not Found";
         }
     }
-    public File performGenerateImage(String title){
+    public Image performGenerateImage(String title){
         try{
             String serverUrl = "http://localhost:8100/image";
             URL url = new URI(serverUrl).toURL();
@@ -115,10 +116,11 @@ public class RequestSender {
             InputStream in = connection.getInputStream();
             String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             in.close();
-            Path image = (Path) Paths.get(response + ".png");
-            File f = ((java.nio.file.Path) image).toFile();
 
-            return f;
+            String recipeFileName = title.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+
+            return currImage;
         } catch (Exception e){
             e.printStackTrace();
             return null;

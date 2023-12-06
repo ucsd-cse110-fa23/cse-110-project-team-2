@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -94,8 +95,9 @@ class LoginUI extends GridPane {
                         Date rDate = df.parse(recipe.getString("date"));
                         String rType = recipe.getString("mealType");
                         String rBody = recipe.getString("recipe");
-
-                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+                        
+                        ImageView recipeImage = new ImageView(AppFrame.getRequest().performGenerateImage(rTitle));
+                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate, recipeImage);
                         AppFrame.getAppRecipeList().getChildren().add(currRecipe);
                     }
                 } catch (JSONException e1) {
