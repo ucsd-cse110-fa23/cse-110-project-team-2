@@ -1,3 +1,4 @@
+package main.java;
 
 
 public class LoginScreen extends Screen {
@@ -12,6 +13,12 @@ public class LoginScreen extends Screen {
         this.setCenter(login);
     }
 
+    public boolean getAutoLogin(){
+        return login.getAutoLogin();
+    }
+    public String getUser(){
+        return login.getUser();
+    }
     @Override
     protected Screen createNextScreen() {
         return new HomeScreen(login.getUsernameInput());

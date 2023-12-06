@@ -1,3 +1,4 @@
+package server.java;
 
 import java.net.URISyntaxException;
 import com.sun.net.httpserver.*;

@@ -1,19 +1,13 @@
-
-import java.io.File;
-import java.sql.Date;
+package main.java;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    private RequestSender request;
 
     @Override
     public void start(Stage primaryStage) {
-        this.request = new RequestSender();
         AppFrame root = new AppFrame();
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
@@ -38,17 +32,7 @@ public class App extends Application {
     }
     @Override
     public void stop() {
-        String recipeTitle;
-        String recipe;
-        String uploadString;
-        this.request = new RequestSender();
-        for (int i = 0; i < AppFrame.getAppRecipeList().getChildren().size(); i++) {
-            recipeTitle = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipeTitle();
-            recipe = ((Recipe)AppFrame.getAppRecipeList().getChildren().get(i)).getRecipe();
-            uploadString = recipeTitle + "," + recipe;
-            System.out.println(uploadString);
-            String response = request.performRequest("POST", uploadString, null);
-        }
+        
     }
     public static void main(String[] args) {
         launch(args);
