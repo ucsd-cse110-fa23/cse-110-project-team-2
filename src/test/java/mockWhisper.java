@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import org.json.JSONException;
 
 
+
 public class mockWhisper implements WhisperInterface{
     @Override
     public String transcribe(File recording) throws IOException, URISyntaxException, JSONException {

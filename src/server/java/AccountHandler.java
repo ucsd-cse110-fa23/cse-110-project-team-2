@@ -1,5 +1,4 @@
-
-
+package server.java;
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;

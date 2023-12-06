@@ -1,5 +1,6 @@
 
 
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -91,6 +92,7 @@ public class ChatGPT implements ChatGPTInterface{
         JSONObject responseJson = new JSONObject(responseBody);
         JSONArray choices = responseJson.getJSONArray("choices");
         String generatedText = choices.getJSONObject(0).getString("text");
+        generatedText = generatedText.replace("\n\n", "");
         //System.out.println(generatedText);
         return generatedText;
     }

@@ -1,5 +1,6 @@
 
 
+
 import java.io.*;
 import java.nio.file.Files;
 
@@ -12,7 +13,7 @@ public class Accounts {
     /*separate JSONObjects key'd by username, username object contains object keyd by recipetitle+date, recipetitle+date objects contain 4
     key value pairs, mealtype:mealtype(ex breakfast), date:creation date, title:recipe title, recipe: actual recipe*/
     private JSONObject allRecipes; 
-    Accounts(){
+    public Accounts(){
         userPw = null;
         allRecipes = null;
         loaduserPW(new File("userPw.json"));
@@ -73,6 +74,7 @@ public class Accounts {
 
     public boolean editSavedRecipe(String username, String recipeTitleDate, String newRecipe){
         try{
+            System.out.println(allRecipes.getJSONObject(username).has(recipeTitleDate));
             allRecipes.getJSONObject(username).getJSONObject(recipeTitleDate).remove("recipe");
             allRecipes.getJSONObject(username).getJSONObject(recipeTitleDate).put("recipe",newRecipe);
             writeToFileRecipes();
@@ -86,7 +88,6 @@ public class Accounts {
     public boolean saveRecipeToAccount(String username, JSONObject recipe){
         try{
             allRecipes.getJSONObject(username).put(recipe.getString("title")+"@"+recipe.getString("date"),recipe);
-            System.out.println(allRecipes.toString());
             writeToFileRecipes();
         } catch (Exception e){
             e.printStackTrace();
@@ -113,5 +114,4 @@ public class Accounts {
     public JSONObject getUserRecipes(String username){ //gets all recipes from a user and returns the JSONObject
         return allRecipes.getJSONObject(username);
     }
-
 }

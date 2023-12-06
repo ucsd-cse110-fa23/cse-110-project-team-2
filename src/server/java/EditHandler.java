@@ -1,17 +1,14 @@
-
-
-
+package server.java;
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 
-public class AllRecipeRequestHandler implements HttpHandler{
-
+public class EditHandler implements HttpHandler{
     private BusinessLogic bl;
 
-    AllRecipeRequestHandler(BusinessLogic bl){
+    EditHandler(BusinessLogic bl){
         this.bl = bl;
     }
     @Override
@@ -41,12 +38,14 @@ public class AllRecipeRequestHandler implements HttpHandler{
 
         System.out.println(requestBody);
 
-        //takes json from request body and gets request details
-        JSONObject requestDetails = new JSONObject(requestBody);
-        String user = requestDetails.getString("user");
+        //takes json from request body and gets login details
+        JSONObject loginDetails = new JSONObject(requestBody);
+        String user = loginDetails.getString("user");
+        String titleDate = loginDetails.getString("titleDate");
+        String recipe = loginDetails.getString("recipe");
 
         //matches login details to known database
-        response = bl.getAllRecipes(user).toString();
+        response = bl.editRecipe(user, titleDate, recipe) ? "true":"Username already taken";
         return response;
     }
 }
