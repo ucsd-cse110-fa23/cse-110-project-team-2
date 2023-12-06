@@ -10,7 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,8 +37,22 @@ class LoginUI extends GridPane {
     private Button loginButton;
     private CheckBox rememberOption;
     private Alert alert;
-
+    private boolean autologin;
+    private String user;
     LoginUI() {
+        try{
+           JSONObject logindetails = new JSONObject(Files.readString(new File("loginDetails.json").toPath()));
+           this.autologin = false;
+           if(logindetails.getString("autoLogin").equals("true")){
+                this.autologin = true;
+                this.user = logindetails.getString("user");
+                String password = logindetails.getString("pw");
+                loadRecipes(user, password);
+                moveToNextScreen(user);
+           }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         username = new Label("Username:");
         usernameInput = new TextField(); 
         usernameInput.setMaxSize(150, 5);
@@ -70,48 +89,37 @@ class LoginUI extends GridPane {
         return passwordInput.getText();
     }
 
-    public Boolean checkAutomaticLogin() {
+    public Boolean rememberMeChecked() {
         return rememberOption.isSelected();
     }
 
     public void addListeners(){
         loginButton.setOnAction(e -> {
-            if (checkAutomaticLogin()) {
-                System.out.println("Automatic Login has been enabled");  
-            }
             String username = getUsernameInput();
             String password = getPasswordInput();
-            System.out.println(username);
-            System.out.println(password);
+            //Writes login details for auto-login if it's selected when login buttong is hit
+            if (rememberMeChecked()) {
+                JSONObject logindetails = new JSONObject();
+                logindetails.put("autoLogin", "true");
+                logindetails.put("user",username);
+                logindetails.put("pw",password);
+                File f = new File("loginDetails.json");
+                FileOutputStream fw;
+                try {
+                    fw = new FileOutputStream(f);
+                    OutputStreamWriter writer = new OutputStreamWriter(fw);
+                    writer.write(logindetails.toString());
+                    writer.flush();
+                    writer.close();
+                } catch(Exception ex){
+                    ex.printStackTrace();
+                }
+                
+            }
             // Check login validation here
             String response = AppFrame.getRequest().performLogin(username, password);
             if(response.equals("true")) {
-                try {
-                    JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
-                    for(String key : recipes.keySet()){
-                        JSONObject recipe = recipes.getJSONObject(key);
-                        String rTitle = recipe.getString("title");
-                        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                        Date rDate = df.parse(recipe.getString("date"));
-                        String rType = recipe.getString("mealType");
-                        String rBody = recipe.getString("recipe");
-
-                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
-                        AppFrame.getAppRecipeList().getChildren().add(currRecipe);
-                    }
-                } catch (JSONException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (ParseException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                loadRecipes(username, password);
                 moveToNextScreen(username);
             }
             else {
@@ -121,7 +129,7 @@ class LoginUI extends GridPane {
         });
 
         createButton.setOnAction(e -> {
-            if (checkAutomaticLogin()) {
+            if (rememberMeChecked()) {
                 System.out.println("Automatic login was selected but won't be enabled by clicking 'create'");
             }
             String username = getUsernameInput();
@@ -149,6 +157,31 @@ class LoginUI extends GridPane {
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);
             current.show();
+        }
+    }
+
+    public boolean getAutoLogin(){
+        return autologin;
+    }
+    public String getUser(){
+        return user;
+    }
+    private void loadRecipes(String username, String password){
+        try {
+            JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
+            for(String key : recipes.keySet()){
+                JSONObject recipe = recipes.getJSONObject(key);
+                String rTitle = recipe.getString("title");
+                DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                Date rDate = df.parse(recipe.getString("date"));
+                String rType = recipe.getString("mealType");
+                String rBody = recipe.getString("recipe");
+
+                Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+                AppFrame.getAppRecipeList().getChildren().add(currRecipe);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

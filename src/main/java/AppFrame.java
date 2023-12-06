@@ -13,7 +13,12 @@ public class AppFrame extends BorderPane {
         AppFrame.recipeList = new RecipeList();
         AppFrame.request = new RequestSender();
         startScreen = new LoginScreen();
-        this.setCenter(startScreen);
+        if(startScreen.getAutoLogin()){
+            this.setCenter(new HomeScreen(startScreen.getUser()));
+        }
+        else{
+            this.setCenter(startScreen);
+        }
     }
     
     public static RecipeList getAppRecipeList() {

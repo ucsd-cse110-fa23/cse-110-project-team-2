@@ -59,9 +59,6 @@ public class BusinessLogic {
     }
 
     public boolean saveRecipeToAccount(String username, JSONObject recipe){
-        System.out.println("What am I saving?");
-        System.out.println(username);
-        System.out.println(recipe.toString());
         return accounts.saveRecipeToAccount(username, recipe);
     }
 
