@@ -1,7 +1,5 @@
 package main.java;
 
-
-
 import javafx.scene.layout.BorderPane;
 
 public class AppFrame extends BorderPane {
