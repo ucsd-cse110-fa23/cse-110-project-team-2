@@ -1,24 +1,15 @@
-Exception in thread "main" java.net.BindException: Address already in use: bind
-	at java.base/sun.nio.ch.Net.bind0(Native Method)
-	at java.base/sun.nio.ch.Net.bind(Net.java:565)
-	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
-	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
-	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:89)
-	at jdk.httpserver/sun.net.httpserver.ServerImpl.<init>(ServerImpl.java:145)
-	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
-	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
-	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServersun.net.httpserver.FixedLengthInputStream@6c5a3576
-post data which is the format string,string: {"pw":"","user":""}
-data when its separated: Posted entry {{"pw":"","user":""}}
-sun.net.httpserver.FixedLengthInputStream@1d8646b0
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@1fb7d520
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@6837cc2d
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@66282abf
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
+Server started on port 8100
+{"pw":"Ly","user":"Kevin"}
+{"pw":"Ly","user":"Kevin123"}
+You
+{"ingredients":"You","type":"Lunch"}
+{"ingredients":"You","type":"Lunch"}
+{"\n\nYou-rific Veggie Wrap@Tue Dec 05 11:54:21 PST 2023":{"date":"Tue Dec 05 11:54:21 PST 2023","mealType":"Lunch","recipe":"\n\nIngredients:\n\n-1 cup cooked rice\n-3 slices bacon, cooked and crumbled\n-2 tablespoons diced onion\n-2 cloves garlic, minced\n-½ cup diced mushrooms\n-2 tablespoons minced fresh parsley\n-1 tomato, diced\n-1 teaspoon paprika\n-Salt and pepper, to taste\n\nDirections:\n\n1. Heat a large skillet over medium heat.\n\n2. Add bacon, onion, garlic and mushrooms to the skillet and cook until the onion is translucent and the mushrooms are tender.\n\n3. Stir in the cooked rice and mix until combined.\n\n4. Add the diced tomato, parsley, and paprika and season with salt and pepper to taste.\n\n5. Cook for an additional 5 minutes or until heated through.\n\n6. Serve your bacon rice skillet. Enjoy!","title":"\n\nYou-rific Veggie Wrap"},"user":"Kevin123","titleDate":"\n\nYou-rific Veggie Wrap@Tue Dec 05 11:54:21 PST 2023"}
+What am I saving?
+Kevin123
+{"date":"Tue Dec 05 11:54:21 PST 2023","mealType":"Lunch","recipe":"\n\nIngredients:\n\n-1 cup cooked rice\n-3 slices bacon, cooked and crumbled\n-2 tablespoons diced onion\n-2 cloves garlic, minced\n-½ cup diced mushrooms\n-2 tablespoons minced fresh parsley\n-1 tomato, diced\n-1 teaspoon paprika\n-Salt and pepper, to taste\n\nDirections:\n\n1. Heat a large skillet over medium heat.\n\n2. Add bacon, onion, garlic and mushrooms to the skillet and cook until the onion is translucent and the mushrooms are tender.\n\n3. Stir in the cooked rice and mix until combined.\n\n4. Add the diced tomato, parsley, and paprika and season with salt and pepper to taste.\n\n5. Cook for an additional 5 minutes or until heated through.\n\n6. Serve your bacon rice skillet. Enjoy!","title":"\n\nYou-rific Veggie Wrap"}
+{"":{},"Kevin":{},"oiaudou":{},"Kevin123":{"\n\nYou-rific Veggie Wrap@Tue Dec 05 11:54:21 PST 2023":{"date":"Tue Dec 05 11:54:21 PST 2023","mealType":"Lunch","recipe":"\n\nIngredients:\n\n-1 cup cooked rice\n-3 slices bacon, cooked and crumbled\n-2 tablespoons diced onion\n-2 cloves garlic, minced\n-½ cup diced mushrooms\n-2 tablespoons minced fresh parsley\n-1 tomato, diced\n-1 teaspoon paprika\n-Salt and pepper, to taste\n\nDirections:\n\n1. Heat a large skillet over medium heat.\n\n2. Add bacon, onion, garlic and mushrooms to the skillet and cook until the onion is translucent and the mushrooms are tender.\n\n3. Stir in the cooked rice and mix until combined.\n\n4. Add the diced tomato, parsley, and paprika and season with salt and pepper to taste.\n\n5. Cook for an additional 5 minutes or until heated through.\n\n6. Serve your bacon rice skillet. Enjoy!","title":"\n\nYou-rific Veggie Wrap"}},"test":{"\n\nTomato Egg Skillet@Mon Dec 04 22:24:54 PST 2023":{"date":"Mon Dec 04 22:24:54 PST 2023","mealType":"Lunch","recipe":"\n\nIngredients:\n1 Tomato\n2 Eggs\n1/4 teaspoon Salt\n1/4 teaspoon Pepper\n1 tablespoon Olive Oil\n\nInstructions:\n1. Start by heating olive oil in a non-stick skillet over medium-high heat. \n2. Cut the tomato into quarter slices and add them to the skillet. \n3. Cook the tomato slices until lightly browned. \n4. Crack the eggs into a bowl, then add salt and pepper to the eggs. \n5. Add the egg mixture to the skillet and reduce the heat to medium-low. \n6. Stir the egg and tomato until the eggs are cooked and there are no raw egg pieces visible. \n7. Serve the egg and tomato dish hot. Enjoy!","title":"\n\nTomato Egg Skillet"},"\n\nBacon and Ham Sandwich@Mon Dec 04 22:26:21 PST 2023":{"date":"Mon Dec 04 22:26:21 PST 2023","mealType":"Lunch","recipe":"\n\nIngredients needed:\n1-4 slices of Bacon \n1-2 slices of Ham \n2 slices of Bread \nOptional:\nMayonnaise\nMustard\n\nInstructions:\n1. Heat up the skillet on medium heat. \n2. Lay the bacon strips in the skillet and cook until both sides are lightly browned. \n3. After the bacon is done, set it aside and add the ham to the same skillet. \n4. Cook the ham until lightly browned, flipping it over once during the cooking process. \n5. Toast the two slices of bread in a toaster or a toaster oven.\n6. Assemble the sandwich by spreading a thin layer of mayonnaise and/or mustard (one or both depending on preference) on each slice of bread.\n7. Place the bacon and ham on one slice of bread and top it off with the other slice of bread. \n8. Enjoy your bacon and ham sandwich!","title":"\n\nBacon and Ham Sandwich"}},"Kevinevin123":{},"huh":{}}
+{"titleDate":"You-rific Veggie Wrap@Tue Dec 05 11:54:21 PST 2023","username":"Kevin123"}
+Chicken, eggs, and breadcrumbs.
+{"ingredients":"Chicken, eggs, and breadcrumbs.","type":"Dinner"}
+{"ingredients":"Chicken, eggs, and breadcrumbs.","type":"Dinner"}
