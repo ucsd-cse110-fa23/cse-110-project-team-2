@@ -1,2 +1,2 @@
 # PantryPal MS1 - Alex, Aurelio, Ian, Kevin, Nandita, Rachelle
->To Run our App, compile all code and run "MyServer", then run "App" with the proper arguments for JavaFX "--module-path 'path to JavaFX lib folder' --add-modules javafx.controls,javafx.fxml" a
+>To run our app use ./gradlew clean build then ./gradlew runApp if you want to run the app with the server and ./gradlew run if you want to see what happens when the server is down

@@ -1,4 +1,4 @@
-package main.java;
+
 
 
 import java.text.DateFormat;
@@ -9,6 +9,8 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class RecipeList extends VBox{
@@ -109,7 +111,12 @@ public class RecipeList extends VBox{
             String rType = recipe.getString("mealType");
             String rBody = recipe.getString("recipe");
 
-            Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+            String recipeTitle = recipe.getString("title");
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            ImageView recipeImage = new ImageView();
+            recipeImage.setImage(currImage);
+            Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate, recipeImage);
             AppFrame.getAppRecipeList().getChildren().add(currRecipe);
         }
     }
