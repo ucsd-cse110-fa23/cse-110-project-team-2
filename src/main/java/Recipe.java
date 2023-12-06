@@ -33,7 +33,7 @@ public class Recipe extends HBox{
         this.setPrefSize(500, 20); // sets size of Contact
         this.setStyle("-fx-background-color: #DAE5EA; -fx-border-width: 0; -fx-font-weight: bold;"); // sets background color of Contact
 
-        System.out.println("RECIPE TITLE IS: " + recipeTitle);
+        //System.out.println("RECIPE TITLE IS: " + recipeTitle);
         recipeTitle = recipeTitle.trim().replaceAll("^[\n\r]", "");
         this.recipeTitle = recipeTitle.trim().replaceAll("^[\n\r]", "");
         recipeButton = new Button(recipeTitle); // creates a button for marking the task as done

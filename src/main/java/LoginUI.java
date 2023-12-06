@@ -48,7 +48,6 @@ class LoginUI extends GridPane {
                 this.user = logindetails.getString("user");
                 String password = logindetails.getString("pw");
                 loadRecipes(user, password);
-                moveToNextScreen(user);
            }
         }catch(Exception e){
             e.printStackTrace();

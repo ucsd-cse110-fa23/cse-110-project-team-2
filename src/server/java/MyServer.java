@@ -17,18 +17,16 @@ public class MyServer {
     // create a thread pool to handle requests
     ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
 
-    // create a map to store data
+    //Create Business Logic used for most handlers
     BusinessLogic bl = new BusinessLogic();
-    ArrayList<String> data = new ArrayList<String>();
-    //Map<String, String> data = new HashMap<>();
 
     // create a server
     HttpServer server = HttpServer.create(
         new InetSocketAddress(SERVER_HOSTNAME, SERVER_PORT),
         0);
 
-    RecipeRequestHandler request = new RecipeRequestHandler(data);
-    server.createContext("/", request);
+    ConnectionTestHandler request = new ConnectionTestHandler();
+    server.createContext("/connectionTest", request);
 
     GPTHandler gpthandler = new GPTHandler(bl);
     server.createContext("/generate", gpthandler);
