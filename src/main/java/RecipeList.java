@@ -5,7 +5,7 @@ import javafx.scene.layout.VBox;
 
 public class RecipeList extends VBox{
     private boolean namesAscending = false;
-    private boolean datesAscending = true;
+    private boolean datesAscending = false;
 
     RecipeList() {
         this.setSpacing(5); // sets spacing between Recipes
@@ -53,12 +53,14 @@ public class RecipeList extends VBox{
             for(int j = i; j < this.getChildren().size(); ++j) {
                 String r1 = ((Recipe)this.getChildren().get(max)).getRecipeTitle();
                 String r2 = ((Recipe)this.getChildren().get(j)).getRecipeTitle();
-                if(r1.compareToIgnoreCase(r2) < 0) {
-                    if(!namesAscending) {
+                if(namesAscending) {
+                    if(r1.compareToIgnoreCase(r2) < 0) {
                         max = j;
                     }
-                    else {
-                        max = i;
+                }
+                else {
+                    if(r1.compareToIgnoreCase(r2) > 0) {
+                        max = j;
                     }
                 }
             }
@@ -74,12 +76,14 @@ public class RecipeList extends VBox{
             for(int j = i; j < this.getChildren().size(); ++j) {
                 Date r1 = ((Recipe)this.getChildren().get(max)).getDate();
                 Date r2 = ((Recipe)this.getChildren().get(j)).getDate();
-                if(r1.compareTo(r2) < 0) {
-                    if(!datesAscending) {
+                if(datesAscending) {
+                    if(r1.compareTo(r2) < 0) {
                         max = j;
                     }
-                    else {
-                        max = i;
+                }
+                else {
+                    if(r1.compareTo(r2) > 0) {
+                        max = j;
                     }
                 }
             }

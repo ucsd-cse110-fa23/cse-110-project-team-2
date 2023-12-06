@@ -98,6 +98,8 @@ class LoginUI extends GridPane {
                         Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
                         AppFrame.getAppRecipeList().getChildren().add(currRecipe);
                     }
+                    AppFrame.getAppRecipeList().sortRecipesByDate();
+
                 } catch (JSONException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();

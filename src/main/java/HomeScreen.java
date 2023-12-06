@@ -40,9 +40,7 @@ public class HomeScreen extends Screen {
 class FilterSortButtons extends HBox {
     private ComboBox<String> filters;
     private Button sortButtonName;
-    private boolean namesAscending = false;
     private Button sortButtonDate;
-    private boolean datesAscending = false;
     
     FilterSortButtons() {
         filters = new ComboBox<String>();
@@ -59,11 +57,9 @@ class FilterSortButtons extends HBox {
         filters.setOnAction(e -> AppFrame.recipeList.filterRecipes(filters.getValue()));
         sortButtonName.setOnAction(e -> {
             AppFrame.recipeList.sortRecipesByName();
-            namesAscending = !namesAscending;
         });
         sortButtonDate.setOnAction(e -> {
             AppFrame.recipeList.sortRecipesByDate();
-            datesAscending = !datesAscending;
         });
     }
 }
