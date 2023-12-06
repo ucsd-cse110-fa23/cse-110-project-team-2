@@ -1,4 +1,3 @@
-package test.java;
 
 
 import java.io.File;
@@ -7,7 +6,6 @@ import java.net.URISyntaxException;
 
 import org.json.JSONException;
 
-import main.java.ChatGPTInterface;
 
 public class mockGPT implements ChatGPTInterface{
     @Override
