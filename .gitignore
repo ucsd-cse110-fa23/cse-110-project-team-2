@@ -8,4 +8,4 @@ bin/
 build
 *.wav
 recording.wav
-server.log
+*.png

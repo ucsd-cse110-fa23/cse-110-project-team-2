@@ -1,15 +1,20 @@
 
 
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,8 +36,23 @@ class LoginUI extends GridPane {
     private Button loginButton;
     private CheckBox rememberOption;
     private Alert alert;
+    private boolean autologin;
+    private String user;
 
     LoginUI() {
+        try{
+            JSONObject logindetails = new JSONObject(Files.readString(new File("loginDetails.json").toPath()));
+            this.autologin = false;
+            if(logindetails.getString("autoLogin").equals("true")){
+                this.autologin = true;
+                this.user = logindetails.getString("user");
+                String password = logindetails.getString("pw");
+                loadRecipes(user, password);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         username = new Label("Username:");
         usernameInput = new TextField(); 
         usernameInput.setMaxSize(150, 5);
@@ -87,17 +107,8 @@ class LoginUI extends GridPane {
             if(response.equals("true")) {
                 try {
                     JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
-                    for(String key : recipes.keySet()){
-                        JSONObject recipe = recipes.getJSONObject(key);
-                        String rTitle = recipe.getString("title");
-                        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                        Date rDate = df.parse(recipe.getString("date"));
-                        String rType = recipe.getString("mealType");
-                        String rBody = recipe.getString("recipe");
-
-                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
-                        AppFrame.getAppRecipeList().getChildren().add(currRecipe);
-                    }
+                    AppFrame.getAppRecipeList().loadRecipes(recipes, username);
+                    AppFrame.getAppRecipeList().sortRecipesByDate();
                 } catch (JSONException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -148,6 +159,38 @@ class LoginUI extends GridPane {
             current.setScene(new Scene(screenTwo, 500, 500));
             current.setResizable(false);
             current.show();
+        }
+    }
+
+    public boolean getAutoLogin(){
+        return autologin;
+    }
+    public String getUser(){
+        return user;
+    }
+    private void loadRecipes(String username, String password){
+        try {
+            JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
+            for(String key : recipes.keySet()){
+                JSONObject recipe = recipes.getJSONObject(key);
+                String rTitle = recipe.getString("title");
+                DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                Date rDate = df.parse(recipe.getString("date"));
+                String rType = recipe.getString("mealType");
+                String rBody = recipe.getString("recipe");
+
+
+                String recipeTitle = recipe.getString("title");
+                String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+                Image currImage = new Image("file:"+recipeFileName+".png");
+                ImageView recipeImage = new ImageView();
+                recipeImage.setImage(currImage);
+
+                Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate, recipeImage);
+                AppFrame.getAppRecipeList().getChildren().add(currRecipe);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
