@@ -1,3 +1,4 @@
+package server.java;
 
 import java.io.File;
 import java.io.IOException;
@@ -5,6 +6,10 @@ import java.net.URISyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import main.java.ChatGPT;
+import main.java.DallE;
+import main.java.Whisper;
 
 public class BusinessLogic {
     private ChatGPT cgpt;
