@@ -40,16 +40,16 @@ public class MyServer {
     server.createContext("/login", loginhandler);
 
     AccountHandler accounthandler = new AccountHandler(bl);
-    server.createContext("/createAccount", accounthandler);
+    server.createContext("/createAccount", accounthandler); 
+
+    ImageHandler imagehandler = new ImageHandler(bl);
+    server.createContext("/createImage", imagehandler);
 
     DeleteHandler deletehandler = new DeleteHandler(bl);
     server.createContext("/deleteRecipe", deletehandler);
 
     AllRecipeRequestHandler arrh = new AllRecipeRequestHandler(bl);
     server.createContext("/requestAll",arrh);
-
-    ImageHandler imagehandler = new ImageHandler(bl);
-    server.createContext("/image", imagehandler);
 
     SaveRecipeHandler srh = new SaveRecipeHandler(bl);
     server.createContext("/saveRecipe", srh);

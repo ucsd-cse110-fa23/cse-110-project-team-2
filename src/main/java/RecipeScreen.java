@@ -98,7 +98,7 @@ public class RecipeScreen extends Screen{
             recipeImage.setImage(AppFrame.getRequest().performGenerateImage(recipeTitle));
         } catch (IOException e1) {
             e1.printStackTrace();
-        } catch (InterruptedException e1) {
+        } catch (InterruptedException e1) { 
             e1.printStackTrace();
         }
         Screen sameScreen = createSameScreen();

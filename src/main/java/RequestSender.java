@@ -100,14 +100,14 @@ public class RequestSender {
         }
     }
     public Image performGenerateImage(String title) throws IOException, InterruptedException{
-        try {
-            String serverUrl = "http://localhost:8100/image";
+        /*try {
+            String serverUrl = "http://localhost:8100/createImage";
             URL url = new URI(serverUrl).toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             // Post method not getting called 
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);  
-
+ 
             OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
             out.write(title);
             out.flush();
@@ -126,7 +126,42 @@ public class RequestSender {
             e.printStackTrace();
             //Image currImage = new Image("file:dog_walking.png");
             return null;
-        }
+        }*/
+        String serverUrl = "http://localhost:8100/createImage";
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("recipeTitle", title);
+        System.out.println(requestBody.toString());
+
+            // Create the HTTP Client
+            HttpClient client = HttpClient.newHttpClient();
+
+            URI ur = URI.create(serverUrl);
+            // Create the request object
+            HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(ur)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .build();
+
+            // Send the request and receive the response
+            HttpResponse<String> response = client.send(
+            request,
+            HttpResponse.BodyHandlers.ofString()
+            );
+            
+            // Process the response
+            //Nothing is being written into the response
+            String responseBody = response.body();
+            //System.out.println(responseBody);
+            //JSONObject dataJson = new JSONObject(responseBody);
+            //String recipeTitle = dataJson.getString("recipeTitle");
+            //System.out.println(recipeTitle);
+            String recipeFileName = responseBody.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+ recipeFileName +".png");
+            //Image currImage = new Image("file:dog_walking.png");
+            //System.out.println("currImage points to: " + currImage);
+            return currImage;
     }
     public String performGenerateRecipe(String ingredients, String mealtype) throws IOException, InterruptedException {
             String urlString = "http://localhost:8100/generate";

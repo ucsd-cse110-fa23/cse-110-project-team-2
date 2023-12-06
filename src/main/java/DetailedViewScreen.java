@@ -19,7 +19,7 @@ public class DetailedViewScreen extends Screen {
     DetailedViewScreen(String username, Recipe currentRecipe) {
         currentUsername = username;
         this.currentRecipe = currentRecipe;
-        this.currentRecipeImage = currentRecipe.getRecipeImage();
+        this.currentRecipeImage = currentRecipe.getRecipeImage(); 
         
         setHeaderText("Current Recipe: " + currentRecipe.getRecipeTitle());
         setFooterButtons("Back", "Delete", "Edit");
