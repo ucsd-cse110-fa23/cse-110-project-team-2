@@ -1,7 +1,5 @@
 package main.java;
 
-
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
