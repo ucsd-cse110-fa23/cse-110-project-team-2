@@ -1,6 +1,5 @@
 package main.java;
 
-
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,10 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -39,19 +35,21 @@ class LoginUI extends GridPane {
     private Alert alert;
     private boolean autologin;
     private String user;
+
     LoginUI() {
         try{
-           JSONObject logindetails = new JSONObject(Files.readString(new File("loginDetails.json").toPath()));
-           this.autologin = false;
-           if(logindetails.getString("autoLogin").equals("true")){
+            JSONObject logindetails = new JSONObject(Files.readString(new File("loginDetails.json").toPath()));
+            this.autologin = false;
+            if(logindetails.getString("autoLogin").equals("true")){
                 this.autologin = true;
                 this.user = logindetails.getString("user");
                 String password = logindetails.getString("pw");
                 loadRecipes(user, password);
-           }
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
+
         username = new Label("Username:");
         usernameInput = new TextField(); 
         usernameInput.setMaxSize(150, 5);
@@ -88,37 +86,39 @@ class LoginUI extends GridPane {
         return passwordInput.getText();
     }
 
-    public Boolean rememberMeChecked() {
+    public Boolean checkAutomaticLogin() {
         return rememberOption.isSelected();
     }
 
     public void addListeners(){
         loginButton.setOnAction(e -> {
+            if (checkAutomaticLogin()) {
+                System.out.println("Automatic Login has been enabled");  
+            }
             String username = getUsernameInput();
             String password = getPasswordInput();
-            //Writes login details for auto-login if it's selected when login buttong is hit
-            if (rememberMeChecked()) {
-                JSONObject logindetails = new JSONObject();
-                logindetails.put("autoLogin", "true");
-                logindetails.put("user",username);
-                logindetails.put("pw",password);
-                File f = new File("loginDetails.json");
-                FileOutputStream fw;
-                try {
-                    fw = new FileOutputStream(f);
-                    OutputStreamWriter writer = new OutputStreamWriter(fw);
-                    writer.write(logindetails.toString());
-                    writer.flush();
-                    writer.close();
-                } catch(Exception ex){
-                    ex.printStackTrace();
-                }
-                
-            }
+            System.out.println(username);
+            System.out.println(password);
             // Check login validation here
             String response = AppFrame.getRequest().performLogin(username, password);
             if(response.equals("true")) {
-                loadRecipes(username, password);
+                try {
+                    JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
+                    AppFrame.getAppRecipeList().loadRecipes(recipes, username);
+                    AppFrame.getAppRecipeList().sortRecipesByDate();
+                } catch (JSONException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 moveToNextScreen(username);
             }
             else {
@@ -128,7 +128,7 @@ class LoginUI extends GridPane {
         });
 
         createButton.setOnAction(e -> {
-            if (rememberMeChecked()) {
+            if (checkAutomaticLogin()) {
                 System.out.println("Automatic login was selected but won't be enabled by clicking 'create'");
             }
             String username = getUsernameInput();
