@@ -8,11 +8,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
+
 public class App extends Application {
     private RequestSender request;
 
     @Override
     public void start(Stage primaryStage) {
+        boolean serverCon = true;
+        try {
+            URL myURL = new URL("http://localhost:8100");
+            URLConnection myURLConnection = myURL.openConnection();=
+        } catch (Exception e) {   
+            serverCon = false;
+        } 
         this.request = new RequestSender();
         AppFrame root = new AppFrame();
         primaryStage.setTitle("PantryPal");
@@ -20,6 +31,13 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.show(); 
 
+        if(!serverCon){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Server Down");
+            alert.setContentText("Server is currently down. Please try again later");
+            alert.showAndWait();
+        }
         // System.out.println("TEST LOGIN" + request.performLogin("test_user", "1234"));
         // System.out.println("TEST ACC CREATE: " + request.performCreateAccount("test_user", "1234"));
         // String query = "getNext"; 
