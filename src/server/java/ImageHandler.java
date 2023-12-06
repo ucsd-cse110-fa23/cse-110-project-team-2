@@ -10,11 +10,11 @@ public class ImageHandler implements HttpHandler{
     public ImageHandler(BusinessLogic bl){
         this.bl = bl;
     }
-
     public void handle(HttpExchange httpExchange) throws IOException {
+        System.out.println("are you being called?");
         String response = "Request Received";
         String method = httpExchange.getRequestMethod();
-
+        //System.out.println(method);
         try {
             if (method.equals("POST")) {
                 response = handlePost(httpExchange);
@@ -28,14 +28,15 @@ public class ImageHandler implements HttpHandler{
             e.printStackTrace();
         }
         // Sending back response to the client
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream outStream = httpExchange.getResponseBody();
-        outStream.write(response.getBytes());
-        outStream.close();
+        OutputStreamWriter out = new OutputStreamWriter(outStream, StandardCharsets.UTF_8);
+        out.write(response);
+        out.close();
     }
 
     private String handlePost(HttpExchange httpExchange) throws IOException, InterruptedException, URISyntaxException{
-        InputStream inStream = httpExchange.getRequestBody();
+       InputStream inStream = httpExchange.getRequestBody();
         String response = new String(inStream.readAllBytes(), StandardCharsets.UTF_8);
 
         bl.generateImage(response);

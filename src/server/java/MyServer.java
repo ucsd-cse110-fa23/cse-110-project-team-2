@@ -48,8 +48,8 @@ public class MyServer {
     AllRecipeRequestHandler arrh = new AllRecipeRequestHandler(bl);
     server.createContext("/requestAll",arrh);
 
-    ImageHandler imageHandler = new ImageHandler(bl);
-    server.createContext("/image", imageHandler);
+    ImageHandler imagehandler = new ImageHandler(bl);
+    server.createContext("/image", imagehandler);
 
     SaveRecipeHandler srh = new SaveRecipeHandler(bl);
     server.createContext("/saveRecipe", srh);

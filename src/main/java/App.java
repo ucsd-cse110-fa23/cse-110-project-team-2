@@ -18,7 +18,7 @@ public class App extends Application {
         primaryStage.setTitle("PantryPal");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.setResizable(false);
-        primaryStage.show(); 
+        primaryStage.show();
 
         // System.out.println("TEST LOGIN" + request.performLogin("test_user", "1234"));
         // System.out.println("TEST ACC CREATE: " + request.performCreateAccount("test_user", "1234"));

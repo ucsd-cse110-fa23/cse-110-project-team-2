@@ -11,13 +11,13 @@ public class BusinessLogic {
     private Whisper wspr;
     //private HashMap<String,String> accounts;
     private Accounts accounts;
-    private DallE dall;
+    private DallE dallE;
     public BusinessLogic(){
         this.cgpt = new ChatGPT();
         this.wspr = new Whisper();
         //this.accounts = new HashMap<String,String>();
         this.accounts = new Accounts();
-        this.dall = new DallE();
+        this.dallE = new DallE();
     }
 
     //Generates using chatgpt
@@ -33,8 +33,8 @@ public class BusinessLogic {
         return wspr.transcribe(recording);
     }
 
-    public String generateImage(String title) throws IOException, URISyntaxException, JSONException {
-        return "hi";
+    public void generateImage(String title) throws IOException, URISyntaxException, JSONException, InterruptedException {
+        dallE.image(title);
     }
 
     public boolean checkLogin(String username, String password){

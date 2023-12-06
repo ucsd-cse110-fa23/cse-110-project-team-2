@@ -99,14 +99,14 @@ public class RequestSender {
             return "Error: File Not Found";
         }
     }
-    public Image performGenerateImage(String title){
-        try{
+    public Image performGenerateImage(String title) throws IOException, InterruptedException{
+        try {
             String serverUrl = "http://localhost:8100/image";
             URL url = new URI(serverUrl).toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            // Post method not getting called 
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);  
-
 
             OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
             out.write(title);
@@ -117,12 +117,14 @@ public class RequestSender {
             String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             in.close();
 
-            String recipeFileName = title.replaceAll("\\s+", "_").toLowerCase();
-            Image currImage = new Image("file:"+recipeFileName+".png");
-
+            String recipeFileName = response.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+ recipeFileName +".png");
+            //Image currImage = new Image("file:dog_walking.png");
+            //System.out.println("currImage points to: " + currImage);
             return currImage;
         } catch (Exception e){
             e.printStackTrace();
+            //Image currImage = new Image("file:dog_walking.png");
             return null;
         }
     }

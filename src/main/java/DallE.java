@@ -75,6 +75,6 @@ public class DallE implements DallEInterface{
         {
             Files.copy(in, Paths.get(recipeFileName+".png"));
         }
-
+        System.out.println("are you even being called?");
     }
 }

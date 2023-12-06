@@ -64,6 +64,11 @@ public class TranscriptionScreen extends Screen {
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
             date = new Date();
+            //System.out.println(recipeTitle);
+            //String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            //Image currImage = new Image("file:"+recipeFileName+".png");
+            //System.out.println("currImage points to: " + currImage);
+            recipeImage = new ImageView();
             recipeImage.setImage(AppFrame.getRequest().performGenerateImage(recipeTitle));
         } catch (IOException e1) {
             e1.printStackTrace();
