@@ -1,9 +1,11 @@
+package test.java;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import org.json.JSONException;
 
 import javafx.util.Pair;
+import main.java.RegenInterface;
 
 public class mockRegen implements RegenInterface{
     @Override

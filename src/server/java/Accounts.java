@@ -13,7 +13,7 @@ public class Accounts {
     /*separate JSONObjects key'd by username, username object contains object keyd by recipetitle+date, recipetitle+date objects contain 4
     key value pairs, mealtype:mealtype(ex breakfast), date:creation date, title:recipe title, recipe: actual recipe*/
     private JSONObject allRecipes; 
-    Accounts(){
+    public Accounts(){
         userPw = null;
         allRecipes = null;
         loaduserPW(new File("userPw.json"));
