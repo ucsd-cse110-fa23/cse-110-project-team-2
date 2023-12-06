@@ -27,6 +27,7 @@ public class RecipeScreen extends Screen{
     private ChatGPT gpt;
     private String currentUsername;
     private ImageView recipeImage;
+    private DallE dallE;
 
     RecipeScreen(String username, String recipe, String recipeTitle, String ingreds, String mealType, Date date, ImageView recipeImage){
         setHeaderText("Here is your recipe!");
@@ -50,7 +51,14 @@ public class RecipeScreen extends Screen{
         generatedRecipe.setWrapText(true);
         setFooterButtons("Cancel", "Regenerate", "Save");
         setLeftButtonAction("PantryPal", this::changeNextScreenEvent);
-        setCenterButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
+        setCenterButtonAction("PantryPal", event -> {
+            try {
+                changeScreenGenerateRecipeEvent(event);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         setRightButtonAction("PantryPal", arg0 -> {
             try {
                 changeScreenSaveRecipe(arg0);
@@ -59,6 +67,7 @@ public class RecipeScreen extends Screen{
                 e.printStackTrace();
             }
         });
+        this.setTop(recipeImage);
         this.setCenter(generatedRecipe);
         this.request = new RequestSender();
     }
@@ -85,13 +94,19 @@ public class RecipeScreen extends Screen{
         changeScreen(nextScreen);
     } 
 
-    public void changeScreenGenerateRecipeEvent (ActionEvent e) {
+    public void changeScreenGenerateRecipeEvent (ActionEvent e) throws URISyntaxException {
+        dallE = new DallE();
         try {
             String data = AppFrame.getRequest().performGenerateRecipe(ingreds, mealType);
             JSONObject dataJson = new JSONObject(data);
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
             date = new Date();
+            dallE.image(recipeTitle);
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            recipeImage = new ImageView();
+            recipeImage.setImage(currImage);
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {
