@@ -22,30 +22,38 @@ import java.net.URISyntaxException;
  
 
 public class RequestSender {
-    public String performRequest(String method, String language, String query) {
+    public String performCheck() {
         // Implement your HTTP request logic here and return the response
 
         try {
-            String urlString = "http://localhost:8100/";
-            if (query != null) {
-                urlString += "?=" + query;
-            }
-            URL url = new URI(urlString).toURL();
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(method);
-            conn.setDoOutput(true);
+            // String urlString = "http://localhost:8100/";
 
-            if (method.equals("POST") || method.equals("PUT")) {
-                OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(language);
-                out.flush();
-                out.close();
-            }
+            // JSONObject requestBody = new JSONObject();
+            // requestBody.put("check","true");
+            String urlString = "http://localhost:8100/connectionTest";
 
-            InputStream in = conn.getInputStream();
-            String response = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-            in.close();
-            return response;
+            // Create the HTTP Client
+            HttpClient client = HttpClient.newHttpClient();
+            URI ur = URI.create(urlString);
+            // Create the request object
+            HttpRequest request = HttpRequest
+            .newBuilder()
+            .uri(ur)
+            .header("Content-Type", "application/json")
+            // .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+            .POST(HttpRequest.BodyPublishers.ofString("test"))
+            .build();
+
+             // Send the request and receive the response
+            HttpResponse<String> response = client.send(
+            request,
+            HttpResponse.BodyHandlers.ofString()
+            );
+            
+            // Process the response
+            String responseBody = response.body();
+            //System.out.println(responseBody);
+            return responseBody;
         } catch (Exception ex) {
             ex.printStackTrace();
             return "Error: " + ex.getMessage();
