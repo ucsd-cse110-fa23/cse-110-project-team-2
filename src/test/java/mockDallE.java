@@ -1,5 +1,3 @@
-package test.java;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +8,6 @@ import java.nio.file.Paths;
 
 import org.json.JSONException;
 
-import main.java.DallEInterface;
 
 public class mockDallE implements DallEInterface{
     @Override

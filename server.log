@@ -2,23 +2,11 @@ Exception in thread "main" java.net.BindException: Address already in use: bind
 	at java.base/sun.nio.ch.Net.bind0(Native Method)
 	at java.base/sun.nio.ch.Net.bind(Net.java:565)
 	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
-	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at java.base/sun.nio.ch.ServerSocketChan{"user":"test"}
+erSocketChannelImpl.java:301)
 	at java.base/sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:89)
 	at jdk.httpserver/sun.net.httpserver.ServerImpl.<init>(ServerImpl.java:145)
 	at jdk.httpserver/sun.net.httpserver.HttpServerImpl.<init>(HttpServerImpl.java:50)
 	at jdk.httpserver/sun.net.httpserver.DefaultHttpServerProvider.createHttpServer(DefaultHttpServerProvider.java:35)
-	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServersun.net.httpserver.FixedLengthInputStream@6c5a3576
-post data which is the format string,string: {"pw":"","user":""}
-data when its separated: Posted entry {{"pw":"","user":""}}
-sun.net.httpserver.FixedLengthInputStream@1d8646b0
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@1fb7d520
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@6837cc2d
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
-sun.net.httpserver.FixedLengthInputStream@66282abf
-post data which is the format string,string: {"pw":"Ly","user":"Kevin"}
-data when its separated: Posted entry {{"pw":"Ly","user":"Kevin"}}
+	at jdk.httpserver/com.sun.net.httpserver.HttpServer.create(HttpServer.java:152)
+	at MyServer.main(MyServer.java:24)

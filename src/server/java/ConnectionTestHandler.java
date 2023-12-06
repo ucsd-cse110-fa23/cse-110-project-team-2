@@ -1,5 +1,3 @@
-package server.java;
-
 import com.sun.net.httpserver.*;
 import java.io.*;
 
