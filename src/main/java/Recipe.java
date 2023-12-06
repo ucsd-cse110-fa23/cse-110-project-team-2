@@ -20,7 +20,7 @@ public class Recipe extends HBox{
     private Button recipeButton;
     private String currentUsername;
 
-    Recipe(String username, String recipeTitle, String recipe, String recipeType, Date date){
+    Recipe(String username, String recipeTitle, String recipe, String recipeType, Date date, ImageView recipeImage){
         this.recipeType = recipeType;
         this.recipeTitle = recipeTitle;
         this.recipe = recipe;

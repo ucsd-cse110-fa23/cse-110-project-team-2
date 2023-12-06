@@ -17,14 +17,14 @@ import javafx.scene.image.ImageView;
 public class TranscriptionScreen extends Screen {
     public static String ingredients;
     public static String mealType;
-    private ChatGPT gpt;
     private String recipe;
     private String recipeTitle;
     private ImageView recipeImage;
     private Date date;
     private TextArea ingredArea;
-    private RequestSender request = new RequestSender();
     private String currentUsername;
+    private DallE dallE;
+
 
     TranscriptionScreen(String username, String transcription, String type) {
         currentUsername = username;
@@ -33,7 +33,14 @@ public class TranscriptionScreen extends Screen {
         setHeaderText("This is what we heard from you. Confirm your ingredients:");
         setFooterButtons("Cancel", "", "Next");
         setLeftButtonAction("PantryPal", this::changePreviousScreenEvent);
-        setRightButtonAction("PantryPal", this::changeScreenGenerateRecipeEvent);
+        setRightButtonAction("PantryPal", event -> {
+            try {
+                changeScreenGenerateRecipeEvent(event);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         ingredArea = new TextArea();
         ingredArea.setText(ingredients);
         this.setCenter(ingredArea);
@@ -41,7 +48,7 @@ public class TranscriptionScreen extends Screen {
 
     @Override
     protected Screen createNextScreen() {
-        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingredients, mealType, date);
+        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingredients, mealType, date, recipeImage);
     }
 
     @Override
@@ -57,13 +64,20 @@ public class TranscriptionScreen extends Screen {
         return mealType;
     }
 
-    public void changeScreenGenerateRecipeEvent(ActionEvent e) {
+    public void changeScreenGenerateRecipeEvent(ActionEvent e) throws URISyntaxException {
+        dallE = new DallE();
         try {
             String data = AppFrame.getRequest().performGenerateRecipe(ingredients, mealType);
             JSONObject dataJson = new JSONObject(data);
             recipe = dataJson.getString("recipe");
             recipeTitle = dataJson.getString("title");
             date = new Date();
+            dallE.image(recipeTitle);
+            String recipeFileName = recipeTitle.replaceAll("\\s+", "_").toLowerCase();
+            Image currImage = new Image("file:"+recipeFileName+".png");
+            recipeImage = new ImageView();
+            recipeImage.setImage(currImage);
+
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {

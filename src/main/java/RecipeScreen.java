@@ -26,8 +26,9 @@ public class RecipeScreen extends Screen{
     private Date date;
     private ChatGPT gpt;
     private String currentUsername;
+    private ImageView recipeImage;
 
-    RecipeScreen(String username, String recipe, String recipeTitle, String ingreds, String mealType, Date date){
+    RecipeScreen(String username, String recipe, String recipeTitle, String ingreds, String mealType, Date date, ImageView recipeImage){
         setHeaderText("Here is your recipe!");
         this.currentUsername = username;
         this.recipe = recipe;
@@ -36,6 +37,12 @@ public class RecipeScreen extends Screen{
         this.date = date;
         this.ingreds = ingreds;
         this.mealType = mealType;
+        this.recipeImage = recipeImage;
+
+        recipeImage.setFitHeight(250);
+        recipeImage.setFitWidth(250);
+        recipeImage.setPreserveRatio(true);
+
         generatedRecipe = new TextArea(recipeTitle + "\n\n" + recipe);
         generatedRecipe.setMaxHeight(400);
         generatedRecipe.setMaxWidth(400);
@@ -67,12 +74,12 @@ public class RecipeScreen extends Screen{
     }
 
     protected Screen createSameScreen() {
-        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingreds, mealType, date);
+        return new RecipeScreen(currentUsername, recipe, recipeTitle, ingreds, mealType, date, recipeImage);
     }
 
     public void changeScreenSaveRecipe (ActionEvent e) throws IOException, InterruptedException {
         Screen nextScreen = new HomeScreen(currentUsername);
-        recipeObj = new Recipe(currentUsername, recipeTitle, recipe, mealType, date);
+        recipeObj = new Recipe(currentUsername, recipeTitle, recipe, mealType, date, recipeImage);
         AppFrame.getRequest().performSaveRecipe(currentUsername, recipeTitle, date.toString(), recipe, mealType);
         AppFrame.getAppRecipeList().getChildren().add(0, recipeObj);
         changeScreen(nextScreen);

@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class BusinessLogic {
     private ChatGPT cgpt;
     private Whisper wspr;
