@@ -1,7 +1,5 @@
 package main.java;
 
-
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -20,8 +18,8 @@ public class RecordScreen extends Screen {
     private String transcript;
     private Boolean isRecording = false;
     private Recorder recorder;
-    private Whisper testWhisper = new Whisper();
-    private RequestSender request = new RequestSender();
+    // private Whisper testWhisper = new Whisper();
+    // private RequestSender request = new RequestSender();
     private String currentUsername;
 
     RecordScreen(String type, String username) {
