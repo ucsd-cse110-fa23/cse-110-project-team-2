@@ -1,5 +1,11 @@
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javafx.scene.layout.VBox;
 
@@ -90,5 +96,19 @@ public class RecipeList extends VBox{
             this.getChildren().get(max).toBack();
         }
         datesAscending = !datesAscending;
+    }
+
+    public void loadRecipes(JSONObject recipeJson, String username) throws JSONException, ParseException {
+        for(String key : recipeJson.keySet()){
+            JSONObject recipe = recipeJson.getJSONObject(key);
+            String rTitle = recipe.getString("title");
+            DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+            Date rDate = df.parse(recipe.getString("date"));
+            String rType = recipe.getString("mealType");
+            String rBody = recipe.getString("recipe");
+
+            Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
+            AppFrame.getAppRecipeList().getChildren().add(currRecipe);
+        }
     }
 }

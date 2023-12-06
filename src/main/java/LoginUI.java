@@ -87,19 +87,8 @@ class LoginUI extends GridPane {
             if(response.equals("true")) {
                 try {
                     JSONObject recipes = new JSONObject(AppFrame.getRequest().performGetAllRecipes(username));
-                    for(String key : recipes.keySet()){
-                        JSONObject recipe = recipes.getJSONObject(key);
-                        String rTitle = recipe.getString("title");
-                        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-                        Date rDate = df.parse(recipe.getString("date"));
-                        String rType = recipe.getString("mealType");
-                        String rBody = recipe.getString("recipe");
-
-                        Recipe currRecipe = new Recipe(username, rTitle, rBody, rType, rDate);
-                        AppFrame.getAppRecipeList().getChildren().add(currRecipe);
-                    }
+                    AppFrame.getAppRecipeList().loadRecipes(recipes, username);
                     AppFrame.getAppRecipeList().sortRecipesByDate();
-
                 } catch (JSONException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
