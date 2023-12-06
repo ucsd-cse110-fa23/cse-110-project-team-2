@@ -1,4 +1,4 @@
-package server.java;
+
 
 import java.io.*;
 import java.nio.file.Files;
@@ -113,5 +113,4 @@ public class Accounts {
     public JSONObject getUserRecipes(String username){ //gets all recipes from a user and returns the JSONObject
         return allRecipes.getJSONObject(username);
     }
-
 }

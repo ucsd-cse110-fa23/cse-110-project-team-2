@@ -1,5 +1,3 @@
-package main.java;
-
 
 import org.json.JSONException;
 import java.io.*;
