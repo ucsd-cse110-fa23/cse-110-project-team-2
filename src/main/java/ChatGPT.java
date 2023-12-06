@@ -1,3 +1,4 @@
+package main.java;
 
 
 import java.io.IOException;
@@ -91,6 +92,7 @@ public class ChatGPT implements ChatGPTInterface{
         JSONObject responseJson = new JSONObject(responseBody);
         JSONArray choices = responseJson.getJSONArray("choices");
         String generatedText = choices.getJSONObject(0).getString("text");
+        generatedText = generatedText.replace("\n\n", "");
         //System.out.println(generatedText);
         return generatedText;
     }

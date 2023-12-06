@@ -1,6 +1,9 @@
+package main.java;
 
 
 
+
+import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
@@ -21,7 +24,17 @@ public class EditScreen extends Screen {
         setHeaderText("Currently Editing: " + currentRecipe.getRecipeTitle());
         setFooterButtons("Back", "", "Save");
         setLeftButtonAction("Detailed View", this::changePreviousScreenEvent);
-        setRightButtonAction("Detailed View", this::changeScreenSaveEdits);
+        setRightButtonAction("Detailed View", arg0 -> {
+            try {
+                changeScreenSaveEdits(arg0);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
         this.setCenter(editRecipeBox);
     }
 
@@ -39,8 +52,9 @@ public class EditScreen extends Screen {
         return currentRecipe;
     }
 
-    public void changeScreenSaveEdits (ActionEvent e) {
+    public void changeScreenSaveEdits (ActionEvent e) throws IOException, InterruptedException {
         currentRecipe.setRecipe(editRecipeBox.getText());
+        AppFrame.getRequest().performEditRecipe(currentUsername, getCurrentRecipe().getRecipeTitle(), getCurrentRecipe().getDate().toString() ,getCurrentRecipe().getRecipe());
         Screen nextScreen = createNextScreen();
         changeScreen(nextScreen);
     } 

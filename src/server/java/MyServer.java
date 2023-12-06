@@ -1,3 +1,4 @@
+package server.java;
 
 
 //import java.io.IOException;
@@ -53,6 +54,8 @@ public class MyServer {
     SaveRecipeHandler srh = new SaveRecipeHandler(bl);
     server.createContext("/saveRecipe", srh);
 
+    EditHandler eh = new EditHandler(bl);
+    server.createContext("/editRecipe", eh);
 
     server.setExecutor(threadPoolExecutor);
 

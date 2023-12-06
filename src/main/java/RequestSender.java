@@ -1,3 +1,4 @@
+package main.java;
 
 
 
@@ -319,7 +320,40 @@ public class RequestSender {
         String responseBody = response.body();
         //System.out.println(responseBody);
         return responseBody;
-}
+    }
+
+    public String performEditRecipe(String username, String title, String date, String recipe) throws IOException, InterruptedException{
+        String urlString = "http://localhost:8100/editRecipe";
+        // Create a request body which you will pass into request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("user", username);
+        requestBody.put("titleDate",title+"@"+date);
+        requestBody.put("recipe",recipe);
+
+
+        // Create the HTTP Client
+        HttpClient client = HttpClient.newHttpClient();
+
+        URI ur = URI.create(urlString);
+        // Create the request object
+        HttpRequest request = HttpRequest
+        .newBuilder()
+        .uri(ur)
+        .header("Content-Type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+        .build();
+
+        // Send the request and receive the response
+        HttpResponse<String> response = client.send(
+        request,
+        HttpResponse.BodyHandlers.ofString()
+        );
+        
+        // Process the response
+        String responseBody = response.body();
+        //System.out.println(responseBody);
+        return responseBody;
+    }
 
 }
 

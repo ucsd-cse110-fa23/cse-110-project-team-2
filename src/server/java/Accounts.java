@@ -1,3 +1,4 @@
+package server.java;
 
 
 import java.io.*;
@@ -73,6 +74,7 @@ public class Accounts {
 
     public boolean editSavedRecipe(String username, String recipeTitleDate, String newRecipe){
         try{
+            System.out.println(allRecipes.getJSONObject(username).has(recipeTitleDate));
             allRecipes.getJSONObject(username).getJSONObject(recipeTitleDate).remove("recipe");
             allRecipes.getJSONObject(username).getJSONObject(recipeTitleDate).put("recipe",newRecipe);
             writeToFileRecipes();
@@ -86,7 +88,6 @@ public class Accounts {
     public boolean saveRecipeToAccount(String username, JSONObject recipe){
         try{
             allRecipes.getJSONObject(username).put(recipe.getString("title")+"@"+recipe.getString("date"),recipe);
-            System.out.println(allRecipes.toString());
             writeToFileRecipes();
         } catch (Exception e){
             e.printStackTrace();
